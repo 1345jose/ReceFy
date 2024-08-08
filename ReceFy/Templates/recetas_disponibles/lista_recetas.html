@@ -1,0 +1,296 @@
+{% load static %}
+
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'recetas_disponibles/lista_recetas.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<!-- BUSCADOR Y FILTROS -->
+<div class="container mt-4">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar recetas por nombre...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="category-container" id="category-desayuno">
+        <h3 style="color: white;">
+            <i class="fas fa-mug-hot"></i>  Desayunos
+        </h3>
+        <hr>
+        <button class="slider-btn left-btn" onclick="slide('left', 'desayuno')">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="slider-container">
+            <div class="slider" id="slider-desayuno">
+                <div class="slider-track">
+                    {% for receta in recetas %}
+                        {% if receta.categoria == "Desayuno" %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                        {% if receta.imagen and receta.imagen.url %}
+                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn right-btn" onclick="slide('right', 'desayuno')">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+
+    <br><br><br>
+
+    <div class="category-container" id="category-entrante">
+        <h3 style="color: white;">
+            <i class="fas fa-cheese"></i>  Entradas
+        </h3>
+        <hr>
+        <button class="slider-btn left-btn" onclick="slide('left', 'entrante')">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="slider-container">
+            <div class="slider" id="slider-entrante">
+                <div class="slider-track">
+                    {% for receta in recetas %}
+                        {% if receta.categoria == "Entrante" %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                        {% if receta.imagen and receta.imagen.url %}
+                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn right-btn" onclick="slide('right', 'entrante')">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <br><br><br>
+
+    <div class="category-container" id="category-platos-principales">
+        <h3 style="color: white;">
+            <i class="fas fa-drumstick-bite"></i>  Platos Principales
+        </h3>
+        <hr>
+        <button class="slider-btn left-btn" onclick="slide('left', 'platos-principales')">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="slider-container">
+            <div class="slider" id="slider-platos-principales">
+                <div class="slider-track">
+                    {% for receta in recetas %}
+                        {% if receta.categoria == "Plato Principal" %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                        {% if receta.imagen and receta.imagen.url %}
+                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn right-btn" onclick="slide('right', 'platos-principales')">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <br><br><br>
+
+    <div class="category-container" id="category-postre">
+        <h3 style="color: white;">
+            <i class="fas fa-birthday-cake"></i>  Postres
+        </h3>
+        <hr>
+        <button class="slider-btn left-btn" onclick="slide('left', 'postre')">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="slider-container">
+            <div class="slider" id="slider-postre">
+                <div class="slider-track">
+                    {% for receta in recetas %}
+                        {% if receta.categoria == "Postre" %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                        {% if receta.imagen and receta.imagen.url %}
+                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn right-btn" onclick="slide('right', 'postre')">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <br><br><br>
+
+    <div class="category-container" id="category-sopa">
+        <h3 style="color: white;">
+            <i class="fas fa-utensil-spoon"></i>  Sopas
+        </h3>
+        <hr>
+        <button class="slider-btn left-btn" onclick="slide('left', 'sopa')">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="slider-container">
+            <div class="slider" id="slider-sopa">
+                <div class="slider-track">
+                    {% for receta in recetas %}
+                        {% if receta.categoria == "Sopa" %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                        {% if receta.imagen and receta.imagen.url %}
+                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn right-btn" onclick="slide('right', 'sopa')">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<br><br><br><br>
+{% include 'inc/footer.html' %}
+
+<!-- Script de búsqueda y slider -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var searchInput = document.getElementById("searchInput");
+    var categoryContainers = document.querySelectorAll(".category-container");
+
+    searchInput.addEventListener("input", function() {
+        var searchTerm = searchInput.value.toLowerCase();
+
+        categoryContainers.forEach(function(container) {
+            var categoryCards = container.querySelectorAll(".recipe-card");
+            var anyCategoryVisible = false;
+
+            categoryCards.forEach(function(card) {
+                var recipeTitle = card.querySelector(".card-title").textContent.toLowerCase();
+                if (recipeTitle.includes(searchTerm)) {
+                    card.style.display = "inline-block";
+                    anyCategoryVisible = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            container.style.display = anyCategoryVisible ? "block" : "none";
+        });
+    });
+
+    // Iniciar el carrusel automático
+    startAutoSlide();
+});
+
+function startAutoSlide() {
+    var sliders = document.querySelectorAll('.slider');
+    sliders.forEach(function(slider) {
+        var sliderWidth = slider.offsetWidth;
+        var sliderTrack = slider.querySelector('.slider-track');
+        var scrollWidth = sliderTrack.scrollWidth;
+        var scrollPosition = 0;
+        var interval = 2000; // Tiempo en milisegundos para el intervalo de desplazamiento
+
+        setInterval(function() {
+            scrollPosition += sliderWidth / 3; // Ajusta la velocidad del desplazamiento
+            if (scrollPosition >= scrollWidth) {
+                scrollPosition = 0; // Volver al inicio
+            }
+            slider.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        }, interval);
+    });
+}
+
+function slide(direction, category) {
+    var slider = document.getElementById("slider-" + category);
+    var sliderWidth = slider.offsetWidth;
+    var currentScroll = slider.scrollLeft;
+
+    var newScroll = currentScroll + (direction === "left" ? -sliderWidth : sliderWidth);
+    slider.scrollTo({
+        left: newScroll,
+        behavior: "smooth"
+    });
+}
+
+</script>

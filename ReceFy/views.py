@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import MiUsuario
+from .models import MiUsuario, Receta
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -20,7 +20,7 @@ def apartado_novedades(request):
 
 def salud_nutricion(request):
     pagina_actual = "salud_nutricion"
-    return render(request, "salud_nutricion.html", {"pagina": pagina_actual})
+    return render(request, "salud_nutricion/salud_nutricion.html", {"pagina": pagina_actual})
 
 #endregion
 
@@ -179,4 +179,25 @@ def imagen2(request):
 
     return render(request, 'configuracion/imagenes_usuario.html')
 
+#endregion
+
+#region RECETAS DISPONIBLES
+
+def lista_recetas(request):
+    # Definir el nombre de la página actual
+    pagina_actual = "lista_recetas"
+    
+    # Obtener todas las recetas
+    recetas_list = Receta.objects.all()
+    
+    # Renderizar la plantilla con el contexto
+    return render(request, "recetas_disponibles/lista_recetas.html", {
+        "recetas": recetas_list,
+        "pagina": pagina_actual
+    })
+
+def detalle_receta(request, id_receta):
+    pagina_actual = "detalle_receta"
+    receta = Receta.objects.get(pk=id_receta)
+    return render(request, "recetas_disponibles/detalle_receta.html", {"receta": receta, "pagina": pagina_actual})
 #endregion

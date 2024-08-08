@@ -1,0 +1,64 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'recetas_disponibles/detalle_receta.css' %}">
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Ajuste para que la tarjeta sea más ancha -->
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-lg rounded-4" style="max-width: 900px; margin: auto; display: flex;">
+                <!-- Imagen a la izquierda -->
+                <img src="{{ receta.imagen.url }}" class="card-img-left" alt="{{ receta.nombre_plato }}">
+                <div class="card-body d-flex flex-column">
+                    <h1 class="display-3 mb-4">{{ receta.nombre_plato }}</h1>
+                    <hr>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><i class="fas fa-tags"></i> <strong>Categoría:</strong> {{ receta.categoria }}</p>
+                            <p><i class="fas fa-calendar-seasons"></i> <strong>Temporada:</strong> {{ receta.temporada }}</p>
+                            <p><i class="fas fa-globe"></i> <strong>Origen:</strong> {{ receta.origen }}</p>
+                            <p><i class="fas fa-list-ul"></i> <strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+                            <p><i class="fas fa-align-left"></i> <strong>Descripción:</strong> {{ receta.descripcion }}</p>
+                            <p><i class="fas fa-cogs"></i> <strong>Instrucciones:</strong> {{ receta.instrucciones }}</p>
+                            <p><i class="fas fa-clock"></i> <strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }}</p>
+                            <p><i class="fas fa-tachometer-alt"></i> <strong>Dificultad:</strong> {{ receta.dificultad }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            {% if receta.usuario %}
+                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ receta.usuario.first_name }} {{ receta.usuario.last_name }}</p>
+                            {% else %}
+                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema Recetarium</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<div class="sec-comentarios mt-4">
+    <h2 class="mb-4">Comentarios</h2>
+    <div class="form-group">
+        <textarea class="form-control mb-3" id="descripcion" name="descripcion" placeholder="Escribe tu comentario" required></textarea>
+        <button class="btn btn-primary w-100" type="submit">Comentar</button>
+    </div>
+    <div class="comentarios mt-3">
+        <!-- Aquí se mostrarán los comentarios -->
+        <div class="comentario">
+            <p><strong>Usuario1:</strong> Muy buena receta</p>
+            <p class="fecha">Publicado el 07/08/2024</p>
+        </div>
+        <div class="comentario">
+            <p><strong>Usuario2:</strong> Esta mela.</p>
+            <p class="fecha">Publicado el 07/08/2024</p>
+        </div>
+        <!-- Más comentarios -->
+    </div>
+</div>
+<br><br><br><br>
+
+{% include 'inc/footer.html' %}
