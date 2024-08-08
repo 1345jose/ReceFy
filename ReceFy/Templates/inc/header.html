@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{% static 'bootstrap/bootstrap4.5.2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'estilos_sueltos/header.css' %}">
+    <title>Recetarium</title>
+</head>
+
+<body>
+    <header>
+        <div class="encabezado">
+            <div class="logo">
+                <a href="#" class="back-button">
+                    <i class="bi bi-arrow-left-short"></i>
+                    <h1>RC</h1>
+                </a>
+            </div>
+            <div class="pagina">
+                <h2>
+                    {% if pagina == 'soporte_tecnico' %}
+                    Soporte Técnico
+                    {% elif pagina == 'receta_crear' %}
+                    Crear Tu Receta
+                    {% elif pagina == 'Not_Found' %}
+                    Página No Disponible
+                    {% elif pagina == 'lista_recetastas' %}
+                    Recetas Disponibles
+                    {% elif pagina == 'detalle_receta' %}
+                    {{ receta.nombre_plato }}
+                    {% elif pagina == 'configuracion' %}
+                    Actualizar mi Informacion
+                    {% elif pagina == 'detalle_dietas' %}
+                    {{ dietas.nombre }}
+                    {% elif pagina == 'plan_nutricional' %}
+                    Plan Nutricional
+                    {% elif pagina == 'informacion' %}
+                    ¡ Lo Que Necesites Esta Aqui !
+                    {% elif pagina == 'crear_elegir_receta' %}
+                    Expande Tu Mundo
+                    {% elif pagina == 'salud_nutricion' %}
+                    Salud Y Nutrición
+                    {% elif pagina == 'Registro' %}
+                    Crea Tu Cuenta
+                    {% elif pagina == 'calculadoraB' %}
+                     Prioriza Tu Salud
+                    {% elif pagina == 'loginusuarios' %}
+                    Iniciar Sesión
+                    {% elif pagina == 'registro' %}
+                    Crear Cuenta
+                    {% elif pagina == 'lista_dietas' %}
+                    {{ dietas.nombre }}
+                    Dietas Disponibles
+                    {% elif pagina == 'lista_consejeros' %}
+                    Consejeros Disponibles
+                    {% elif pagina == 'receta_crear' %}
+                    Crea Tu Receta
+                    {% elif pagina == 'soporte_send' %}
+                    ¡ Gracias !
+                    {% elif pagina == 'consejeros_dietas' %}
+                    Crear tu Dieta
+                    {% else %}
+                    Recetarium
+                    {% endif %}
+                </h2>
+            </div>
+            <div class="slogan">
+                <a href="{% url 'index' %}">
+                    <h1>Recetarium</h1>
+                </a>
+            </div>
+        </div>
+    </header>
+  
+
+    <!-- Asegúrate de que jQuery esté incluido -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Script para manejar clic en el icono de flecha izquierda
+        $(document).ready(function() {
+            $('.bi-arrow-left-short').click(function(event) {
+                event.preventDefault();
+                history.back();
+            });
+        });
+    </script>
+</body>
+
+</html>
