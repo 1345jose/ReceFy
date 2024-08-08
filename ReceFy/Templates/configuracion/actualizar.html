@@ -1,0 +1,54 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'configuracion/actualizar.css' %}">
+
+<main>
+    <div class="form">
+    <div class="texts">
+        <h1>ReceFy</h1>
+        <p>Actualizar Tu Informacion</p>
+    </div>
+    <hr>
+    {% for i in act %}
+    <form action="" method="post" >
+        {% csrf_token%}
+            <div class="form-group">
+                <label for="">Biografia</label>
+                <input type="text" class="form-control" id="biografia" name="biografia" placeholder="Ingresa tu Biografia" value="{{ i.biografia }}" required>
+            </div>
+            <div class="form-group">
+                <label for="">Edad</label>
+                <input type="number" class="form-control"  id="edad" name="edad"  value="{{ i.edad }}" required>
+            </div>
+            <div class="form-group">
+                <label for="">Telefono</label>
+                <input type="number" class="form-control" id="telefono" name="telefono" value="{{ i.telefono }}" required>
+            </div>
+            <div class="form-group">
+                <label for="">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
+            <div class="form-group">
+                <label for="">Pais</label>
+                <input type="text" class="form-control" id="pais" name="pais" value="{{ i.pais }}" required>
+            </div>
+           
+            <div class="form-group">
+                <label for="">Selecciona Tu idiomas</label>
+                <select name="idioma" id="idioma" class="form-control" value="{{ i.idioma }}">
+                    <option value="español">Español</option>
+                    <option value="ingles">Ingles/us</option>
+                    <option value="frances">Frances</option>
+                    <option value="portugues">Portugues</option>
+                    
+                </select>
+            </div>
+    
+            <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+    {% endfor %}
+    </form>
+</div>
+</main>
+
+{% include 'inc/footer.html' %}

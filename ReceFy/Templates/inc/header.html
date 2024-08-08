@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="{% static 'bootstrap/bootstrap4.5.2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Bootstrap/bootstrap4.5.2.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"rel="stylesheet">
     <link rel="stylesheet" href="{% static 'estilos_sueltos/header.css' %}">
@@ -36,8 +36,6 @@
                     Recetas Disponibles
                     {% elif pagina == 'detalle_receta' %}
                     {{ receta.nombre_plato }}
-                    {% elif pagina == 'configuracion' %}
-                    Actualizar mi Informacion
                     {% elif pagina == 'detalle_dietas' %}
                     {{ dietas.nombre }}
                     {% elif pagina == 'plan_nutricional' %}
@@ -67,8 +65,10 @@
                     ¡ Gracias !
                     {% elif pagina == 'consejeros_dietas' %}
                     Crear tu Dieta
+                    {% elif pagina == 'configuracion' %}
+                    Configuracion
                     {% else %}
-                    Recetarium
+                    ReceFy
                     {% endif %}
                 </h2>
             </div>

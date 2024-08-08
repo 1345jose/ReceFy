@@ -144,6 +144,39 @@ def completar_info(request):
         return redirect('/')  
     return render(request,'usuarios/completar_info.html',{'pagina':pagina_actual})
 
-def actualizar_info(request):
-    return render(request,'configuracion/actualizar.html')
+@login_required
+def actualizar_info(request, idusuario):
+    pagina_actual = "configuracion"
+    act = request.user
+    if request.method == "POST":
+        if request.POST.get('biografia') and request.POST.get('telefono') and request.POST.get('fecha_nacimiento') and request.POST.get('edad') and request.POST.get('pais') and request.POST.get('idioma'):
+            act = MiUsuario.objects.get(id=idusuario)
+            act.biografia = request.POST.get('biografia')
+            act.telefono = request.POST.get('telefono')
+            act.fecha_nacimiento = request.POST.get('fecha_nacimiento')
+            act.edad = request.POST.get('edad')
+            act.pais = request.POST.get('pais')
+            act.idioma = request.POST.get('idioma')
+            act.save()
+            return redirect('/usuarios/mi_perfil')
+    else:
+        act = MiUsuario.objects.filter(id=idusuario)
+        return render(request,'configuracion/actualizar.html', {'act':act, 'pagina':pagina_actual})
+    
+
+
+@login_required
+def imagen2(request):
+    if request.method == "POST":
+        usuario = request.user  # Obtenemos el usuario actual
+        
+        # Actualizamos la imagen 'imagen2' si está presente en el formulario
+        if request.FILES.get('imagen2'):
+            usuario.imagen2 = request.FILES.get('imagen2')
+
+        # Guardamos los cambios en la base de datos
+        usuario.save()
+
+    return render(request, 'configuracion/imagenes_usuario.html')
+
 #endregion

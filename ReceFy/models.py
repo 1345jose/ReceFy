@@ -3,8 +3,8 @@ from django.db import models
 from django.core.files.images import get_image_dimensions
 
 class MiUsuario(AbstractUser):
-    imagen1 = models.ImageField(upload_to='imagenes/', blank=True, null=True)
-    imagen2 = models.ImageField(upload_to='imagenes/', blank=True, null=True)
+    imagen1 = models.ImageField(upload_to='perfil_usuario/', blank=True, null=True)
+    imagen2 = models.ImageField(upload_to='perfil_usuario/', blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     biografia = models.TextField(blank=True, null=True)

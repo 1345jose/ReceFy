@@ -7,8 +7,11 @@
     <style>     
         @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+        body{
+            background: url('https://images.pexels.com/photos/6077630/pexels-photo-6077630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat center center/cover;
+        }
         .sidebar {
-            width: 250px;
+            width: 275px;
             background-color: #156a43;
             padding: 20px;
             height: 100vh;
@@ -56,18 +59,22 @@
             padding: 20px;
             width: calc(100% - 270px);
         }
+
+        .barita{
+            margin: 0 auto;
+            width: 15%;
+        }
         .encabezado h1{
             font-family: 'Courgette', cursive;
             font-family: 'Lobster', sans-serif;
             font-size: 45px;
+            color: white;
         }
         
-        .barita{
-            height: 350px;
-            border-radius: 25px;
-            background-color: #1abe72;
-        }
         .informacion{
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
             font-size: 17px;
             margin-top: 8px;
         }
@@ -77,6 +84,26 @@
         
         .informacion p strong {
             margin-right: 10px;
+        }
+
+        hr{
+            background-color: gray;
+            height: 1px;
+            border-radius: 15px;
+        }
+
+        .foto img{
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            margin: 0 auto;
+            border: 5px solid #28a56b;
+            transition: border 0.3s ease , transform 0.5s ease; 
+        }
+        .foto img:hover{
+            border: 4px solid white;
+            transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
+
         }
         
     </style>
@@ -101,7 +128,7 @@
             </button>
             <div class="dropdown-menu">
                 <h6 class="dropdown-header">Dropdown header</h6>
-                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="/actualizar_perfil/{{ user.id }}">Action</a>
                 <a class="dropdown-item" href="#">Another action</a>
               </div>
           </div>
@@ -109,18 +136,17 @@
     </aside>
 
     <main class="barra">
-        <div class="encabezado">
-            <h1 class="text-center">ReceFy</h1>
-        </div>
+      {% include 'inc/header.html' %}
         <div class="barita">
-            <div class="portada">
-                <img src="" alt="">
-            </div>
             <div class="foto">
-                <img src="" alt="">
+                {% if usuario.imagen2 %}
+                    <img src="{{ usuario.imagen2.url }}" alt="Perfil del usuario">
+                {% else %}
+                    <img src="{% static 'path/to/default-image.jpg' %}" alt="No tienes perfil">
+                {% endif %}
             </div>
         </div>
-        <hr>
+        
 
         <div class="informacion">
             <div class="row">
@@ -140,54 +166,41 @@
                     {% endif %}
                 </div>
         
-                <hr>
-        
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        {% if usuario.telefono %}
-                            <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        {% if usuario.fecha_nacimiento %}
-                            <p><strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-        
-                <div class="row mt-4">
-                    <div class="col-md-4">
-                        {% if usuario.edad %}
-                            <p><strong>Edad:</strong> {{ usuario.edad }}</p>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4">
-                        {% if usuario.pais %}
-                            <p><strong>País:</strong> {{ usuario.pais }}</p>
-                        {% endif %}
-                    </div>
+                   
+                    
                     <div class="col-md-4">
                         {% if usuario.idioma %}
                             <p><strong>Idioma:</strong> {{ usuario.idioma }}</p>
                         {% endif %}
                     </div>
+                </div>  
+        
+                <div class="row mt-2">
+                    <div class="col">
+                        {% if usuario.telefono %}
+                            <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+                            <p><strong>Correo Electronico:</strong> {{ usuario.email }}</p>
+
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {% if usuario.fecha_nacimiento %}
+                            <p><strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
+                            <p><strong>País:</strong> {{ usuario.pais }}</p>
+
+                        {% endif %}
+                    </div>
                 </div>
         
-                <hr>
-        
-                {% if not usuario.biografia and not usuario.telefono and not usuario.fecha_nacimiento and not usuario.edad and not usuario.pais and not usuario.idioma %}
-                    <a href="{% url 'completar_info' %}"><button type="submit" class="btn btn-primary">Completar información</button></a>
+                {% if not usuario.biografia and not usuario.telefono and not usuario.fecha_nacimiento and not usuario.pais and not usuario.idioma %}
+                    <a href="{% url 'completar_info' %}"><button type="submit" class="btn btn-primary">Completar Información</button></a>
                 {% endif %}
             {% else %}
-                <a href=""><button type="submit" class="btn btn-primary">Completar información</button></a>
             {% endif %}
         </div>
-        
     </main>
-
-
-
-
+    {% include 'inc/footer.html' %}
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

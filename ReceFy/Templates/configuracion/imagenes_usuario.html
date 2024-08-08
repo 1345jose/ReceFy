@@ -1,0 +1,14 @@
+{% load static %}
+
+{% include 'inc/header.html' %}
+
+<main>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form group">
+        <label for="">Imagen2</label>
+         <input type="file" class="form-control" id="imagen2" name="imagen2">
+        </div>
+        <button type="submit" class="btn btn-primary">enviar imagen</button>
+    </form>
+</main>

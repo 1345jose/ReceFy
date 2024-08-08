@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ReceFy import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +34,11 @@ urlpatterns = [
     path('usuarios/logout', views.logoutusuarios, name='logout'),
     path('usuarios/mi_perfil', views.mi_perfil,name="mi_perfil"),
     path('usuarios/completar', views.completar_info, name="completar_info"),
-    path('configuracion/actualizar_info', views.actualizar_info, name="actualizar_perfil")
+    path('configuracion/actualizar_info/<int:idusuario>', views.actualizar_info, name="actualizar_perfil"),
 
+
+    #pruebas
+    path('imagen', views.imagen2, name="imagen2")
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
