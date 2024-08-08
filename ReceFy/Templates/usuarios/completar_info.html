@@ -1,0 +1,43 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'usuarios/completar_info.css' %}">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<main>
+    <div class="texts">
+        <h1>ReceFy</h1>
+        <p>Completa tu informacion para que sea visible en tu perfil para los demas</p>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control" id="biografia" name="biografia" placeholder="Ingresa tu Biografia" required>
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control"  id="edad" name="edad" placeholder="Ingresa Tu Edad" required>
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Ingresa Un Telefono" required>
+        </div>
+        <div class="form-group">
+            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="pais" name="pais" placeholder="Ingresa Tu nacionalidad" required>
+        </div>
+       
+        <div class="form-group">
+            <label for="">Selecciona Tu idiomas</label>
+            <select name="idioma" id="idioma" class="form-control">
+                <option value="español">Español</option>
+                <option value="ingles">Ingles/us</option>
+                <option value="frances">Frances</option>
+                <option value="portugues">Portugues</option>
+                
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Datos</button>
+    </form>
+</main>

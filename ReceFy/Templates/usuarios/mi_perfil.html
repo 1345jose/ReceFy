@@ -1,0 +1,205 @@
+{% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>     
+        @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+        .sidebar {
+            width: 250px;
+            background-color: #156a43;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #cbd5e0;
+            padding: 10px;
+            text-decoration: none;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            transition: color 0.5s ease;
+        }
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.37);
+            color: #fff;
+        }
+        .sidebar h2{
+            color: #fff;
+            transition: transform 0.5s ease; /* Aplica la transición al cambio de color del borde */
+
+        }
+        .sidebar h2:hover{
+            transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
+
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .sidebar hr{
+            background-color: white;
+        }
+        .sidebar h1{
+            font-family: 'Courgette', cursive;
+            font-family: 'Lobster', sans-serif;
+        }
+
+        
+        .barra{
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+        }
+        .encabezado h1{
+            font-family: 'Courgette', cursive;
+            font-family: 'Lobster', sans-serif;
+            font-size: 45px;
+        }
+        
+        .barita{
+            height: 350px;
+            border-radius: 25px;
+            background-color: #1abe72;
+        }
+        .informacion{
+            font-size: 17px;
+            margin-top: 8px;
+        }
+        .informacion strong i {
+            margin-right: 10px;
+        }
+        
+        .informacion p strong {
+            margin-right: 10px;
+        }
+        
+    </style>
+</head>
+    <aside class="sidebar">
+        <h2>Mi perfil</h2>
+        <hr>
+      
+        <a href="#"><i class="fa-solid fa-utensils"></i>Mis Recetas</a>
+        <a href="#"><i class="fa-solid fa-user-shield"></i> Seguridad</a>
+        <a href="#"><i class="fa-solid fa-link"></i>Enlaces</a>
+        <a href="#"><i class="fa-solid fa-timeline"></i> Conexiones</a>
+        
+        <br><br><br>
+        <hr>
+        <a href="/" class=""><i class="fa-solid fa-house-user"></i>Inicio</a>
+        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+        <h1><a href="{% url 'index' %}">RC</a></h1>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Configuracion
+            </button>
+            <div class="dropdown-menu">
+                <h6 class="dropdown-header">Dropdown header</h6>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+              </div>
+          </div>
+          
+    </aside>
+
+    <main class="barra">
+        <div class="encabezado">
+            <h1 class="text-center">ReceFy</h1>
+        </div>
+        <div class="barita">
+            <div class="portada">
+                <img src="" alt="">
+            </div>
+            <div class="foto">
+                <img src="" alt="">
+            </div>
+        </div>
+        <hr>
+
+        <div class="informacion">
+            <div class="row">
+                <div class="col">
+                    <h1>{{ usuario.first_name }} {{ usuario.last_name }}</h1>
+                </div>
+                <div class="col">
+                    <h1>{{ usuario.username }}</h1>
+                </div>
+            </div>
+            <hr>
+        
+            {% if usuario %}
+                <div class="bio mt-3">
+                    {% if usuario.biografia %}
+                        <p><strong>Biografía:</strong> {{ usuario.biografia }}</p>
+                    {% endif %}
+                </div>
+        
+                <hr>
+        
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        {% if usuario.telefono %}
+                            <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {% if usuario.fecha_nacimiento %}
+                            <p><strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+        
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        {% if usuario.edad %}
+                            <p><strong>Edad:</strong> {{ usuario.edad }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        {% if usuario.pais %}
+                            <p><strong>País:</strong> {{ usuario.pais }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        {% if usuario.idioma %}
+                            <p><strong>Idioma:</strong> {{ usuario.idioma }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+        
+                <hr>
+        
+                {% if not usuario.biografia and not usuario.telefono and not usuario.fecha_nacimiento and not usuario.edad and not usuario.pais and not usuario.idioma %}
+                    <a href="{% url 'completar_info' %}"><button type="submit" class="btn btn-primary">Completar información</button></a>
+                {% endif %}
+            {% else %}
+                <a href=""><button type="submit" class="btn btn-primary">Completar información</button></a>
+            {% endif %}
+        </div>
+        
+    </main>
+
+
+
+
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+</html>

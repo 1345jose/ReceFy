@@ -8,10 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="{% static 'bootstrap/bootstrap4.5.2.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"rel="stylesheet">
     <link rel="stylesheet" href="{% static 'estilos_sueltos/header.css' %}">
-    <title>Recetarium</title>
+    <title>ReceFy</title>
 </head>
 
 <body>
@@ -31,6 +30,8 @@
                     Crear Tu Receta
                     {% elif pagina == 'Not_Found' %}
                     Página No Disponible
+                    {% elif pagina == 'completar_info' %}
+                    Completa Tu Perfil
                     {% elif pagina == 'lista_recetastas' %}
                     Recetas Disponibles
                     {% elif pagina == 'detalle_receta' %}
@@ -73,7 +74,7 @@
             </div>
             <div class="slogan">
                 <a href="{% url 'index' %}">
-                    <h1>Recetarium</h1>
+                    <h1>ReceFy</h1>
                 </a>
             </div>
         </div>

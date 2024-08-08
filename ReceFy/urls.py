@@ -24,5 +24,14 @@ urlpatterns = [
     path('novedades/', views.apartado_novedades, name="apartado_novedades"),
     
     #region Salud Nutricion
-    path('salud-nutricion/', views.salud_nutricion, name="salud_nutricion")
+    path('salud-nutricion/', views.salud_nutricion, name="salud_nutricion"),
+    
+    #region Usuarios
+    path('usuarios/registro', views.registro_usuario, name="registro_usuario"),
+    path('usuarios/login', views.loginusuarios, name="login"),
+    path('usuarios/logout', views.logoutusuarios, name='logout'),
+    path('usuarios/mi_perfil', views.mi_perfil,name="mi_perfil"),
+    path('usuarios/completar', views.completar_info, name="completar_info"),
+    path('configuracion/actualizar_info', views.actualizar_info, name="actualizar_perfil")
+
 ]
