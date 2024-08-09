@@ -36,6 +36,7 @@ urlpatterns = [
     path('recetas/', views.lista_recetas, name="lista_recetas"),
     path('detalle_receta/<int:id_receta>', views.detalle_receta, name="detalle_receta"),
     path('recetas/crear', views.receta_crear, name="crear_receta"),
+    path("recetas/apartado",views.crear_ver,name="crear_ver"),
 
     #endregion
     

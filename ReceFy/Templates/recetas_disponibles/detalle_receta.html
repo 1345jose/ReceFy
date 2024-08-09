@@ -25,8 +25,8 @@
                             <p><i class="fas fa-tachometer-alt"></i> <strong>Dificultad:</strong> {{ receta.dificultad }}</p>
                         </div>
                         <div class="col-md-6">
-                            {% if receta.user %}
-                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ receta.user.first_name }} {{ receta.user.last_name }}</p>
+                            {% if receta.usuario %}
+                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ receta.usuario.first_name }} {{ receta.usuario.last_name }}</p>
                             {% else %}
                                 <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema Recetarium</p>
                             {% endif %}

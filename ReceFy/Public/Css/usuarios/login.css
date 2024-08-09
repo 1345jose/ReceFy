@@ -188,9 +188,6 @@ form button:hover {
     
 }
 
-.correo{
-    font-size: 25px;
-}
 
 @media (max-width: 381px) {
     body {

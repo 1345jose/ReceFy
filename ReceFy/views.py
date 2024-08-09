@@ -187,6 +187,10 @@ def imagen2(request):
         usuario.save()
     return render(request, 'configuracion/imagenes_usuario.html')
 
+#endregion
+
+#region Configuraciones
+
 
 def rest_email(request):
     if request.method == "POST":
@@ -214,12 +218,12 @@ def rest_email(request):
                 # Mensaje en HTML con la URL personalizada
                 html_message = f"""
                 <html>
-                    <body style="background-color:white; font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-                        <div>
-                            <h2 style="color: #4CAF50;">Grupo ReceFy</h2>
+                    <body style="background-color: #198d57a9; font-family: 'Courgette', cursive; font-family: 'Lobster', sans-serif; line-height: 1.5; color: white; padding:20px; border-radius: 25px;">
+                        <div style="backgroud-color: rgba(255, 255, 255, 0.486);">
+                            <h2>ReceFy</h2>
                             <p>Hola,</p>
                             <p>Recupera tu contraseña haciendo clic en el siguiente enlace:</p>
-                            <a href="{password_update_url}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Recuperar Contraseña</a>
+                            <a href="{password_update_url}" style="display: inline-block; padding: 10px 20px; background-color: #28a56b; color: white; text-decoration: none; border-radius: 15px;">Recuperar Contraseña</a>
                             <p>Si el botón anterior no funciona, copia y pega el siguiente enlace en tu navegador:</p>
                             <p><a href="{password_update_url}">{password_update_url}</a></p>
                             <p>Saludos,<br>El equipo de ReceFy</p>
@@ -235,12 +239,11 @@ def rest_email(request):
                     settings.DEFAULT_FROM_EMAIL,
                     [email],
                     fail_silently=False,
-                    html_message=html_message,  # Añadir el mensaje en HTML
+                    html_message=html_message, 
                 )
 
                 return redirect('/')  # Redirige al usuario después de enviar el correo
             except User.DoesNotExist:
-                # En caso de que el correo no exista en la base de datos
                 return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'El correo electrónico no está registrado.'})
             except Exception as e:
                 # En caso de error al enviar el correo, mostrar el mensaje de error
@@ -264,6 +267,10 @@ def passwordUpdate(request,idusuario):
 
 
 #endregion
+
+
+#endregion
+
 
 # region Soperte Tecnico
 def soporte_tecnico(request):
@@ -301,10 +308,10 @@ def soporte_tecnico(request):
     # Renderizar el formulario inicial si no es método POST o si hay errores
 
 #endregion
+
 #region RECETAS DISPONIBLES
 
 def lista_recetas(request):
-    # Definir el nombre de la página actual
     pagina_actual = "lista_recetas"
     
     # Obtener todas las recetas
@@ -321,8 +328,10 @@ def detalle_receta(request, id_receta):
     receta = Receta.objects.get(pk=id_receta)
     return render(request, "recetas_disponibles/detalle_receta.html", {"receta": receta, "pagina": pagina_actual})
 
-@login_required
+
 def receta_crear(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
     pagina_actual = "receta_crear"
     if request.method == 'POST':
         nombre_plato = request.POST.get('nombre_plato')
@@ -360,5 +369,8 @@ def receta_crear(request):
         # Manejar el caso de solicitud GET si es necesario
         return render(request, 'recetas_disponibles/receta_crear.html', {"pagina": pagina_actual})
     
+def crear_ver(request):
+    pagina_actual = "apartado_recetas"
+    return render(request,'recetas_disponibles/apartado_recetas.html',{'pagina':pagina_actual})
 #endregion
 

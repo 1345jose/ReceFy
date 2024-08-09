@@ -1,0 +1,22 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/recetas_disponibles/apartado_recetas.css'%}">
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'crear_receta' %} " style="text-decoration: none;"><h1>Crear una nueva Receta</h1></a>
+                <p>¡Crea tus propias recetas y compártelas con la comunidad! Aprovecha esta oportunidad para compartir tus recetas favoritas y descubrir nuevas.</p>
+            </div>
+            
+            <div class="col">
+                <a href="" style="text-decoration: none;"><h1>Mis Recetas</h1></a>
+                <p>Visualiza y modifica tus recetas creadas anteriormente. Mantén un registro de tus creaciones culinarias y haz mejoras según tus gustos.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include 'inc/footer.html' %}
