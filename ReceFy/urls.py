@@ -25,13 +25,17 @@ urlpatterns = [
     path('', views.index ,name="index"),
     path('novedades/', views.apartado_novedades, name="apartado_novedades"),
     
+    
     #region Salud Nutricion
     path('salud-nutricion/', views.salud_nutricion, name="salud_nutricion"),
     #endregion
 
+
+
     #region Recetas Disponibles
     path('recetas/', views.lista_recetas, name="lista_recetas"),
     path('detalle_receta/<int:id_receta>', views.detalle_receta, name="detalle_receta"),
+    path('recetas/crear', views.receta_crear, name="crear_receta"),
 
     #endregion
     
@@ -47,8 +51,10 @@ urlpatterns = [
     #pruebas
     path('imagen', views.imagen2, name="imagen2"),
     
-    #region Soporte Tecnico
+    #region Soporte y Configuracion
     path('configuracion/soporte_tecnico', views.soporte_tecnico, name="soporte"),
+    path('configuracion/recuperar_contraseña', views.rest_email, name="recuperar_contraseña"),
+    path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwordUpdate")
     
 ]
 if settings.DEBUG:

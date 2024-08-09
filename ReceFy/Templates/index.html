@@ -21,7 +21,7 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'apartado_novedades' %}">Novedades</a></li>
-                    <li><a href="#">Soporte Técnico</a></li>
+                    <li><a href="{% url 'soporte' %}">Soporte Técnico</a></li>
                     {% if user.is_authenticated %}
                         <li>
                             <div class="dropdown">
@@ -69,7 +69,7 @@
             <small></small>
         </div>
         <div class="card-items">
-            <a href="#"> <h1>Crea tus Propias Recetas</h1></a>
+            <a href="{% url 'crear_receta' %}"> <h1>Crea tus Propias Recetas</h1></a>
             <p>En Recetarium puedes crear tus recetas y guardarlas o poder publicarlas con las demás personas para que sean calificadas y comentadas por expertos o por la comunidad de usuarios existente en la plataforma.</p>
             <small></small>
         </div>

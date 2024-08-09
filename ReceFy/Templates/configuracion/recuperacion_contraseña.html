@@ -1,0 +1,32 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/configuracion/reset_password.css' %}">
+
+<main>
+    <div class="container">
+        <div class="text">
+            <h1>ReceFy</h1>
+            <p>Recupera Tu Contraseña</p>
+        </div>
+        <hr>
+        <form method="post" action="{% url 'recuperar_contraseña' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="">Correo Electronico</label>
+                <input type="text" class="form-control" id="email" name="email">
+            </div>
+
+            <h3 class="correo">El Correo que ingresaste tiene que ser de una cuenta ya existente</h3>
+            <p class="text-center">Recibiras un correo a tu email que te indicara como puedes recuperar tu contraseña.</p>
+
+            <button type="submit" class="btn btn-primary">Enviar Correo</button>
+            
+        </form>
+    </div>
+            
+
+</main>
+
+{% include 'inc/footer.html' %}

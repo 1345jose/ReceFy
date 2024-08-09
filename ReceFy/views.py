@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.urls import reverse
+
+
 
 
 
@@ -130,6 +134,10 @@ def completar_info(request):
     pagina_actual = "completar_info"
     if request.method == "POST":
         usuario = request.user
+        if request.POST.get('first_name'):
+            usuario.first_name = request.POST.get('first_name')
+        if request.POST.get('last_name'):
+            usuario.last_name = request.POST.get('last_name')
         if request.POST.get('telefono'):
             usuario.telefono = request.POST.get('telefono')
         if request.POST.get('fecha_nacimiento'):
@@ -152,8 +160,10 @@ def actualizar_info(request, idusuario):
     pagina_actual = "configuracion"
     act = request.user
     if request.method == "POST":
-        if request.POST.get('biografia') and request.POST.get('telefono') and request.POST.get('fecha_nacimiento') and request.POST.get('edad') and request.POST.get('pais') and request.POST.get('idioma'):
+        if  request.POST.get('first_name') and request.POST.get('last_name') and request.POST.get('biografia') and request.POST.get('telefono') and request.POST.get('fecha_nacimiento') and request.POST.get('edad') and request.POST.get('pais') and request.POST.get('idioma'):
             act = MiUsuario.objects.get(id=idusuario)
+            act.first_name = request.POST.get('fist_name')
+            act.last_name = request.POST.get('last_name')
             act.biografia = request.POST.get('biografia')
             act.telefono = request.POST.get('telefono')
             act.fecha_nacimiento = request.POST.get('fecha_nacimiento')
@@ -178,9 +188,119 @@ def imagen2(request):
     return render(request, 'configuracion/imagenes_usuario.html')
 
 
+def rest_email(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        User = get_user_model()
+
+        if email:
+            try:
+                # Buscar el usuario por correo electrónico
+                user = User.objects.get(email=email)
+
+                # Generar la URL para actualizar la contraseña con el ID del usuario
+                password_update_url = request.build_absolute_uri(
+                    reverse('passwordUpdate', kwargs={'idusuario': user.id})
+                )
+
+                # Mensaje en texto plano (opcional)
+                plain_message = (
+                    f"De: Grupo ReceFy\n"
+                    f"Correo para: {email}\n\n"
+                    "Hola, Recupera tu contraseña en el siguiente link: "
+                    f"{password_update_url}"
+                )
+
+                # Mensaje en HTML con la URL personalizada
+                html_message = f"""
+                <html>
+                    <body style="background-color:white; font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+                        <div>
+                            <h2 style="color: #4CAF50;">Grupo ReceFy</h2>
+                            <p>Hola,</p>
+                            <p>Recupera tu contraseña haciendo clic en el siguiente enlace:</p>
+                            <a href="{password_update_url}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Recuperar Contraseña</a>
+                            <p>Si el botón anterior no funciona, copia y pega el siguiente enlace en tu navegador:</p>
+                            <p><a href="{password_update_url}">{password_update_url}</a></p>
+                            <p>Saludos,<br>El equipo de ReceFy</p>
+                        </div>
+                    </body>
+                </html>
+                """
+
+                # Enviar correo con HTML
+                send_mail(
+                    "Recuperación de Contraseña",
+                    plain_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False,
+                    html_message=html_message,  # Añadir el mensaje en HTML
+                )
+
+                return redirect('/')  # Redirige al usuario después de enviar el correo
+            except User.DoesNotExist:
+                # En caso de que el correo no exista en la base de datos
+                return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'El correo electrónico no está registrado.'})
+            except Exception as e:
+                # En caso de error al enviar el correo, mostrar el mensaje de error
+                return render(request, 'configuracion/recuperacion_contraseña.html', {'error': str(e)})
+        else:
+            # Si el email no fue proporcionado, mostrar el formulario nuevamente
+            return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'Por favor, proporciona un correo electrónico válido.'})
+    
+    # Si la solicitud no es POST, renderiza el formulario de recuperación de contraseña
+    return render(request, 'configuracion/recuperacion_contraseña.html')
+         
+def passwordUpdate(request,idusuario):
+    if request.method == "POST":
+        if request.POST.get('password'):
+            up = MiUsuario.objects.get(id=idusuario)
+            up.set_password(request.POST.get('password'))
+            up.save()
+            return redirect('/usuarios/login')
+    else:   
+        return render(request, 'soporte/passwordUpdate.html')
+
+
 #endregion
 
+# region Soperte Tecnico
+def soporte_tecnico(request):
+    pagina_actual = "soporte_tecnico"
 
+    if request.method == "POST":
+        descripcion = request.POST.get("descripcion")
+        email = request.POST.get("email")
+
+        # Validar si la descripción no está vacía
+        if descripcion and email:
+            # Enviar correo
+            send_mail(
+                "Nuevo problema reportado",
+                f"Descripción del problema:\n{descripcion}\n\nCorreo del remitente:\n{email}",
+                settings.DEFAULT_FROM_EMAIL,
+                ["recetarium19@gmail.com"],
+                fail_silently=False,
+            )
+            # Mostrar mensaje de éxito
+            messages.success(
+                request,
+                "Tu solicitud ha sido enviada correctamente. Nos pondremos en contacto contigo pronto.",
+            )
+            # Redirigir a una página de confirmación o regresar al formulario (según el flujo de tu aplicación)
+            return redirect("soporte_send")
+        else:
+            # Mostrar mensaje de error si la descripción o el email están vacíos
+            messages.error(
+                request, "Por favor proporciona una descripción del problema y tu correo electrónico."
+            )
+
+    # Renderizar la plantilla del formulario
+    return render(request, "configuracion/soporte_tecnico.html", {"pagina_actual": pagina_actual})
+    # Renderizar el formulario inicial si no es método POST o si hay errores
+
+#endregion
 #region RECETAS DISPONIBLES
 
 def lista_recetas(request):
@@ -200,4 +320,45 @@ def detalle_receta(request, id_receta):
     pagina_actual = "detalle_receta"
     receta = Receta.objects.get(pk=id_receta)
     return render(request, "recetas_disponibles/detalle_receta.html", {"receta": receta, "pagina": pagina_actual})
+
+@login_required
+def receta_crear(request):
+    pagina_actual = "receta_crear"
+    if request.method == 'POST':
+        nombre_plato = request.POST.get('nombre_plato')
+        categoria = request.POST.get('categoria')
+        temporada = request.POST.get('temporada')
+        origen = request.POST.get('origen')
+        ingredientes = request.POST.get('ingredientes')
+        descripcion = request.POST.get('descripcion')
+        instrucciones = request.POST.get('instrucciones')
+        tiempo_preparacion = request.POST.get('tiempo_preparacion')
+        dificultad = request.POST.get('dificultad')
+        imagen = request.FILES.get('imagen')  
+
+        usuario = request.user
+
+        nueva_receta = Receta(
+            nombre_plato=nombre_plato,
+            categoria=categoria,
+            temporada=temporada,
+            origen=origen,
+            ingredientes=ingredientes,
+            descripcion=descripcion,
+            instrucciones=instrucciones,
+            tiempo_preparacion=tiempo_preparacion,
+            dificultad=dificultad,
+            imagen=imagen,
+            usuario=usuario  # Asignar el usuario actual
+        )
+
+        # Guardar la receta en la base de datos
+        nueva_receta.save()
+    
+        return redirect('lista_recetas')
+    else:
+        # Manejar el caso de solicitud GET si es necesario
+        return render(request, 'recetas_disponibles/receta_crear.html', {"pagina": pagina_actual})
+    
 #endregion
+
