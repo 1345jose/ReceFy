@@ -132,6 +132,10 @@ def mi_perfil(request):
 @login_required
 def completar_info(request):
     pagina_actual = "completar_info"
+    usuario = request.user
+    if usuario.first_name and usuario.last_name and usuario.telefono and usuario.fecha_nacimiento and usuario.biografia and usuario.pais and usuario.idioma and usuario.edad:
+        messages.info(request, 'Ya has completado tu información.')
+        return redirect('/usuarios/mi_perfil') 
     if request.method == "POST":
         usuario = request.user
         if request.POST.get('first_name'):
@@ -193,21 +197,19 @@ def imagen2(request):
 
 
 def rest_email(request):
+    pagina_actual = "reset_password"
     if request.method == "POST":
         email = request.POST.get("email")
         User = get_user_model()
 
         if email:
             try:
-                # Buscar el usuario por correo electrónico
                 user = User.objects.get(email=email)
 
-                # Generar la URL para actualizar la contraseña con el ID del usuario
                 password_update_url = request.build_absolute_uri(
                     reverse('passwordUpdate', kwargs={'idusuario': user.id})
                 )
 
-                # Mensaje en texto plano (opcional)
                 plain_message = (
                     f"De: Grupo ReceFy\n"
                     f"Correo para: {email}\n\n"
@@ -215,7 +217,6 @@ def rest_email(request):
                     f"{password_update_url}"
                 )
 
-                # Mensaje en HTML con la URL personalizada
                 html_message = f"""
                 <html>
                     <body style="background-color: #198d57a9; font-family: 'Courgette', cursive; font-family: 'Lobster', sans-serif; line-height: 1.5; color: white; padding:20px; border-radius: 25px;">
@@ -232,7 +233,6 @@ def rest_email(request):
                 </html>
                 """
 
-                # Enviar correo con HTML
                 send_mail(
                     "Recuperación de Contraseña",
                     plain_message,
@@ -242,25 +242,26 @@ def rest_email(request):
                     html_message=html_message, 
                 )
 
-                return redirect('/')  # Redirige al usuario después de enviar el correo
+                messages.success(request, 'El correo de recuperación ha sido enviado exitosamente.')
+
+                return redirect('/configuracion/recuperar_contraseña')
             except User.DoesNotExist:
                 return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'El correo electrónico no está registrado.'})
             except Exception as e:
-                # En caso de error al enviar el correo, mostrar el mensaje de error
                 return render(request, 'configuracion/recuperacion_contraseña.html', {'error': str(e)})
         else:
-            # Si el email no fue proporcionado, mostrar el formulario nuevamente
             return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'Por favor, proporciona un correo electrónico válido.'})
-    
-    # Si la solicitud no es POST, renderiza el formulario de recuperación de contraseña
-    return render(request, 'configuracion/recuperacion_contraseña.html')
+
+    return render(request, 'configuracion/recuperacion_contraseña.html',{'pagina':pagina_actual})
+
          
 def passwordUpdate(request,idusuario):
     if request.method == "POST":
+        usuario = request.user  
         if request.POST.get('password'):
-            up = MiUsuario.objects.get(id=idusuario)
-            up.set_password(request.POST.get('password'))
-            up.save()
+            usuario = MiUsuario.objects.get(id=idusuario)
+            usuario.set_password(request.POST.get('password'))
+            usuario.save()
             return redirect('/usuarios/login')
     else:   
         return render(request, 'soporte/passwordUpdate.html')

@@ -14,7 +14,7 @@ class MiUsuario(AbstractUser):
   
 
 #region Recetas  
-class Receta(models.Model):
+class Receta(models.Model): 
     STATUS_CHOICES = [
         ('habilitado', 'Habilitado'),
         ('inhabilitado', 'Inhabilitado'),
