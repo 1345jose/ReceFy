@@ -5,12 +5,19 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 <main>
+    <div class="form">
     <div class="texts">
         <h1>ReceFy</h1>
         <p>Completa tu informacion para que sea visible en tu perfil para los demas</p>
     </div>
     <form action="" method="post">
         {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Ingresa Tu Nombre" required>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Ingresa Tu Apellido" required>
+        </div>
         <div class="form-group">
             <input type="text" class="form-control" id="biografia" name="biografia" placeholder="Ingresa tu Biografia" required>
         </div>
@@ -40,4 +47,5 @@
 
         <button type="submit" class="btn btn-primary">Enviar Datos</button>
     </form>
+    </div>
 </main>

@@ -38,7 +38,11 @@ urlpatterns = [
 
 
     #pruebas
-    path('imagen', views.imagen2, name="imagen2")
+    path('imagen', views.imagen2, name="imagen2"),
+    
+    #region Soporte Tecnico
+    path('configuracion/soporte_tecnico', views.soporte_tecnico, name="soporte"),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,9 @@ from .models import MiUsuario
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 
 def index(request):
@@ -168,15 +171,49 @@ def actualizar_info(request, idusuario):
 @login_required
 def imagen2(request):
     if request.method == "POST":
-        usuario = request.user  # Obtenemos el usuario actual
-        
-        # Actualizamos la imagen 'imagen2' si está presente en el formulario
+        usuario = request.user  
         if request.FILES.get('imagen2'):
             usuario.imagen2 = request.FILES.get('imagen2')
-
-        # Guardamos los cambios en la base de datos
         usuario.save()
-
     return render(request, 'configuracion/imagenes_usuario.html')
+
+
+#endregion
+
+#region Soporte
+
+def soporte_tecnico(request):
+    pagina_actual = "soporte_tecnico"
+
+    if request.method == "POST":
+        descripcion = request.POST.get("descripcion")
+        email = request.POST.get("email")
+
+        # Validar si la descripción no está vacía
+        if descripcion and email:
+            # Enviar correo
+            send_mail(
+                "Nuevo problema reportado",
+                f"Descripción del problema:\n{descripcion}\n\nCorreo del remitente:\n{email}",
+                settings.DEFAULT_FROM_EMAIL,
+                ["recetarium19@gmail.com"],
+                fail_silently=False,
+            )
+            # Mostrar mensaje de éxito
+            messages.success(
+                request,
+                "Tu solicitud ha sido enviada correctamente. Nos pondremos en contacto contigo pronto.",
+            )
+            # Redirigir a una página de confirmación o regresar al formulario (según el flujo de tu aplicación)
+            return redirect("soporte_send")
+        else:
+            # Mostrar mensaje de error si la descripción o el email están vacíos
+            messages.error(
+                request, "Por favor proporciona una descripción del problema y tu correo electrónico."
+            )
+
+    # Renderizar la plantilla del formulario
+    return render(request, "configuracion/soporte_tecnico.html", {"pagina_actual": pagina_actual})
+    # Renderizar el formulario inicial si no es método POST o si hay errores
 
 #endregion

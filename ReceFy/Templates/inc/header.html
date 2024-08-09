@@ -9,7 +9,7 @@
     <link href="{% static 'Bootstrap/bootstrap4.5.2.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'estilos_sueltos/header.css' %}">
+    <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/header.css' %}">
     <title>ReceFy</title>
 </head>
 
@@ -17,7 +17,7 @@
     <header>
         <div class="encabezado">
             <div class="logo">
-                <a href="#" class="back-button">
+                <a href="{% url 'index' %}" class="back-button">
                     <i class="bi bi-arrow-left-short"></i>
                     <h1>RC</h1>
                 </a>
