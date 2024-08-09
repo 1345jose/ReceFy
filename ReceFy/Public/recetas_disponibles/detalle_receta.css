@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: 'Asap', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(315deg, #1d4d28 3%, #4b6c4e 38%, #239b6d 68%, #214836 98%);
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    left: -70px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 1400px; /* Cambia esto para que se ajuste al ancho del contenedor */
+    width: 1400px; /* Asegúrate de que ocupe el 100% del ancho disponible */
+    margin: auto; /* Centra la tarjeta horizontalmente */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-bottom: 4px solid #28a56b;
+}
+
+.card-body {
+    padding: 30px;
+    background: #fff;
+    border-radius: 0 0 20px 20px;
+}
+
+h1.display-3 {
+    font-family: 'Lobster', cursive;
+    color: #333;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Urbanist', sans-serif;
+    color: #28a56b;
+    font-size: 2rem;
+    margin-top: 20px;
+    border-bottom: 2px solid #28a56b;
+    padding-bottom: 10px;
+}
+
+.sec-comentarios {
+    background: #f9f9f9; /* Fondo gris claro para la sección de comentarios */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 30px; /* Espaciado interno aumentado */
+    box-shadow: 0 0 20px rgba(0,0,0,0.2); /* Sombra más pronunciada */
+    animation: fadeIn 1s ease-in-out; /* Animación de entrada */
+    margin-top: 30px; /* Espaciado superior */
+    max-width: 1570px; /* Ancho máximo de la sección de comentarios */
+    margin-left: auto; /* Centrar horizontalmente */
+    margin-right: auto; /* Centrar horizontalmente */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.sec-comentarios h2 {
+    font-family: 'Lobster', cursive;
+    color: #333;
+    font-size: 2.5rem; /* Tamaño de fuente aumentado */
+    margin-bottom: 30px; /* Espaciado inferior aumentado */
+}
+
+.form-group {
+    margin-bottom: 30px; /* Espaciado inferior del grupo de formulario aumentado */
+}
+
+textarea.form-control {
+    border-radius: 15px; /* Bordes redondeados del área de texto */
+    border: 1px solid #ddd; /* Borde gris claro */
+    padding: 20px; /* Espaciado interno aumentado */
+    font-size: 1.1rem; /* Tamaño de fuente aumentado */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1); /* Sombra interna más pronunciada */
+    transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+}
+
+textarea.form-control:focus {
+    box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra al enfocarse */
+    border-color: #28a56b; /* Borde verde al enfocarse */
+}
+
+button.btn-primary {
+    background-color: #28a56b; /* Color de fondo del botón */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados del botón */
+    padding: 15px 25px; /* Espaciado interno ajustado */
+    color: white; /* Color del texto del botón */
+    font-size: 1.2rem; /* Tamaño de fuente del botón */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+    width: 60px;
+}
+
+button.btn-primary:hover {
+    background-color: #1e8e4d; /* Color de fondo del botón al pasar el ratón */
+    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+}
+
+.comentarios {
+    margin-top: 30px; /* Espaciado superior aumentado */
+}
+
+.comentario {
+    background: #fff; /* Fondo blanco para cada comentario */
+    border-radius: 10px; /* Bordes redondeados de cada comentario */
+    padding: 20px; /* Espaciado interno aumentado */
+    margin-bottom: 20px; /* Espaciado inferior entre comentarios */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra más pronunciada */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+.comentario:hover {
+    background-color: #f1f1f1; /* Fondo gris claro al pasar el ratón */
+    /* También se podría agregar un borde o efecto adicional aquí si se desea */
+}
+
+.comentario p {
+    margin: 0 0 10px; /* Margen inferior ajustado en los párrafos dentro del comentario */
+}
+
+.comentario .fecha {
+    font-size: 0.9rem; /* Tamaño de fuente para la fecha */
+    color: #777; /* Color gris para la fecha */
+}

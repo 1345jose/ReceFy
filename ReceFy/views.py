@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import MiUsuario
+from .models import MiUsuario, Receta
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -23,7 +23,7 @@ def apartado_novedades(request):
 
 def salud_nutricion(request):
     pagina_actual = "salud_nutricion"
-    return render(request, "salud_nutricion.html", {"pagina": pagina_actual})
+    return render(request, "salud_nutricion/salud_nutricion.html", {"pagina": pagina_actual})
 
 #endregion
 
@@ -180,40 +180,24 @@ def imagen2(request):
 
 #endregion
 
-#region Soporte
 
-def soporte_tecnico(request):
-    pagina_actual = "soporte_tecnico"
+#region RECETAS DISPONIBLES
 
-    if request.method == "POST":
-        descripcion = request.POST.get("descripcion")
-        email = request.POST.get("email")
+def lista_recetas(request):
+    # Definir el nombre de la página actual
+    pagina_actual = "lista_recetas"
+    
+    # Obtener todas las recetas
+    recetas_list = Receta.objects.all()
+    
+    # Renderizar la plantilla con el contexto
+    return render(request, "recetas_disponibles/lista_recetas.html", {
+        "recetas": recetas_list,
+        "pagina": pagina_actual
+    })
 
-        # Validar si la descripción no está vacía
-        if descripcion and email:
-            # Enviar correo
-            send_mail(
-                "Nuevo problema reportado",
-                f"Descripción del problema:\n{descripcion}\n\nCorreo del remitente:\n{email}",
-                settings.DEFAULT_FROM_EMAIL,
-                ["recetarium19@gmail.com"],
-                fail_silently=False,
-            )
-            # Mostrar mensaje de éxito
-            messages.success(
-                request,
-                "Tu solicitud ha sido enviada correctamente. Nos pondremos en contacto contigo pronto.",
-            )
-            # Redirigir a una página de confirmación o regresar al formulario (según el flujo de tu aplicación)
-            return redirect("soporte_send")
-        else:
-            # Mostrar mensaje de error si la descripción o el email están vacíos
-            messages.error(
-                request, "Por favor proporciona una descripción del problema y tu correo electrónico."
-            )
-
-    # Renderizar la plantilla del formulario
-    return render(request, "configuracion/soporte_tecnico.html", {"pagina_actual": pagina_actual})
-    # Renderizar el formulario inicial si no es método POST o si hay errores
-
+def detalle_receta(request, id_receta):
+    pagina_actual = "detalle_receta"
+    receta = Receta.objects.get(pk=id_receta)
+    return render(request, "recetas_disponibles/detalle_receta.html", {"receta": receta, "pagina": pagina_actual})
 #endregion
