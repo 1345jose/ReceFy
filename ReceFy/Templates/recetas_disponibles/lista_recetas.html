@@ -12,22 +12,33 @@
         <input type="text" id="searchInput" placeholder="Buscar recetas por nombre...">
         <i class="fas fa-search search-icon"></i>
     </div>
+    <br>
+    <h3 style="color: white;">
+        <i class="fas fa-tags"></i> Categoría de las recetas    
+    </h3>
+    <hr>
+        <a href="#category-desayuno" class="category-link">Desayunos</a>
+        <a href="#category-entrante" class="category-link">Entradas</a>
+        <a href="#category-platos-principales" class="category-link">Platos Fuertes</a>
+        <a href="#category-postre" class="category-link">Postres</a>
+        <a href="#category-sopa" class="category-link">Sopas</a>
+    
 </div>
 
 <div class="container mt-5">
     <div class="category-container" id="category-desayuno">
         <h3 style="color: white;">
-            <i class="fas fa-mug-hot"></i>  Desayunos
+            <i class="fas fa-mug-hot"></i> Desayunos
         </h3>
         <hr>
-        <button class="slider-btn left-btn" onclick="slide('left', 'desayuno')">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider-container">
-            <div class="slider" id="slider-desayuno">
-                <div class="slider-track">
-                    {% for receta in recetas %}
-                        {% if receta.categoria == "Desayuno" %}
+        {% if recetas_desayuno %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'desayuno')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-desayuno">
+                    <div class="slider-track">
+                        {% for receta in recetas_desayuno %}
                             <div class="recipe-card">
                                 <div class="card">
                                     <a href="{% url 'detalle_receta' receta.id_receta %}">
@@ -45,32 +56,35 @@
                                     </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="slider-btn right-btn" onclick="slide('right', 'desayuno')">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+            <button class="slider-btn right-btn" onclick="slide('right', 'desayuno')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay recetas disponibles en esta categoría.
+            </h3>
+        {% endif %}
     </div>
-
-
+    
     <br><br><br>
 
     <div class="category-container" id="category-entrante">
         <h3 style="color: white;">
-            <i class="fas fa-cheese"></i>  Entradas
+            <i class="fas fa-leaf"></i> Entradas
         </h3>
         <hr>
-        <button class="slider-btn left-btn" onclick="slide('left', 'entrante')">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider-container">
-            <div class="slider" id="slider-entrante">
-                <div class="slider-track">
-                    {% for receta in recetas %}
-                        {% if receta.categoria == "Entrante" %}
+        {% if recetas_entradas %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'entrante')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-entrante">
+                    <div class="slider-track">
+                        {% for receta in recetas_entradas %}
                             <div class="recipe-card">
                                 <div class="card">
                                     <a href="{% url 'detalle_receta' receta.id_receta %}">
@@ -88,31 +102,35 @@
                                     </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="slider-btn right-btn" onclick="slide('right', 'entrante')">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+            <button class="slider-btn right-btn" onclick="slide('right', 'entrante')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay recetas disponibles en esta categoría.
+            </h3>
+        {% endif %}
     </div>
 
     <br><br><br>
 
     <div class="category-container" id="category-platos-principales">
         <h3 style="color: white;">
-            <i class="fas fa-drumstick-bite"></i>  Platos Principales
+            <i class="fas fa-utensils"></i>  Platos Principales
         </h3>
         <hr>
-        <button class="slider-btn left-btn" onclick="slide('left', 'platos-principales')">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider-container">
-            <div class="slider" id="slider-platos-principales">
-                <div class="slider-track">
-                    {% for receta in recetas %}
-                        {% if receta.categoria == "Plato Principal" %}
+        {% if recetas_platos_principales %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'platos-principales')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-platos-principales">
+                    <div class="slider-track">
+                        {% for receta in recetas_platos_principales %}
                             <div class="recipe-card">
                                 <div class="card">
                                     <a href="{% url 'detalle_receta' receta.id_receta %}">
@@ -130,31 +148,35 @@
                                     </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="slider-btn right-btn" onclick="slide('right', 'platos-principales')">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+            <button class="slider-btn right-btn" onclick="slide('right', 'platos-principales')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay recetas disponibles en esta categoría.
+            </h3>
+        {% endif %}
     </div>
 
     <br><br><br>
 
     <div class="category-container" id="category-postre">
         <h3 style="color: white;">
-            <i class="fas fa-birthday-cake"></i>  Postres
+            <i class="fas fa-birthday-cake"></i> Postres
         </h3>
         <hr>
-        <button class="slider-btn left-btn" onclick="slide('left', 'postre')">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider-container">
-            <div class="slider" id="slider-postre">
-                <div class="slider-track">
-                    {% for receta in recetas %}
-                        {% if receta.categoria == "Postre" %}
+        {% if recetas_postres %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'postre')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-postre">
+                    <div class="slider-track">
+                        {% for receta in recetas_postres %}
                             <div class="recipe-card">
                                 <div class="card">
                                     <a href="{% url 'detalle_receta' receta.id_receta %}">
@@ -172,31 +194,35 @@
                                     </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="slider-btn right-btn" onclick="slide('right', 'postre')">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+            <button class="slider-btn right-btn" onclick="slide('right', 'postre')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay recetas disponibles en esta categoría.
+            </h3>
+        {% endif %}
     </div>
 
     <br><br><br>
 
     <div class="category-container" id="category-sopa">
         <h3 style="color: white;">
-            <i class="fas fa-utensil-spoon"></i>  Sopas
+            <i class="fas fa-cloud"></i> Sopas
         </h3>
         <hr>
-        <button class="slider-btn left-btn" onclick="slide('left', 'sopa')">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider-container">
-            <div class="slider" id="slider-sopa">
-                <div class="slider-track">
-                    {% for receta in recetas %}
-                        {% if receta.categoria == "Sopa" %}
+        {% if recetas_sopas %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'sopa')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-sopa">
+                    <div class="slider-track">
+                        {% for receta in recetas_sopas %}
                             <div class="recipe-card">
                                 <div class="card">
                                     <a href="{% url 'detalle_receta' receta.id_receta %}">
@@ -214,16 +240,19 @@
                                     </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="slider-btn right-btn" onclick="slide('right', 'sopa')">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+            <button class="slider-btn right-btn" onclick="slide('right', 'sopa')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay recetas disponibles en esta categoría.
+            </h3>
+        {% endif %}
     </div>
-</div>
 
 <br><br><br><br>
 {% include 'inc/footer.html' %}

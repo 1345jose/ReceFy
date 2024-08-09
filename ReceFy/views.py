@@ -312,16 +312,23 @@ def soporte_tecnico(request):
 #region RECETAS DISPONIBLES
 
 def lista_recetas(request):
-    pagina_actual = "lista_recetas"
-    
-    # Obtener todas las recetas
-    recetas_list = Receta.objects.all()
-    
-    # Renderizar la plantilla con el contexto
-    return render(request, "recetas_disponibles/lista_recetas.html", {
-        "recetas": recetas_list,
-        "pagina": pagina_actual
-    })
+    recetas = Receta.objects.all()
+    recetas_desayuno = recetas.filter(categoria="Desayuno")
+    recetas_entradas = recetas.filter(categoria="Entrante")
+    recetas_platos_principales = recetas.filter(categoria="Plato Principal")
+    recetas_postres = recetas.filter(categoria="Postre")
+    recetas_sopas = recetas.filter(categoria="Sopa")
+
+    context = {
+        'recetas': recetas,
+        'recetas_desayuno': recetas_desayuno,
+        'recetas_entradas': recetas_entradas,
+        'recetas_platos_principales': recetas_platos_principales,
+        'recetas_postres': recetas_postres,
+        'recetas_sopas': recetas_sopas,
+
+    }
+    return render(request, 'recetas_disponibles/lista_recetas.html', context)
 
 def detalle_receta(request, id_receta):
     pagina_actual = "detalle_receta"
