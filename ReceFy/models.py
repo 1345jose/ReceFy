@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.files.images import get_image_dimensions
 
 class MiUsuario(AbstractUser):
     imagen1 = models.ImageField(upload_to='perfil_usuario/', blank=True, null=True)
@@ -11,7 +10,6 @@ class MiUsuario(AbstractUser):
     pais = models.CharField(max_length=100, blank=True, null=True)
     idioma = models.CharField(max_length=50, blank=True, null=True)
     edad = models.PositiveIntegerField(blank=True, null=True)
-  
 
 #region Recetas  
 class Receta(models.Model): 
@@ -34,6 +32,7 @@ class Receta(models.Model):
     fecha_registro_receta = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='habilitado', null=True)
+
     class Meta:
         db_table = "tbl_recetas"
         
@@ -41,11 +40,22 @@ class Receta(models.Model):
 
 #region Comentarios
 
-
 class Comentario(models.Model):
-    receta = models.ForeignKey('Receta', on_delete=models.CASCADE, related_name='comentarios')
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, related_name='comentarios')
     usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
     contenido = models.CharField(max_length=1500) 
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         db_table = "tbl_comentarios"
+        
+class MeGusta(models.Model):
+    comentario = models.ForeignKey(Comentario, related_name='me_gustas', on_delete=models.CASCADE)
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "tbl_like_c"
+        unique_together = ('comentario', 'usuario')
+
+#endregion
