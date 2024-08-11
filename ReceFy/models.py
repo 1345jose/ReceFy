@@ -38,3 +38,14 @@ class Receta(models.Model):
         db_table = "tbl_recetas"
         
 #endregion
+
+#region Comentarios
+
+
+class Comentario(models.Model):
+    receta = models.ForeignKey('Receta', on_delete=models.CASCADE, related_name='comentarios')
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    contenido = models.CharField(max_length=1500) 
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        db_table = "tbl_comentarios"

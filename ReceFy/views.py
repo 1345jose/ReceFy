@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import MiUsuario, Receta
+from .models import MiUsuario, Receta , Comentario
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -198,7 +198,6 @@ def imagen2(request):
 
 #region Configuraciones
 
-
 def rest_email(request):
     pagina_actual = "reset_password"
     if request.method == "POST":
@@ -360,8 +359,27 @@ def lista_recetas(request):
 
 def detalle_receta(request, id_receta):
     pagina_actual = "detalle_receta"
-    receta = Receta.objects.get(pk=id_receta)
-    return render(request, "recetas_disponibles/detalle_receta.html", {"receta": receta, "pagina": pagina_actual})
+    receta = get_object_or_404(Receta, pk=id_receta)
+    
+    comentarios = receta.comentarios.all()
+
+    if request.method == 'POST':
+        contenido = request.POST.get('contenido')
+
+        if contenido:
+            Comentario.objects.create(
+                receta=receta,
+                usuario=request.user,
+                contenido=contenido
+            )
+            # Usa el nombre correcto de la clave primaria
+            return redirect('detalle_receta', id_receta=receta.pk)  # Cambiado de receta.id a receta.pk
+    
+    return render(request, "recetas_disponibles/detalle_receta.html", {
+        "receta": receta, 
+        "pagina": pagina_actual,  
+        'comentarios': comentarios
+    })
 
 
 def receta_crear(request):

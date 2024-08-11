@@ -40,23 +40,33 @@
 
 <br><br>
 
+{% if user.is_authenticated %}
 <div class="sec-comentarios mt-4">
     <h2 class="mb-4">Comentarios</h2>
+
+    <form action="" method="post">
+    {% csrf_token %}
     <div class="form-group">
-        <textarea class="form-control mb-3" id="descripcion" name="descripcion" placeholder="Escribe tu comentario" required></textarea>
+        <textarea class="form-control mb-3" id="contenido" name="contenido" placeholder="Escribe tu comentario" required></textarea>
         <button class="btn btn-primary w-100" type="submit">Comentar</button>
     </div>
+    </form>
+
+        {% else %}
+            <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
+        {% endif %}
+
     <div class="comentarios mt-3">
-        <!-- Aquí se mostrarán los comentarios -->
+
+        {% for comentario in comentarios %}
         <div class="comentario">
-            <p><strong>Usuario1:</strong> Muy buena receta</p>
-            <p class="fecha">Publicado el 07/08/2024</p>
+            <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
+            <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
         </div>
-        <div class="comentario">
-            <p><strong>Usuario2:</strong> Esta mela.</p>
-            <p class="fecha">Publicado el 07/08/2024</p>
-        </div>
-        <!-- Más comentarios -->
+        {% empty %}
+          <li>No hay comentarios aún. Sé el primero en comentar.</li>
+        {% endfor %}
+
     </div>
 </div>
 <br><br><br><br>
