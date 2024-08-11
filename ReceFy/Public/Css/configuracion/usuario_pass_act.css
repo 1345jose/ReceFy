@@ -1,0 +1,80 @@
+body{
+    background: url('/static/media/principal1.jpg') no-repeat center center/cover;
+    color: white;
+}
+
+main{
+    margin: 0 auto;
+    padding: 20px;
+    width: 40%;
+   
+}
+.container{
+    background-color: rgba(255, 255, 255, 0.39);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition:  transform 0.5s ease, background-color 0.3s ease;
+}
+
+.container:hover{
+    background-color: rgba(255, 255, 255, 0.377);
+    transform: scale(1.05);
+}
+
+.texto h1{
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+    color: white;
+}
+p{
+    color: white;
+    text-align: center
+}
+.adf{
+    font-weight: bold;
+    color: #002fff; 
+}
+hr{
+    background-color: #28a56b;
+    height: 3px;
+    border-radius: 14px;
+}
+form{
+    padding: 20px;
+}
+
+.form-control{
+    border-radius: 25px;
+}
+
+@media screen and (min-width: 1280px) {
+    .container {
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    body {
+        background: url('https://images.pexels.com/photos/4253320/pexels-photo-4253320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        overflow: auto; 
+    }
+
+
+    main {
+        width: 100%;
+        height: 50%; 
+    }
+
+    .form:hover {
+        border: none; 
+    }
+    
+}

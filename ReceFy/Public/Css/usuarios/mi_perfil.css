@@ -10,7 +10,9 @@ body{
     height: 100vh;
     position: fixed;
     overflow-y: auto;
+    text-decoration: none;
 }
+
 .sidebar a {
     display: flex;
     align-items: center;
@@ -97,4 +99,52 @@ hr{
     border: 4px solid white;
     transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
 
+}
+
+
+#security-options {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}
+
+/* Clase que se añade para desplegar las opciones */
+#security-options.show {
+    height: auto; /* Permite que el contenedor se expanda */
+}
+
+
+#security-options a {
+    display: block;
+    padding: 5px 10px;
+    color: #cbd5e0;
+    height: 35px;
+    margin: 0 auto;
+    text-decoration: none;
+}
+
+#security-options a:hover {
+    background-color: rgba(255, 255, 255, 0.37);
+}
+
+/* Asegúrate de que este CSS esté incluido en tu archivo CSS o en un <style> en tu HTML */
+#security-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right-icon {
+    color: #cbd5e03b;
+    margin-left: auto;
+    transition: color 0.2s ease;
+}
+
+.right-icon:hover{
+    color: #cbd5e0;
+}
+
+.hidden .seguridad{
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.37);
 }

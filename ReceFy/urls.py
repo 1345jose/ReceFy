@@ -37,6 +37,8 @@ urlpatterns = [
     path('detalle_receta/<int:id_receta>', views.detalle_receta, name="detalle_receta"),
     path('recetas/crear', views.receta_crear, name="crear_receta"),
     path("recetas/apartado",views.crear_ver,name="crear_ver"),
+    path('recetas/<int:usuario_id>/tus_recetas/', views.recetas_usuarios, name='recetas_usuarios'),
+
 
     #endregion
     
@@ -48,15 +50,16 @@ urlpatterns = [
     path('usuarios/completar', views.completar_info, name="completar_info"),
     path('configuracion/actualizar_info/<int:idusuario>', views.actualizar_info, name="actualizar_perfil"),
     #endregion
-
+ 
     #pruebas
     path('imagen', views.imagen2, name="imagen2"),
     
     #region Soporte y Configuracion
     path('configuracion/soporte_tecnico', views.soporte_tecnico, name="soporte"),
     path('configuracion/recuperar_contraseña', views.rest_email, name="recuperar_contraseña"),
-    path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwordUpdate")
-    
+    path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwordUpdate"),
+    path('configuracion/updateUser/<int:idusuario>', views.updateUser, name="updateUser"),
+         
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

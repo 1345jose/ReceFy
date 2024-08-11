@@ -6,32 +6,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'Css/usuarios/mi_perfil.css' %}">
 </head>
-    <aside class="sidebar">
-        <h2>Mi perfil</h2>
-        <hr>
-      
-        <a href="#"><i class="fa-solid fa-utensils"></i>Mis Recetas</a>
-        <a href="#"><i class="fa-solid fa-user-shield"></i> Seguridad</a>
-        <a href="#"><i class="fa-solid fa-link"></i>Enlaces</a>
-        <a href="#"><i class="fa-solid fa-timeline"></i> Conexiones</a>
+<aside class="sidebar">
+    <h2>Mi perfil</h2>
+    <hr class="other">
+
+    <a href="{% url 'recetas_usuarios' user.id %}"><i class="fa-solid fa-utensils"></i>Mis Recetas</a>
+    <a href="#" id="security-link">
+        <i class="fa-solid fa-user-shield"></i> 
+        Seguridad  
+        <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
+    </a>
         
-        <br><br><br>
-        <hr>
-        <a href="/" class=""><i class="fa-solid fa-house-user"></i>Inicio</a>
-        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
-        <h1><a href="{% url 'index' %}">RC</a></h1>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Configuracion
-            </button>
-            <div class="dropdown-menu">
-                <h6 class="dropdown-header">Dropdown header</h6>
-                <a class="dropdown-item" href="/actualizar_perfil/{{ user.id }}">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-              </div>
+    <div id="security-options" class="hidden">
+        <hr class="seguridad">
+        <a href="/configuracion/updateUser/{{ user.id }}"><i class="bi bi-shield-fill-exclamation"></i> Contraseña</a>
+        <a href="#"><i class="fa-solid fa-lock"></i> Privacidad</a>
+        <hr class="seguridad">
+    </div>
+
+    <a href="#"><i class="fa-solid fa-link"></i>Enlaces</a>
+    <a href="#"><i class="fa-solid fa-timeline"></i> Vincular</a>
+    
+    <br><br><br>
+    <hr class="other">
+    <a href="/" class=""><i class="fa-solid fa-house-user"></i>Inicio</a>
+    <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+    <h1><a href="{% url 'index' %}">RC</a></h1>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Configuracion
+        </button>
+        <div class="dropdown-menu">
+            <h6 class="dropdown-header">Dropdown header</h6>
+            <a class="dropdown-item" href="/actualizar_perfil/{{ user.id }}">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
           </div>
-          
-    </aside>
+    </div>
+</aside>
+
 
     <main class="barra">
       {% include 'inc/header.html' %}
@@ -40,7 +52,7 @@
                 {% if usuario.imagen2 %}
                     <img src="{{ usuario.imagen2.url }}" alt="Perfil del usuario">
                 {% else %}
-                    <img src="{% static 'path/to/default-image.jpg' %}" alt="No tienes perfil">
+                    <img src="{% static 'media/default.webp' %}" alt="No tienes perfil">
                 {% endif %}
             </div>
         </div>
@@ -60,7 +72,7 @@
             {% if usuario %}
                 <div class="bio mt-3">
                     {% if usuario.biografia %}
-                        <p><strong>Biografía:</strong> {{ usuario.biografia }}</p>
+                        <p><i class="bi bi-person-fill"></i> <strong>Biografía:</strong> {{ usuario.biografia }}</p>
                     {% endif %}
                 </div>
         
@@ -69,7 +81,7 @@
                     
                     <div class="col-md-4">
                         {% if usuario.idioma %}
-                            <p><strong>Idioma:</strong> {{ usuario.idioma }}</p>
+                            <p><i class="fa-solid fa-language"></i> <strong>Idioma:</strong>{{ usuario.idioma }}</p>
                         {% endif %}
                     </div>
                 </div>  
@@ -77,15 +89,15 @@
                 <div class="row mt-2">
                     <div class="col">
                         {% if usuario.telefono %}
-                            <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
-                            <p><strong>Correo Electronico:</strong> {{ usuario.email }}</p>
+                            <p><i class="bi bi-telephone-fill"></i> <strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+                            <p><i class="fa-solid fa-envelope"></i> <strong>Correo Electronico:</strong> {{ usuario.email }}</p>
 
                         {% endif %}
                     </div>
                     <div class="col">
                         {% if usuario.fecha_nacimiento %}
-                            <p><strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
-                            <p><strong>País:</strong> {{ usuario.pais }}</p>
+                            <p><i class="bi bi-calendar2-date-fill"></i> <strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
+                            <p><i class="bi bi-globe-americas"></i> <strong>País:</strong> {{ usuario.pais }}</p>
 
                         {% endif %}
                     </div>
@@ -110,7 +122,28 @@
             var sidebar = document.querySelector('.sidebar');
             sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const securityLink = document.getElementById('security-link');
+            const securityOptions = document.getElementById('security-options');
+        
+            securityLink.addEventListener('click', function (event) {
+                event.preventDefault(); // Evita la acción por defecto del enlace
+                
+                // Alterna entre expandir o colapsar
+                if (securityOptions.style.height === '0px' || securityOptions.style.height === '') {
+                    securityOptions.style.height = securityOptions.scrollHeight + 'px';
+                } else {
+                    securityOptions.style.height = '0px';
+                }
+            });
+        });
+        
+        
+        
+        
     </script>
+    
 
 </body>
 </html>

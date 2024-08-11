@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import MiUsuario, Receta
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -7,6 +7,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.contrib.auth import update_session_auth_hash
+
+
 
 
 
@@ -251,11 +254,12 @@ def rest_email(request):
                 return render(request, 'configuracion/recuperacion_contraseña.html', {'error': str(e)})
         else:
             return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'Por favor, proporciona un correo electrónico válido.'})
-
+        
     return render(request, 'configuracion/recuperacion_contraseña.html',{'pagina':pagina_actual})
 
          
 def passwordUpdate(request,idusuario):
+    pagina_actual = "passwordUpdate"
     if request.method == "POST":
         usuario = request.user  
         if request.POST.get('password'):
@@ -264,8 +268,31 @@ def passwordUpdate(request,idusuario):
             usuario.save()
             return redirect('/usuarios/login')
     else:   
-        return render(request, 'soporte/passwordUpdate.html')
+        return render(request, 'soporte/passwordUpdate.html',{'pagina':pagina_actual})
 
+def updateUser(request, idusuario):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    pagina_actual = "updateUser"
+    usuario = get_object_or_404(MiUsuario, id=idusuario)
+    
+    if request.method == "POST":
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        
+        if not usuario.check_password(current_password):
+            messages.error(request, 'La contraseña actual no es correcta.')
+        elif new_password != confirm_password:
+            messages.error(request, 'Las nuevas contraseñas no coinciden.')
+        else:
+            usuario.set_password(new_password)
+            usuario.save()
+            update_session_auth_hash(request, usuario)  # Mantiene la sesión del usuario actualizada
+            messages.success(request, 'La contraseña ha sido cambiada exitosamente.')
+            return redirect('/usuarios/login')
+    
+    return render(request, 'configuracion/usuario_pass_act.html', {'usuario': usuario, 'pagina': pagina_actual})
 
 #endregion
 
@@ -297,7 +324,7 @@ def soporte_tecnico(request):
                 "Tu solicitud ha sido enviada correctamente. Nos pondremos en contacto contigo pronto.",
             )
             # Redirigir a una página de confirmación o regresar al formulario (según el flujo de tu aplicación)
-            return redirect("soporte_send")
+            return redirect('/')
         else:
             # Mostrar mensaje de error si la descripción o el email están vacíos
             messages.error(
@@ -380,5 +407,18 @@ def receta_crear(request):
 def crear_ver(request):
     pagina_actual = "apartado_recetas"
     return render(request,'recetas_disponibles/apartado_recetas.html',{'pagina':pagina_actual})
+
+def recetas_usuarios(request, usuario_id):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    pagina_actual = "recetas_usuarios"
+    user = get_object_or_404(MiUsuario, id=usuario_id)
+    recetas_usuario = Receta.objects.filter(usuario=user)
+    return render(
+        request,
+        "recetas_disponibles/recetas_usuarios.html",
+        {"user": user, "recetas_usuario": recetas_usuario, "pagina":pagina_actual},
+    )
+
 #endregion
 

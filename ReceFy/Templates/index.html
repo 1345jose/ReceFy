@@ -32,7 +32,7 @@
                                     <h3 style="color: #16794b; font-size: 20px; margin-left: 23px;">Opciones</h3>
                                     <hr style="background-color: #16794b; width: 95%; height: 3px; margin: auto; border-radius: 24px;">
                                     <a class="dropdown-item" href="{% url 'mi_perfil' %}">Ver mi perfil</a>
-                                    <a class="dropdown-item" href="">Mis recetas</a>
+                                    <a class="dropdown-item" href="{% url 'recetas_usuarios' user.id %}">Mis recetas</a>
                                     <a class="dropdown-item" href="{% url 'crear_receta' %}">Crear Receta</a>
                                     <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                                 </div>

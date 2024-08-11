@@ -9,6 +9,7 @@
     <link href="{% static 'Bootstrap/bootstrap4.5.2.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/header.css' %}">
     <title>ReceFy</title>
 </head>
@@ -26,6 +27,8 @@
                 <h2>
                     {% if pagina == 'soporte_tecnico' %}
                     Soporte Técnico
+                    {% elif pagina == 'recetas_usuarios' %}
+                    Mis Recetas
                     {% elif pagina == 'receta_crear' %}
                     Crear Tu Receta
                     {% elif pagina == 'Not_Found' %}
@@ -54,6 +57,10 @@
                     Recupera Tu Contraseña
                     {% elif pagina == 'loginusuarios' %}
                     Iniciar Sesión
+                    {% elif pagina == 'updateUser' %}
+                    Actualiza Tu Contraseña
+                    {% elif pagina == 'passwordUpdate' %}
+                    Cambia Tu Contraseña
                     {% elif pagina == 'registro' %}
                     Crear Cuenta
                     {% elif pagina == 'lista_dietas' %}
