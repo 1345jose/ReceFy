@@ -59,27 +59,29 @@
     <div class="comentarios mt-3">
 
         {% for comentario in comentarios %}
-        <div class="comentario">
-            <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
-            <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
-            {% if user.is_authenticated %}
-            <form method="post" style="display:inline;">
-                {% csrf_token %}
-                <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
-                <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
-                    <i class="fas fa-thumbs-up"></i> {{ comentario.me_gusta }}
-                </button>
-            </form>
-            {% else %}
-            <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
+    <div class="comentario">
+        <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
+        <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
+        {% if user.is_authenticated %}
+        <form method="post" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+            <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
+                <i class="fas fa-thumbs-up"></i> {{ comentario.me_gusta_count }}
+            </button>
+        </form>
+        {% else %}
+        <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
         {% endif %}
-        </div>
-        {% empty %}
-          <li>No hay comentarios aún. Sé el primero en comentar.</li>
-        {% endfor %}
+    </div>
+{% empty %}
+    <li>No hay comentarios aún. Sé el primero en comentar.</li>
+{% endfor %}
 
+    
     </div>
 </div>
 <br><br><br><br>
+
 
 {% include 'inc/footer.html' %}
