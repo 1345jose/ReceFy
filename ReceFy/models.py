@@ -59,3 +59,57 @@ class MeGusta(models.Model):
         unique_together = ('comentario', 'usuario')
 
 #endregion
+
+#region Plan Nutricional (Calendario)
+
+class PlanNutricional(models.Model):
+    nombre = models.CharField(max_length=255)
+    user = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    desayuno_domingo = models.TextField(blank=True, null=True)
+    media_manana_domingo = models.TextField(blank=True, null=True)
+    almuerzo_domingo = models.TextField(blank=True, null=True)
+    merienda_domingo = models.TextField(blank=True, null=True)
+    cena_domingo = models.TextField(blank=True, null=True)
+
+    desayuno_lunes = models.TextField(blank=True, null=True)
+    media_manana_lunes = models.TextField(blank=True, null=True)
+    almuerzo_lunes = models.TextField(blank=True, null=True)
+    merienda_lunes = models.TextField(blank=True, null=True)
+    cena_lunes = models.TextField(blank=True, null=True)
+
+    desayuno_martes = models.TextField(blank=True, null=True)
+    media_manana_martes = models.TextField(blank=True, null=True)
+    almuerzo_martes = models.TextField(blank=True, null=True)
+    merienda_martes = models.TextField(blank=True, null=True)
+    cena_martes = models.TextField(blank=True, null=True)
+
+    desayuno_miercoles = models.TextField(blank=True, null=True)
+    media_manana_miercoles = models.TextField(blank=True, null=True)
+    almuerzo_miercoles = models.TextField(blank=True, null=True)
+    merienda_miercoles = models.TextField(blank=True, null=True)
+    cena_miercoles = models.TextField(blank=True, null=True)
+
+    desayuno_jueves = models.TextField(blank=True, null=True)
+    media_manana_jueves = models.TextField(blank=True, null=True)
+    almuerzo_jueves = models.TextField(blank=True, null=True)
+    merienda_jueves = models.TextField(blank=True, null=True)
+    cena_jueves = models.TextField(blank=True, null=True)
+
+    desayuno_viernes = models.TextField(blank=True, null=True)
+    media_manana_viernes = models.TextField(blank=True, null=True)
+    almuerzo_viernes = models.TextField(blank=True, null=True)
+    merienda_viernes = models.TextField(blank=True, null=True)
+    cena_viernes = models.TextField(blank=True, null=True)
+
+    desayuno_sabado = models.TextField(blank=True, null=True)
+    media_manana_sabado = models.TextField(blank=True, null=True)
+    almuerzo_sabado = models.TextField(blank=True, null=True)
+    merienda_sabado = models.TextField(blank=True, null=True)
+    cena_sabado = models.TextField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'tbl_plan_nutricional'
+
+#endregion

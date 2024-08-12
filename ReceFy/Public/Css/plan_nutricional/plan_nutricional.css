@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Estilos generales */
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    margin: 0;
+    font-family: 'Urbanist', sans-serif;
+    overflow: auto;
+    background-image: url('https://images.pexels.com/photos/54455/cook-food-kitchen-eat-54455.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+
+    font-family: 'Courgette', cursive;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td[contenteditable="true"] {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+td[contenteditable="true"]:focus {
+    outline: none;
+    background-color: #e7f3fe;
+}
+
+.fancy-input {
+    font-family: 'Lobster', cursive;
+    font-size: 1.5em;
+    color: #4CAF50;
+    padding: 10px 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.fancy-input:focus {
+    outline: none;
+    background-color: #e7ffe7;
+    border-color: green;
+    box-shadow: 0 0 10px green;
+    animation: borderAnimation 1s infinite;
+}
+
+@keyframes borderAnimation {
+    0% { border-color: green; }
+    50% { border-color: #4CAF50; }
+    100% { border-color: green; }
+}
+
+/* Adaptación del label */
+.calendar-name label {
+    display: block;
+    font-size: 1.2em;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+table td input {
+    border: none; /* Sin borde visible */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 10px;
+    width: calc(100% - 20px); /* Ajusta el ancho para el padding */
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+    background-color: #ffffff; /* Fondo blanco */
+    color: #333; /* Texto en gris oscuro */
+    font-size: 1em; /* Tamaño de fuente adecuado */
+    transition: all 0.3s ease; /* Transiciones suaves */
+    text-align: center; /* Centra el texto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    position: relative; /* Para el pseudo-elemento */
+}
+
+/* Estilo al pasar el mouse sobre el input */
+table td input:hover {
+    background-color: #f0f8f0; /* Fondo más claro al pasar el mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+
+/* Estilo para el input cuando está enfocado */
+table td input:focus {
+    background-color: #e7ffe7; /* Fondo verde claro cuando está enfocado */
+    box-shadow: 0 0 10px rgba(0, 150, 0, 0.5); /* Sombra verde clara cuando está enfocado */
+    outline: none; /* Elimina el borde predeterminado del navegador */
+    animation: pulse 1.5s infinite; /* Efecto de pulsación */
+}
+
+/* Animación de pulsación para el input enfocado */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* Pseudo-elemento para efecto visual adicional */
+table td input::before {
+    content: ''; /* Necesario para el pseudo-elemento */
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px; /* Coincide con el radio del borde del input */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 60%);
+    z-index: -1; /* Colocado detrás del input */
+    opacity: 0; /* Inicialmente invisible */
+    transition: opacity 0.3s ease; /* Transición suave para el efecto */
+}
+
+/* Mostrar el pseudo-elemento al pasar el mouse o enfocar */
+table td input:hover::before,
+table td input:focus::before {
+    opacity: 1; /* Hacer visible el efecto */
+}
+
+/* Animación de pulsación para el input enfocado */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.alert {
+    max-width: 400px; /* Ancho máximo del mensaje */
+    margin: 20px auto; /* Centrar el mensaje horizontalmente */
+    padding: 15px;
+    border-radius: 5px;
+    position: relative;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.alert.hide {
+    display: none;
+}

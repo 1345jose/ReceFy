@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import MiUsuario, Receta , Comentario, MeGusta
+from .models import MiUsuario, Receta , Comentario, MeGusta, PlanNutricional
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -293,8 +293,6 @@ def updateUser(request, idusuario):
 #endregion
 
 
-#endregion
-
 
 # region Soperte Tecnico
 def soporte_tecnico(request):
@@ -448,6 +446,62 @@ def recetas_usuarios(request, usuario_id):
         "recetas_disponibles/recetas_usuarios.html",
         {"user": user, "recetas_usuario": recetas_usuario, "pagina":pagina_actual},
     )
+
+#endregion
+
+#region Plan Nutricional (Calendario)
+
+def crear_plan(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+
+        # Crear una instancia del modelo PlanNutricional
+        plan = PlanNutricional(nombre=nombre, user=request.user)
+        
+        # Asignar los datos del formulario a los campos del modelo
+        meals = ['desayuno', 'media_manana', 'almuerzo', 'merienda', 'cena']
+        days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado']
+        
+        for meal in meals:
+            for day in days:
+                field_name = f'{meal}_{day}'
+                setattr(plan, field_name, request.POST.get(field_name, ''))
+        
+        # Guardar el plan en la base de datos
+        plan.save()
+        
+        messages.success(request, '¡Calendario creado correctamente!')
+
+    # En caso de GET, pasar datos necesarios a la plantilla
+    meals = [
+        {'name': 'desayuno'},
+        {'name': 'media_manana'},
+        {'name': 'almuerzo'},
+        {'name': 'merienda'},
+        {'name': 'cena'}
+    ]
+    days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado']
+    
+    return render(request, 'salud_nutricion/plan_nutricional/plan_nutricional.html', {'meals': meals, 'days': days})
+
+def ver_calendarios(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    # Obtener todos los calendarios del usuario actual
+    calendarios = PlanNutricional.objects.filter(user=request.user)
+    
+    return render(request, 'salud_nutricion/plan_nutricional/ver_calendarios_por_usuario.html', {
+        'calendarios': calendarios,
+    })
+
+
+def ver_calendario(request, id):
+    calendario = get_object_or_404(PlanNutricional, id=id)
+    return render(request, 'salud_nutricion/plan_nutricional/calendarios_detalle.html', {'calendario': calendario})
 
 #endregion
 
