@@ -10,8 +10,6 @@ from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash
 
 
-
-
 def index(request):
     return render(request,'index.html')
 
@@ -354,7 +352,6 @@ def lista_recetas(request):
     }
     return render(request, 'recetas_disponibles/lista_recetas.html', context)
 
-
 def detalle_receta(request, id_receta):
     pagina_actual = "detalle_receta"
     receta = get_object_or_404(Receta, pk=id_receta)
@@ -377,7 +374,6 @@ def detalle_receta(request, id_receta):
             if comentario_id:
                 comentario = get_object_or_404(Comentario, pk=comentario_id)
                 
-                # Verificar si el usuario ya ha dado "Me gusta" a este comentario
                 me_gusta, created = MeGusta.objects.get_or_create(
                     comentario=comentario,
                     usuario=request.user
@@ -386,12 +382,18 @@ def detalle_receta(request, id_receta):
                 if not created:
                     me_gusta.delete()
                 return redirect('detalle_receta', id_receta=id_receta)
+
+    # Contar el total de "Me gusta" para cada comentario
+    for comentario in comentarios:
+        comentario.me_gusta_count = comentario.megustas.count()
     
     return render(request, "recetas_disponibles/detalle_receta.html", {
         "receta": receta, 
         "pagina": pagina_actual,  
         'comentarios': comentarios
     })
+
+
 
 def receta_crear(request):
     if not request.user.is_authenticated:
@@ -451,3 +453,8 @@ def recetas_usuarios(request, usuario_id):
 
 #endregion
 
+#region Comentarios Usuario
+def comentUser(request, usuario_id):
+    user = get_object_or_404(MiUsuario, id=usuario_id)
+    comentarios = Comentario.objects.filter(usuario=user)
+    return render(request, 'usuarios/mi_perfil.html', {'user': user, 'comentarios': comentarios})

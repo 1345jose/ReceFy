@@ -50,12 +50,11 @@ class Comentario(models.Model):
         db_table = "tbl_comentarios"
         
 class MeGusta(models.Model):
-    comentario = models.ForeignKey(Comentario, related_name='me_gustas', on_delete=models.CASCADE)
+    comentario = models.ForeignKey(Comentario, related_name='megustas', on_delete=models.CASCADE)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
-
     class Meta:
         db_table = "tbl_like_c"
-        unique_together = ('comentario', 'usuario')
+        unique_together = ('comentario', 'usuario') 
 
 #endregion

@@ -49,6 +49,8 @@ urlpatterns = [
     path('usuarios/mi_perfil', views.mi_perfil,name="mi_perfil"),
     path('usuarios/completar', views.completar_info, name="completar_info"),
     path('configuracion/actualizar_info/<int:idusuario>', views.actualizar_info, name="actualizar_perfil"),
+    path('usuario/mis-comentarios/', views.comentUser, name='mis_comentarios'),
+    
     #endregion
  
     #pruebas
@@ -59,6 +61,7 @@ urlpatterns = [
     path('configuracion/recuperar_contraseña', views.rest_email, name="recuperar_contraseña"),
     path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwordUpdate"),
     path('configuracion/updateUser/<int:idusuario>', views.updateUser, name="updateUser"),
+    
          
 ]
 if settings.DEBUG:
