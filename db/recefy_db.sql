@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 11-08-2024 a las 19:00:07
+-- Tiempo de generación: 12-08-2024 a las 01:07:00
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -96,13 +96,13 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 CREATE TABLE `django_admin_log` (
   `id` int NOT NULL,
   `action_time` datetime(6) NOT NULL,
-  `object_id` longtext,
-  `object_repr` varchar(200) NOT NULL,
+  `object_id` longtext COLLATE utf8mb4_general_ci,
+  `object_repr` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
   `action_flag` smallint UNSIGNED NOT NULL,
-  `change_message` longtext NOT NULL,
+  `change_message` longtext COLLATE utf8mb4_general_ci NOT NULL,
   `content_type_id` int DEFAULT NULL,
   `user_id` bigint NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,9 @@ CREATE TABLE `django_session` (
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('1rzwhjn01i4swxuxvn2o7c4kozqx19z4', '.eJxVjDEOwjAMRe-SGUXBISRmZO8ZIrt2SQGlUtNOiLtDpQ6w_vfef5lM61Ly2nTOo5iLgWAOvyNT_9C6EblTvU22n-oyj2w3xe602W4SfV539--gUCvfOsLJoRydCqKHBF7cwJF91ETMgECOg7ACivNRQkhnpcjEaZCEIOb9AQB_OGw:1scd1p:_94uVDAAZ7VwcPcVp0XDMpNoAcyUEJFuMw4lncgbdiI', '2024-08-24 03:44:29.849797'),
 ('bspa4bl7lyfslmnw2nk1kqfmhgkw1ouz', '.eJxVjDsOwjAQBe_iGlneJf4sJT1nsHb9IQGUSHFSIe5OIqWAdmbee6vI69LHtZU5DlldFIA6_ULh9CzjbvKDx_uk0zQu8yB6T_Rhm75NubyuR_t30HPrtzUZ572Hih0AmkQOREKqaEAy2QLcBR820HGg7CqGsyX0SCiVbC2iPl_bSjdf:1scrCb:68mzbQhZD9ZQhZ4manoV7dU6q5gclAuKaXAfOKcCHPY', '2024-08-24 18:52:33.623409'),
+('el7sllj2prligya81x42bfpydwgpvgwc', '.eJxVjEEOwiAQRe_C2pAOlFJcuvcMZIYZpGpoUtqV8e7apAvd_vfef6mI21ri1mSJE6uz8ur0uxGmh9Qd8B3rbdZprusykd4VfdCmrzPL83K4fwcFW_nWXecDA_YuZA8dDxacMU5sj5TGMTgRawYCIrA5o_HsBiFnuCdgK4Dq_QHJNzfB:1sdEd7:wfTDHCaXdKo2I_EbnSl0JatGtDZO6H6L0PEfJ9c02ZE', '2024-08-25 19:53:29.734708'),
 ('g9jmxpr24246yelufhpvx5lf33buq8xd', '.eJxVjDsOwjAQBe_iGlleJ-sPJT1nsNbOLg6gWMqnQtwdIqWA9s3Me6lE21rTtvCcxkGdFaA6_Y6ZyoOnnQx3mm5Nlzat85j1ruiDLvraBn5eDvfvoNJSvzWyKyycHZnYSyQrPuSMFgA7G5wXJyAQTbZI3qDFwl1XeoAQiw_C6v0BEm034w:1sd3KM:2tCj-XF3iIa7vDJkb9WmLZIhOOVmTquIoaj4_1inpAU', '2024-08-25 07:49:22.648246'),
+('iiepx2tk9dk912xnfkc82ygwf49gv2l0', '.eJxVjEEOwiAQRe_C2pAOlFJcuvcMZIYZpGpoUtqV8e7apAvd_vfef6mI21ri1mSJE6uz8ur0uxGmh9Qd8B3rbdZprusykd4VfdCmrzPL83K4fwcFW_nWXecDA_YuZA8dDxacMU5sj5TGMTgRawYCIrA5o_HsBiFnuCdgK4Dq_QHJNzfB:1sdEGY:y-QpxfwPdyAU2oJqpF40L9qA_JP91s14IP07YsZJieE', '2024-08-25 19:30:10.696934'),
 ('k4xkpcnu5p4k1ufbzvhgfoue7e5obzu2', '.eJxVjDsOwjAQBe_iGlneJf4sJT1nsHb9IQGUSHFSIe5OIqWAdmbee6vI69LHtZU5DlldFIA6_ULh9CzjbvKDx_uk0zQu8yB6T_Rhm75NubyuR_t30HPrtzUZ572Hih0AmkQOREKqaEAy2QLcBR820HGg7CqGsyX0SCiVbC2iPl_bSjdf:1sd2ff:mPCslIID0gTaodWElsn2nqn0tzGm3JYqBZgqGcNthEM', '2024-08-25 07:07:19.899502'),
 ('ncb35gpgojtvf5rsu6mztrhkop6eoqcv', '.eJxVjDsOwjAQBe_iGlleJ-sPJT1nsNbOLg6gWMqnQtwdIqWA9s3Me6lE21rTtvCcxkGdFaA6_Y6ZyoOnnQx3mm5Nlzat85j1ruiDLvraBn5eDvfvoNJSvzWyKyycHZnYSyQrPuSMFgA7G5wXJyAQTbZI3qDFwl1XeoAQiw_C6v0BEm034w:1scu5P:Mq-LrxoeNgbYCbxbGhY3RUBJQAcmfzN3tPulcAPb_P8', '2024-08-24 21:57:19.070332'),
 ('rzur22wuid2ltr623i2frhz5mgv6f3a6', '.eJxVjDsOwjAQBe_iGlneJf4sJT1nsHb9IQGUSHFSIe5OIqWAdmbee6vI69LHtZU5DlldFIA6_ULh9CzjbvKDx_uk0zQu8yB6T_Rhm75NubyuR_t30HPrtzUZ572Hih0AmkQOREKqaEAy2QLcBR820HGg7CqGsyX0SCiVbC2iPl_bSjdf:1sc5pU:3jpYg4LuRI17CziXnjmBLK7bAn8ZeuZxKVdZuix7NWs', '2024-08-22 16:17:32.536164');
@@ -198,25 +200,25 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 
 CREATE TABLE `recefy_miusuario` (
   `id` bigint NOT NULL,
-  `password` varchar(128) NOT NULL,
+  `password` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
   `last_login` datetime(6) DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
+  `username` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_general_ci NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL,
-  `imagen1` varchar(100) DEFAULT NULL,
-  `imagen2` varchar(100) DEFAULT NULL,
-  `telefono` varchar(15) DEFAULT NULL,
+  `imagen1` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `imagen2` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `telefono` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
-  `biografia` longtext,
-  `pais` varchar(100) DEFAULT NULL,
-  `idioma` varchar(50) DEFAULT NULL,
+  `biografia` longtext COLLATE utf8mb4_general_ci,
+  `pais` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `idioma` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `edad` int UNSIGNED DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `recefy_miusuario`
@@ -224,7 +226,7 @@ CREATE TABLE `recefy_miusuario` (
 
 INSERT INTO `recefy_miusuario` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`, `imagen1`, `imagen2`, `telefono`, `fecha_nacimiento`, `biografia`, `pais`, `idioma`, `edad`) VALUES
 (1, 'pbkdf2_sha256$720000$rMQ3uozxeao2VE4VkG102o$l0ICePr+0f/RTkBubDlfhbWpTwE7Uv19Urcw8YYJ8+k=', '2024-06-21 23:45:04.033627', 0, 'astrid vasquez', '', '', 'astridvasquez474@gmail.com', 0, 1, '2024-06-20 22:51:31.092187', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, 'pbkdf2_sha256$600000$75Pu7qWIHpxM90rWNC0uiT$SXxijgmplcXdB0xA4mNPJdf+A7Ra936VesWZdXg2dEc=', '2024-06-18 22:07:17.857256', 1, 'Samuel', 'Samuel', 'Saldarriaga', 'samuelsaldarriaga0510@gmail.com', 1, 1, '2024-06-09 21:08:40.000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'pbkdf2_sha256$600000$75Pu7qWIHpxM90rWNC0uiT$SXxijgmplcXdB0xA4mNPJdf+A7Ra936VesWZdXg2dEc=', '2024-08-11 19:53:29.726872', 1, 'Samuel', 'Samuel', 'Saldarriaga', 'samuelsaldarriaga0510@gmail.com', 1, 1, '2024-06-09 21:08:40.000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (10, 'pbkdf2_sha256$600000$nW0IlTZ1VriVwqVdlloPgu$982deeIVxh/Zw0nCON2whrue0Mo0hCP3SrKbnt2lIiA=', NULL, 0, 'Jordan', 'Jordan', 'Saldarriaga', 'samuelsaldarriagaramirez@outlook.es', 0, 1, '2024-06-11 22:00:07.000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (11, 'pbkdf2_sha256$720000$Zk2G63EZYTYaSXoPllwtyh$Kuqzep7U4E8FrjDT2Nr1qPawg4KLK9PHiw71vP1tVt4=', '2024-08-11 07:07:19.891505', 0, 'administrador J', 'Jose', 'Vasquez', 'jose.vasquez111@soy.sena.edu.co', 0, 1, '2024-06-20 01:26:33.325113', '', 'perfil_usuario/blank-profile-picture-973460_1280_iOoERcx.webp', '3188158107', '2005-05-12', 'soy jose y este es mi perfil', 'colombia', 'español', 19),
 (14, 'pbkdf2_sha256$720000$LG4aR2qleXJ4DI0zMKOUyZ$nhdL7zz8gNSem9yUXnEYX1oZrNCQKHXynp7tkP2jTr8=', '2024-06-21 02:56:38.734563', 0, 'recetarium', '', '', 'recetarium19@gmail.com', 0, 1, '2024-06-21 02:27:33.827665', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -294,6 +296,62 @@ CREATE TABLE `tbl_like_c` (
   `usuario_id` bigint DEFAULT NULL,
   `fecha` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_plan_nutricional`
+--
+
+CREATE TABLE `tbl_plan_nutricional` (
+  `id` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_id` bigint NOT NULL,
+  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `desayuno_domingo` text COLLATE utf8mb4_general_ci,
+  `media_manana_domingo` text COLLATE utf8mb4_general_ci,
+  `almuerzo_domingo` text COLLATE utf8mb4_general_ci,
+  `merienda_domingo` text COLLATE utf8mb4_general_ci,
+  `cena_domingo` text COLLATE utf8mb4_general_ci,
+  `desayuno_lunes` text COLLATE utf8mb4_general_ci,
+  `media_manana_lunes` text COLLATE utf8mb4_general_ci,
+  `almuerzo_lunes` text COLLATE utf8mb4_general_ci,
+  `merienda_lunes` text COLLATE utf8mb4_general_ci,
+  `cena_lunes` text COLLATE utf8mb4_general_ci,
+  `desayuno_martes` text COLLATE utf8mb4_general_ci,
+  `media_manana_martes` text COLLATE utf8mb4_general_ci,
+  `almuerzo_martes` text COLLATE utf8mb4_general_ci,
+  `merienda_martes` text COLLATE utf8mb4_general_ci,
+  `cena_martes` text COLLATE utf8mb4_general_ci,
+  `desayuno_miercoles` text COLLATE utf8mb4_general_ci,
+  `media_manana_miercoles` text COLLATE utf8mb4_general_ci,
+  `almuerzo_miercoles` text COLLATE utf8mb4_general_ci,
+  `merienda_miercoles` text COLLATE utf8mb4_general_ci,
+  `cena_miercoles` text COLLATE utf8mb4_general_ci,
+  `desayuno_jueves` text COLLATE utf8mb4_general_ci,
+  `media_manana_jueves` text COLLATE utf8mb4_general_ci,
+  `almuerzo_jueves` text COLLATE utf8mb4_general_ci,
+  `merienda_jueves` text COLLATE utf8mb4_general_ci,
+  `cena_jueves` text COLLATE utf8mb4_general_ci,
+  `desayuno_viernes` text COLLATE utf8mb4_general_ci,
+  `media_manana_viernes` text COLLATE utf8mb4_general_ci,
+  `almuerzo_viernes` text COLLATE utf8mb4_general_ci,
+  `merienda_viernes` text COLLATE utf8mb4_general_ci,
+  `cena_viernes` text COLLATE utf8mb4_general_ci,
+  `desayuno_sabado` text COLLATE utf8mb4_general_ci,
+  `media_manana_sabado` text COLLATE utf8mb4_general_ci,
+  `almuerzo_sabado` text COLLATE utf8mb4_general_ci,
+  `merienda_sabado` text COLLATE utf8mb4_general_ci,
+  `cena_sabado` text COLLATE utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tbl_plan_nutricional`
+--
+
+INSERT INTO `tbl_plan_nutricional` (`id`, `nombre`, `user_id`, `fecha_creacion`, `desayuno_domingo`, `media_manana_domingo`, `almuerzo_domingo`, `merienda_domingo`, `cena_domingo`, `desayuno_lunes`, `media_manana_lunes`, `almuerzo_lunes`, `merienda_lunes`, `cena_lunes`, `desayuno_martes`, `media_manana_martes`, `almuerzo_martes`, `merienda_martes`, `cena_martes`, `desayuno_miercoles`, `media_manana_miercoles`, `almuerzo_miercoles`, `merienda_miercoles`, `cena_miercoles`, `desayuno_jueves`, `media_manana_jueves`, `almuerzo_jueves`, `merienda_jueves`, `cena_jueves`, `desayuno_viernes`, `media_manana_viernes`, `almuerzo_viernes`, `merienda_viernes`, `cena_viernes`, `desayuno_sabado`, `media_manana_sabado`, `almuerzo_sabado`, `merienda_sabado`, `cena_sabado`) VALUES
+(8, 'hola', 7, '2024-08-12 04:30:22', 'Ejemplo 1', 'Ejemplo 2', 'Ejemplo 3', 'ejemplo 4', 'ejemplo 5', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'aa', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'),
+(9, 'Calendario Saldarriaga', 7, '2024-08-12 05:45:12', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j', 'j');
 
 -- --------------------------------------------------------
 
@@ -438,6 +496,13 @@ ALTER TABLE `tbl_like_c`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
+-- Indices de la tabla `tbl_plan_nutricional`
+--
+ALTER TABLE `tbl_plan_nutricional`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indices de la tabla `tbl_recetas`
 --
 ALTER TABLE `tbl_recetas`
@@ -488,7 +553,7 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT de la tabla `recefy_miusuario`
 --
 ALTER TABLE `recefy_miusuario`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `recefy_miusuario_groups`
@@ -513,6 +578,12 @@ ALTER TABLE `tbl_comentarios`
 --
 ALTER TABLE `tbl_like_c`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_plan_nutricional`
+--
+ALTER TABLE `tbl_plan_nutricional`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_recetas`
@@ -571,6 +642,12 @@ ALTER TABLE `tbl_comentarios`
 ALTER TABLE `tbl_like_c`
   ADD CONSTRAINT `tbl_like_c_ibfk_1` FOREIGN KEY (`comentario_id`) REFERENCES `tbl_comentarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `tbl_like_c_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `recefy_miusuario` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `tbl_plan_nutricional`
+--
+ALTER TABLE `tbl_plan_nutricional`
+  ADD CONSTRAINT `tbl_plan_nutricional_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `recefy_miusuario` (`id`);
 
 --
 -- Filtros para la tabla `tbl_recetas`

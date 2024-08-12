@@ -1,0 +1,113 @@
+{% load static %}
+{% include "inc/header.html" %}
+
+<link rel="stylesheet" href="{% static 'css/plan_nutricional/plan_nutricional.css' %}">
+
+<main>
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container">
+        <h1>Hola {{ user.first_name }}! Crea Tu Calendario aquí</h1>
+        <br>
+        <form method="post" action="{% url 'crear_plan' %}">
+            {% csrf_token %}
+            <div class="calendar-name">
+                <label for="calendarName">Nombre del calendario:</label>
+                <input type="text" id="calendarName" name="nombre" class="form-control fancy-input" required>
+            </div>
+
+            <br>
+            <table id="mealTable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Comida</th>
+                        <th>Domingo</th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miércoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for meal in meals %}
+                    <tr>
+                        <td>{{ meal.name }}</td>
+                        {% for day in days %}
+                        <td>
+                            <input type="text" name="{{ meal.name }}_{{ day }}" class="form-control">
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br><br>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary" style="background-color: #28a56b; border-color: white;">Guardar Plan</button>
+                <a href="{% url 'ver_calendarios' %}" class="btn btn-secondary">Ver mis Calendarios</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<br><br><br><br>
+{% include "inc/footer.html" %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const { jsPDF } = window.jspdf;
+
+    const pdfButton = document.getElementById("pdfButton");
+    pdfButton.addEventListener("click", () => {
+        const doc = new jsPDF();
+
+        const calendarName = document.getElementById("calendarName").value || "Calendario de Comidas";
+        doc.setFontSize(18);
+        doc.text(calendarName, 14, 22);
+        doc.setFontSize(12);
+        doc.setTextColor(100);
+
+        const table = document.getElementById("mealTable");
+        const headers = [];
+        for (const th of table.querySelectorAll("thead th")) {
+            headers.push(th.textContent.trim());
+        }
+
+        const data = [];
+        for (const tr of table.querySelectorAll("tbody tr")) {
+            const rowData = [];
+            for (const td of tr.querySelectorAll("td")) {
+                rowData.push(td.textContent.trim());
+            }
+            data.push(rowData);
+        }
+
+        doc.autoTable({
+            head: [headers],
+            body: data,
+            startY: 30,
+        });
+
+        doc.save(`${calendarName}.pdf`);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const alerts = document.querySelectorAll('.alert');
+
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.classList.add('hide');
+        }, 3000); // Ocultar después de 3 segundos
+    });
+});
+</script>

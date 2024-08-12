@@ -1,0 +1,39 @@
+{% load static %}
+{% include "inc/header.html" %}
+
+<link rel="stylesheet" href="{% static 'css/plan_nutricional/ver_calendarios_por_usuario.css' %}">
+
+<main>
+    <div class="container">
+        <h1>Bienvenido <b>{{ user.first_name }} {{ user.last_name }}</b>!</h1>
+        <hr>
+
+        {% if calendarios %}
+        <h2>Estos son todos tus calendarios:</h2>
+        <br><br>
+
+        {% for calendario in calendarios %}
+        <div class="calendar-item">
+            <div class="calendar-image" style="background-image: url('https://images.pexels.com/photos/196643/pexels-photo-196643.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
+            <div class="calendar-content">
+                <h3 style="color: white;">{{ calendario.nombre }}</h3>
+                <div class="calendar-buttons">
+                    <a href="{% url 'ver_calendario' calendario.id %}" class="btn btn-info">Ver Detalle</a>
+                    <a href="#" class="btn btn-primary">Actualizar</a>
+                    <a href="#" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-dark text-center" role="alert">
+            ¡No has subido ningún calendario aún! ¿Quieres crear uno?
+            <a href="{% url 'crear_plan' %}">Crear Un Calendario</a>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+{% include "inc/footer.html" %}

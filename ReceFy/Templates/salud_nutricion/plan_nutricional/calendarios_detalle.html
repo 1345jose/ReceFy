@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario: {{ calendario.nombre }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #28a56b 0%, #4CAF50 100%); /* Gradiente de fondo */
+        }
+
+        main {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 95%; /* Ajustado para mayor ancho */
+            max-width: 1600px; /* Aumento del ancho máximo */
+            margin: 0 auto;
+            padding: 50px; /* Aumento del padding */
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 3.5rem; /* Aumento del tamaño de la fuente */
+            font-weight: 700;
+            position: relative;
+            font-family: 'Courgette', cursive;
+            font-family: 'Lobster', sans-serif;
+        }
+
+        h1::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 120px; /* Aumento del ancho de la barra */
+            height: 10px; /* Aumento del alto de la barra */
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px; /* Espaciado entre filas */
+            font-size: 1.4rem; /* Tamaño de fuente */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 20px; /* Padding */
+            text-align: center;
+            vertical-align: middle;
+            position: relative;
+            background-color: #fafafa;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover td {
+            background-color: #e7f3fe;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        td[contenteditable="true"] {
+            background-color: #fff;
+            cursor: text;
+        }
+
+        td[contenteditable="true"]:focus {
+            outline: 2px solid #4CAF50;
+            background-color: #e7f3fe;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            table {
+                font-size: 1.2rem; /* Aumento del tamaño de la fuente en dispositivos pequeños */
+            }
+
+            h1 {
+                font-size: 2.8rem; /* Aumento del tamaño de la fuente en dispositivos pequeños */
+            }
+
+            .container {
+                padding: 30px; /* Aumento del padding en dispositivos pequeños */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main>
+    <h1>Calendario: {{ calendario.nombre }}</h1>
+
+    <div class="container">
+        <table id="mealTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Comida</th>
+                    <th>Domingo</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sábado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Desayuno</td>
+                    <td>{{ calendario.desayuno_domingo }}</td>
+                    <td>{{ calendario.desayuno_lunes }}</td>
+                    <td>{{ calendario.desayuno_martes }}</td>
+                    <td>{{ calendario.desayuno_miercoles }}</td>
+                    <td>{{ calendario.desayuno_jueves }}</td>
+                    <td>{{ calendario.desayuno_viernes }}</td>
+                    <td>{{ calendario.desayuno_sabado }}</td>
+                </tr>
+                <tr>
+                    <td>Media Mañana</td>
+                    <td>{{ calendario.media_manana_domingo }}</td>
+                    <td>{{ calendario.media_manana_lunes }}</td>
+                    <td>{{ calendario.media_manana_martes }}</td>
+                    <td>{{ calendario.media_manana_miercoles }}</td>
+                    <td>{{ calendario.media_manana_jueves }}</td>
+                    <td>{{ calendario.media_manana_viernes }}</td>
+                    <td>{{ calendario.media_manana_sabado }}</td>
+                </tr>
+                <tr>
+                    <td>Almuerzo</td>
+                    <td>{{ calendario.almuerzo_domingo }}</td>
+                    <td>{{ calendario.almuerzo_lunes }}</td>
+                    <td>{{ calendario.almuerzo_martes }}</td>
+                    <td>{{ calendario.almuerzo_miercoles }}</td>
+                    <td>{{ calendario.almuerzo_jueves }}</td>
+                    <td>{{ calendario.almuerzo_viernes }}</td>
+                    <td>{{ calendario.almuerzo_sabado }}</td>
+                </tr>
+                <tr>
+                    <td>Merienda</td>
+                    <td>{{ calendario.merienda_domingo }}</td>
+                    <td>{{ calendario.merienda_lunes }}</td>
+                    <td>{{ calendario.merienda_martes }}</td>
+                    <td>{{ calendario.merienda_miercoles }}</td>
+                    <td>{{ calendario.merienda_jueves }}</td>
+                    <td>{{ calendario.merienda_viernes }}</td>
+                    <td>{{ calendario.merienda_sabado }}</td>
+                </tr>
+                <tr>
+                    <td>Cena</td>
+                    <td>{{ calendario.cena_domingo }}</td>
+                    <td>{{ calendario.cena_lunes }}</td>
+                    <td>{{ calendario.cena_martes }}</td>
+                    <td>{{ calendario.cena_miercoles }}</td>
+                    <td>{{ calendario.cena_jueves }}</td>
+                    <td>{{ calendario.cena_viernes }}</td>
+                    <td>{{ calendario.cena_sabado }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+</body>
+</html>
