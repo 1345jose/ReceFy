@@ -14,7 +14,7 @@ def index(request):
     return render(request,'index.html')
 
 #region Novedades
-
+    
 def apartado_novedades(request):
     pagina_actual = "informacion" 
     return render(request, "apartado_novedades.html", {"pagina": pagina_actual})
@@ -511,6 +511,11 @@ def ver_calendarios(request):
 def ver_calendario(request, id):
     calendario = get_object_or_404(PlanNutricional, id=id)
     return render(request, 'salud_nutricion/plan_nutricional/calendarios_detalle.html', {'calendario': calendario})
+
+def Eliminar_Plan(request,id_plan):
+    plan = PlanNutricional.objects.filter(id=id_plan)
+    plan.delete()
+    return redirect('/ver_calendarios/')
 
 #endregion
 
