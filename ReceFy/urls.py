@@ -62,10 +62,12 @@ urlpatterns = [
     path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwordUpdate"),
     path('configuracion/updateUser/<int:idusuario>', views.updateUser, name="updateUser"),
 
+
     #region Plan Nutricional (calendario)
     path('salud-nutricion/plan-nutricional/', views.crear_plan, name="crear_plan"),
     path('ver_calendarios/', views.ver_calendarios, name='ver_calendarios'),
     path('calendario/<int:id>/', views.ver_calendario, name='ver_calendario'),
+    path('plan/eliminar/<int:id_plan>', views.Eliminar_Plan, name="Eliminar_Plan"),
     #endregion
          
 ]

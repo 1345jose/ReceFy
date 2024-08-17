@@ -9,7 +9,7 @@
         <hr>
 
         {% if calendarios %}
-        <h2>Estos son todos tus calendarios:</h2>
+        <h2>Estos son todos tus Planes hasta ahora:</h2>
         <br><br>
 
         {% for calendario in calendarios %}
@@ -20,7 +20,7 @@
                 <div class="calendar-buttons">
                     <a href="{% url 'ver_calendario' calendario.id %}" class="btn btn-info">Ver Detalle</a>
                     <a href="#" class="btn btn-primary">Actualizar</a>
-                    <a href="#" class="btn btn-danger">Eliminar</a>
+                    <a href="#" data-url="{% url 'Eliminar_Plan' calendario.id %}" onclick="borrarPlan(event, this);" class="btn btn-danger">Eliminar</a>
                 </div>
             </div>
         </div>
@@ -35,5 +35,7 @@
 </main>
 
 <br><br><br><br><br><br><br><br><br><br>
+
+<script src="{% static 'js/alertas.js' %}"></script>
 
 {% include "inc/footer.html" %}
