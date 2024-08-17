@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import MiUsuario, Receta , Comentario, MeGusta, PlanNutricional
+from .models import Dieta, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -514,3 +514,25 @@ def ver_calendario(request, id):
 
 #endregion
 
+#region Dietas Disponibles
+
+def lista_dietas(request):
+    dietas = Dieta.objects.all()
+    dietas_subir_peso = Dieta.objects.filter(categoria='Dietas para subir de peso')
+    dietas_bajar_peso = Dieta.objects.filter(categoria='Dieta para bajar de peso')
+    dietas_deshidratacion = Dieta.objects.filter(categoria='Deshidratacion')
+    dietas_cardiovasculares = Dieta.objects.filter(categoria='Cardiovascular')
+    dietas_diabetes = Dieta.objects.filter(categoria='Diabetes')
+
+    context = {
+        'dietas': dietas,
+        'dietas_subir_peso': dietas_subir_peso,
+        'dietas_bajar_peso': dietas_bajar_peso,
+        'dietas_deshidratacion': dietas_deshidratacion,
+        'dietas_cardiovasculares': dietas_cardiovasculares,
+        'dietas_diabetes': dietas_diabetes,
+
+    }
+    return render(request, 'salud_nutricion/dietas_disponibles/lista_dietas.html', context)
+
+#end region

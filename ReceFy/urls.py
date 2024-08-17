@@ -67,6 +67,11 @@ urlpatterns = [
     path('ver_calendarios/', views.ver_calendarios, name='ver_calendarios'),
     path('calendario/<int:id>/', views.ver_calendario, name='ver_calendario'),
     #endregion
+
+    #region Dietas Disponibles
+    path('dietas/', views.lista_dietas, name='lista_dietas'),
+
+    #endregion
          
 ]
 if settings.DEBUG:

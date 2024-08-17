@@ -1,0 +1,260 @@
+{% load static %}
+
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- BUSCADOR Y FILTROS -->
+<div class="container mt-4">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar dietas por nombre...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+    <br>
+    <h3 style="color: white;">
+        <i class="fas fa-tags"></i> Categoría de las dietas    
+    </h3>
+    <hr>
+    <a href="#category-dietas-subir-peso" class="category-link">Subir de Peso</a>
+    <a href="#category-dietas-bajar-peso" class="category-link">Bajar de Peso</a>
+    <a href="#category-dietas-deshidratacion" class="category-link">Deshidratación</a>
+    <a href="#category-dietas-cardiovasculares" class="category-link">Cardiovasculares</a>
+    <a href="#category-dietas-diabetes" class="category-link">Diabetes</a>
+</div>
+
+<div class="container mt-5">
+    <div class="category-container" id="category-dietas-subir-peso">
+        <h3 style="color: white;">
+            <i class="fas fa-arrow-up"></i> Dietas para Subir de Peso
+        </h3>
+        <hr>
+        {% if dietas_subir_peso %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'subir-peso')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-subir-peso">
+                    <div class="slider-track">
+                        {% for dieta in dietas_subir_peso %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="#">
+                                        {% if dieta.imagen and dieta.imagen.url %}
+                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre_dieta }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn right-btn" onclick="slide('right', 'subir-peso')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay dietas disponibles en esta categoría.
+            </h3>
+        {% endif %}
+    </div>
+    
+    <br><br><br>
+
+    <div class="category-container" id="category-dietas-bajar-peso">
+        <h3 style="color: white;">
+            <i class="fas fa-arrow-down"></i> Dietas para Bajar de Peso
+        </h3>
+        <hr>
+        {% if dietas_bajar_peso %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'bajar-peso')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-bajar-peso">
+                    <div class="slider-track">
+                        {% for dieta in dietas_bajar_peso %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="#">
+                                        {% if dieta.imagen and dieta.imagen.url %}
+                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn right-btn" onclick="slide('right', 'bajar-peso')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay dietas disponibles en esta categoría.
+            </h3>
+        {% endif %}
+    </div>
+
+    <br><br><br>
+
+    <div class="category-container" id="category-dietas-deshidratacion">
+        <h3 style="color: white;">
+            <i class="fas fa-tint"></i> Dietas para Deshidratación
+        </h3>
+        <hr>
+        {% if dietas_deshidratacion %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'deshidratacion')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-deshidratacion">
+                    <div class="slider-track">
+                        {% for dieta in dietas_deshidratacion %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="#">
+                                        {% if dieta.imagen and dieta.imagen.url %}
+                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn right-btn" onclick="slide('right', 'deshidratacion')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay dietas disponibles en esta categoría.
+            </h3>
+        {% endif %}
+    </div>
+
+    <br><br><br>
+
+    <div class="category-container" id="category-dietas-cardiovasculares">
+        <h3 style="color: white;">
+            <i class="fas fa-heartbeat"></i> Dietas Cardiovasculares
+        </h3>
+        <hr>
+        {% if dietas_cardiovasculares %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'cardiovasculares')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-cardiovasculares">
+                    <div class="slider-track">
+                        {% for dieta in dietas_cardiovasculares %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="#">
+                                        {% if dieta.imagen and dieta.imagen.url %}
+                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn right-btn" onclick="slide('right', 'cardiovasculares')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay dietas disponibles en esta categoría.
+            </h3>
+        {% endif %}
+    </div>
+
+    <br><br><br>
+
+    <div class="category-container" id="category-dietas-diabetes">
+        <h3 style="color: white;">
+            <i class="fas fa-blood-drop"></i> Dietas para Diabetes
+        </h3>
+        <hr>
+        {% if dietas_diabetes %}
+            <button class="slider-btn left-btn" onclick="slide('left', 'diabetes')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider-container">
+                <div class="slider" id="slider-diabetes">
+                    <div class="slider-track">
+                        {% for dieta in dietas_diabetes %}
+                            <div class="recipe-card">
+                                <div class="card">
+                                    <a href="#">
+                                        {% if dieta.imagen and dieta.imagen.url %}
+                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% else %}
+                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn right-btn" onclick="slide('right', 'diabetes')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        {% else %}
+            <h3 style="color: wheat; text-align: center;">
+                No hay dietas disponibles en esta categoría.
+            </h3>
+        {% endif %}
+    </div>
+</div>
+
+<br><br><br><br><br><br><br>
+
+{% include 'inc/footer.html' %}
+
+<script src="{% static 'js/sliders_listados.js' %}"></script>
