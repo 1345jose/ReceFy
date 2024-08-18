@@ -540,4 +540,10 @@ def lista_dietas(request):
     }
     return render(request, 'salud_nutricion/dietas_disponibles/lista_dietas.html', context)
 
-#end region
+
+def detalle_dietas(request, id):
+    pagina_actual = "detalle_dietas"
+    dietas = Dieta.objects.get(pk=id)
+    return render(request, "salud_nutricion/dietas_disponibles/detalle_dietas.html", {"dietas": dietas, "pagina": pagina_actual})
+#endregion
+

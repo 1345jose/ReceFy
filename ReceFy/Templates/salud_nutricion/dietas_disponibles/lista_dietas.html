@@ -39,9 +39,9 @@
                         {% for dieta in dietas_subir_peso %}
                             <div class="recipe-card">
                                 <div class="card">
-                                    <a href="#">
+                                    <a href="{% url 'detalle_dietas' dieta.id %}">
                                         {% if dieta.imagen and dieta.imagen.url %}
-                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre_dieta }}">
+                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
                                         {% else %}
                                             <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
                                         {% endif %}
@@ -85,7 +85,7 @@
                         {% for dieta in dietas_bajar_peso %}
                             <div class="recipe-card">
                                 <div class="card">
-                                    <a href="#">
+                                    <a href="{% url 'detalle_dietas' dieta.id %}">
                                         {% if dieta.imagen and dieta.imagen.url %}
                                             <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
                                         {% else %}
@@ -131,7 +131,7 @@
                         {% for dieta in dietas_deshidratacion %}
                             <div class="recipe-card">
                                 <div class="card">
-                                    <a href="#">
+                                    <a href="{% url 'detalle_dietas' dieta.id %}">
                                         {% if dieta.imagen and dieta.imagen.url %}
                                             <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
                                         {% else %}
@@ -177,7 +177,7 @@
                         {% for dieta in dietas_cardiovasculares %}
                             <div class="recipe-card">
                                 <div class="card">
-                                    <a href="#">
+                                    <a href="{% url 'detalle_dietas' dieta.id %}">
                                         {% if dieta.imagen and dieta.imagen.url %}
                                             <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
                                         {% else %}
@@ -223,7 +223,7 @@
                         {% for dieta in dietas_diabetes %}
                             <div class="recipe-card">
                                 <div class="card">
-                                    <a href="#">
+                                    <a href="{% url 'detalle_dietas' dieta.id %}">
                                         {% if dieta.imagen and dieta.imagen.url %}
                                             <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
                                         {% else %}

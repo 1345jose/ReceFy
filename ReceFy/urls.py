@@ -72,6 +72,7 @@ urlpatterns = [
 
     #region Dietas Disponibles
     path('dietas/', views.lista_dietas, name='lista_dietas'),
+    path('dietas/dieta=<int:id>/', views.detalle_dietas, name='detalle_dietas'),
 
     #endregion
          
