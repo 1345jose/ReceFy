@@ -1,96 +1,199 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
-    font-family: "Urbanist", sans-serif;
-    background: linear-gradient(315deg, rgb(25, 100, 65) 3%, rgba(36, 121, 36, 0.514) 38%, rgb(35, 146, 109) 68%, rgb(33, 71, 54) 98%);    color: #333;
-    margin: 0;
-    padding: 0;
+    background-image: url('https://images.pexels.com/photos/952356/pexels-photo-952356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
+
 
 main {
     padding: 20px;
 }
 
-.intro {
-    margin-bottom: 20px;
-    font-size: 45px;
-    color: white;
+.logo {
+    margin-left: 25px;
 }
 
-.intro p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-}
-
-.tab-pane .info{
-    color: white;
-}
-
-.glossary {
-    margin-bottom: 30px;
-    padding: 25px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: rgba(248, 247, 247, 0.541);
-    width: 84%;
+.logo h1, .pagina h2 {
+    font-family: 'Lobster', sans-serif;
+    color: rgb(255, 255, 255);
+    transition: color 0.3s ease, font-size 0.3s ease;
     text-align: center;
-    margin-left: 7%;
-    
+    font-size: 42px;
 }
 
-.glossary h2 {
-    font-size: 2rem;
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo i {
+    color: white;
+    margin-right: 8px;
+}
+
+.slogan h1 {
+    margin-right: 115px;
+    color: #ffffff;
+    font-family: "Urbanist", sans-serif;
+    font-size: 20px;
+}
+
+.logo:hover h1, .pagina h2:hover {
+    font-size: 47px;
+}
+
+
+.nav-pills .nav-link {
+    color: white; /* Color de la letra en blanco */
+    background-color: transparent; /* Fondo transparente cuando no está seleccionado */
+    border-radius: 5px; /* Bordes redondeados para los botones */
+}
+
+/* Estilo para los botones seleccionados (activos) */
+.nav-pills .nav-link.active {
+    background-color: #28a56b; /* Fondo verde cuando el botón está seleccionado */
+    color: white; /* Asegura que la letra siga siendo blanca */
+}
+
+h4{
+    font-size: 35px;
+    text-align: center;
+    color: white;
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+
+}
+
+.consejo-container {
+    background-color: #f0f4f7; /* Color de fondo suave */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    padding: 20px; /* Espacio interno */
+    margin-bottom: 20px; /* Espacio inferior entre consejos */
+    border: 1px solid #d1e0e5; /* Borde sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+}
+
+.consejo-container:hover {
+    transform: scale(1.02); /* Aumenta el tamaño solo un poco al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más grande para un efecto más pronunciado */
+}
+
+.consejo-titulo {
+    font-size: 1.5rem;
+    color: #28a56b; /* Color del título */
+    font-weight: bold;
+}
+
+.consejo-descripcion {
+    font-size: 1rem;
+    color: #34495e; /* Color del texto de la descripción */
+    margin-top: 10px;
+    text-align: justify;
+}
+
+.img-fluid {
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho de la columna */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+    border-radius: 8px; /* Bordes redondeados para las imágenes */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para las imágenes */
+}
+
+/* Alineación vertical en la columna */
+.col-md-4 {
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido en la columna */
+    justify-content: center; /* Centra horizontalmente el contenido en la columna si es necesario */
+}
+
+.container-glosario {
+    background-color: #ffffff; /* Fondo blanco para el contenedor */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 30px; /* Espacio interno */
+    max-width: 1080px; /* Ancho máximo aumentado */
+    width: 100%; /* Ocupa el 100% del ancho disponible */
+    margin: 0 auto; /* Centra horizontalmente */
+    text-align: justify; /* Justifica el texto dentro del contenedor */
+}
+
+.titles-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.glossary img {
-    max-width: 100%; /* Ajuste del ancho máximo */
-    height: auto; /* Altura automática para mantener la proporción */
-    display: block;
-    border-radius: 10px;
+.titulo-glosario-1 {
+    font-size: 33px;
+    font-family: 'Lobster', cursive;
+}
+
+.titulo-glosario-2 {
+    font-size: 33px;
+    font-family: 'Lobster', cursive;
+    color: #28a56b;
+}
+
+.letter-header {
+    font-size: 33px;
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+    color: #28a56b; /* Color general para todas las letras */
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Transiciones de transformación y opacidad */
-    margin-left: auto; /* Centra horizontalmente */
-    margin-right: auto; /* Centra horizontalmente */
 }
 
-.glossary img:hover {
-    transform: scale(1.1); /* Aumenta la escala al 110% */
-    opacity: 0.9; /* Reduce la opacidad al 90% */
-}
-
-.glossary p {
-    font-size: 20px; /* Aumenté el tamaño de fuente para los párrafos */
-    line-height: 1.6;
-}
 
 .alphabet-list {
-    width: 50%;
-    text-decoration: none ;
-    height: 35px;
-    background-color: #28a56b;
-    border-radius: 35px;
-    margin-bottom: 20px;
-    text-align: center; /* Alineación del texto al centro */
+    width: 55%;
+    height: 25px;
+    background: linear-gradient(90deg, #28a56b, #34c759);
+    border-radius: 25px;
+    margin: 15px auto 15px 10px; /* Ajuste del margen izquierdo para moverlo a la izquierda */
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
 }
 
+.alphabet-list:hover {
+    transform: scale(1.05);
+}
 
 .alphabet-list a {
     display: inline-block;
-    margin-right: 10px;
-    font-size: 20px;
+    margin: 0 4px;
+    font-size: 12px;
     color: white;
     text-decoration: none !important;
-    transition: color 0.3s ease, background-color 0.3s ease;
-
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    padding: 4px 8px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.alphabet-list a:hover{
-    background-color:white;
-    border: 1px solid GREY;
-    color:#28a56b;
+.alphabet-list a:hover {
+    background-color: white;
+    color: #28a56b;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #28a56b;
 }
 
 .search-bar {
@@ -101,168 +204,81 @@ main {
 }
 
 .search-bar input {
-    padding: 5px;
-    border: 1px solid #ccc;
+    padding: 10px 15px; /* Aumenta el relleno para hacerlo más grande */
+    border: 2px solid #28a56b; /* Borde verde más grueso */
     border-right: none;
-    border-radius: 4px 0 0 4px;
+    border-radius: 25px 0 0 25px; /* Bordes más redondeados */
+    background-color: #f0f4f7; /* Fondo suave */
+    font-size: 16px; /* Aumenta el tamaño del texto */
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Transiciones suaves */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+.search-bar input:focus {
+    background-color: #ffffff; /* Fondo blanco al enfocar */
+    border-color: #036e3c; /* Borde verde oscuro al enfocar */
+    outline: none; /* Quita el borde azul por defecto */
 }
 
 .search-bar button {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 0 4px 4px 0;
-    background-color: #28a56b;
-    color: white;
+    padding: 10px 20px; /* Aumenta el relleno para un botón más grande */
+    border: 2px solid #28a56b; /* Borde verde más grueso */
+    border-radius: 0 25px 25px 0; /* Bordes más redondeados */
+    background-color: #28a56b; /* Color de fondo verde */
+    color: white; /* Texto blanco */
+    font-size: 16px; /* Aumenta el tamaño del texto */
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 }
 
 .search-bar button:hover {
-    background-color: #036e3c;
+    background-color: #036e3c; /* Verde más oscuro al pasar el ratón */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
 }
 
-.glossary-section {
-    margin-bottom: 20px;
-}
-
-.glossary-section h3 {
-    font-size: 1.5rem;
-    color: #28a56b;
-    margin-bottom: 10px;
-}
-
-.frases h1{
-    font-family: 'Courgette', cursive;
-    font-family: 'Lobster', sans-serif;
-}
-
-.glossary-section p {
-    font-size: 15px;
-    margin-bottom: 10px;
-}
-
-.glossary-section p strong {
-    font-weight: bold;
-}
-
-.textos p{
-    color: white;
-}
-
-.textosg {
-    width: 80%; /* Por ejemplo, ajusta el ancho según tus necesidades */
-    margin: 0 auto; /* Centra el div horizontalmente */
-    text-align: center; /* Centra el contenido dentro del div */
-}
-
-.textosg h1{
-    color: #28a56b;
-    font-size: 45px;
-    
-}
-
-.textosg p{
-    color: #28a56b;
-    font-size: 25px;
-}
-
-.textos {
-    width: 80%; /* Por ejemplo, ajusta el ancho según tus necesidades */
-    margin: 0 auto; /* Centra el div horizontalmente */
-    text-align: center; /* Centra el contenido dentro del div */
-}
-
-.glossary2 {
-    margin-bottom: 30px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: rgba(248, 247, 247, 0.541);
-    width: 70%;
-    text-align: center;
-    margin-left: 15%;
-    
-}
-
-.glossary2 h3 {
-    font-size: 28px; /* Aumenté el tamaño de fuente para los títulos */
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.glossary2 p {
-    font-size: 24px; /* Aumenté el tamaño de fuente para los párrafos */
-    line-height: 1.6;
-    color: #666;
-}
-
-.glossary2 img {
-    width: 100%; /* Ajuste del ancho */
-    max-width: 450px;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Transiciones de transformación y opacidad */
-    margin-left: 34%;
-}
-
-.glossary2 img:hover {
-    transform: scale(1.1); /* Aumenta la escala al 110% */
-    opacity: 0.8; /* Reduce la opacidad al 80% */
-}
-
-.glossary3 {
-    margin-bottom: 30px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: rgba(248, 247, 247, 0.541);
-    width: 74%;
-    text-align: justify;
-    margin-left: 11%;
-    
-}
-
+/* Estilo general de la paginación */
 .pagination {
+    display: flex;
     justify-content: center;
-    margin-top: 20px;
+    padding: 10px 0;
+    list-style: none;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
 }
 
 .pagination .page-link {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
     color: #333;
-    border: none;
-    background-color: transparent;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
-.pagination .page-link:hover {
-    color: #0069d9;
+/* Efecto al pasar el ratón por encima */
+.pagination .page-link:hover,
+.pagination .page-link:focus {
+    color: #28a56b;
+    background: #e9ecef;
+    border-color: #28a56b;
 }
 
-@media (max-width: 768px) {
-    .textos{
-        color: white;
-    }
-    .textos h3{
-        font-size: 15px;
-    }
-    .tab-pane{
-        background-color: #036e3c;
-        width: 100%;
+/* Estilo para el enlace activo */
+.pagination .page-item.active .page-link {
+    color: #fff;
+    background: #28a56b;
+    border-color: #28a56b;
+}
 
-    }
-    .glossary {
-        margin-bottom: 30px;
-        padding: 25px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        background-color: rgba(248, 247, 247, 0.541);
-        width: auto;
-        text-align: center;
-        margin-left: 7%;
-        
-    }
+/* Estilo para los elementos deshabilitados */
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background: #f5f5f5;
+    border-color: #ddd;
 }
