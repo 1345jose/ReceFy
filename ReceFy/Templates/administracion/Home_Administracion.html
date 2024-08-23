@@ -11,8 +11,16 @@
 </head>
 <body>
 
+    <header>
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </button>
+        <h1 class="page-title">ReceFy</h1>
+    </header>
 
-    <aside class="sidebar">
+
+    <aside class="sidebar" id="sidebar">
+        <button class="close-button">&times;</button>
         <h2>Panel de Administración</h2>
         <a href="/"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
         <a href="#"><i class="fas fa-users"></i>Usuarios</a>
@@ -28,10 +36,11 @@
         <div class="card">
             <div class="text">
             <h2>ReceFy</h2>
-            <p style="color: #1b5746;">¡ Hola <b style="color: #1f2937;">{{ user.username }}</b> Bienvenido al panel de administración !</p>
+            <p style="color: #1b5746;">¡ Hola <b style="color: #1f2937;">{{ user.first_name }}</b> Bienvenido al panel de administración !</p>
             </div>
             <div class="card">
                 <h3>Estadísticas Generales</h3>
+                <br>
                 <p>Total de Usuarios: <b>{{ total_usuarios }}</b></p>
                 <p>Total Consejeros: <b>{{ total_consejeros }}</b></p>
                 <p>Total recetas: <b>{{ total_recetas }}</b></p>
@@ -60,7 +69,9 @@
         </div>
         <div class="card">
             <h2>Consejeros</h2>
+            <br>
             <p><b>Consejeros más recientes</b></p>
+            <br>
             <table>
                 <thead>
                     <tr>
@@ -101,8 +112,10 @@
 
         <div class="card">
             <h2>Recetas</h2>
+            <br>
             {% if recetas_recientes %}
             <p><b>Recetas mas recientes</b></p>
+            <br>
             <table>
                 <thead>
                     <tr>
@@ -144,8 +157,10 @@
 
         <div class="card">
             <h2>Dietas</h2>
+            <br>
             {% if dietas_recientes %}
             <p><b>Dietas Más Recientes</b></p>
+            <br>
             <table>
                 <thead>
                     <tr>
@@ -195,8 +210,10 @@
 
         <div class="card">
             <h2>Ingredientes</h2>
+            <br>
             {% if ingredientes_recientes %}
             <p><b>Ingredientes Más Recientes</b></p>
+            <br>
             <table>
                 <thead>
                     <tr>
@@ -233,4 +250,25 @@
         </div>
     </main>
 </body>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const closeButton = document.querySelector('.close-button');
+
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.add('open');
+    });
+
+    closeButton.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+    });
+
+    // Cierra el menú si se hace clic fuera de él
+    document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+</script>
 </html>
