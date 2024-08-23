@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 body{
     background-color: white;
     font-family: "Urbanist", sans-serif;
@@ -101,6 +102,12 @@ main .servicios{
 
 }
 
+.navbar-toggler-icon {
+    margin-top: 13px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    /* Cambia 'rgba(255, 255, 255, 1)' para ajustar el color de las barras */
+  }
+
 .carima h1{
     font-family: 'Courgette', cursive;
     font-family: 'Lobster', sans-serif;
@@ -157,7 +164,6 @@ main .servicios{
 }
 
 
-
 #recetas{
     background: url('https://images.pexels.com/photos/6062042/pexels-photo-6062042.jpeg?auto=compress&cs=tinysrgb&w=600')no-repeat center center/cover;
 }
@@ -198,16 +204,21 @@ footer:hover{
     background-color: #28a56b;
 }
 
- /* Media query to adjust spacing on small screens */
 @media (max-width: 768px) {
     main{
         width: 90%;
     }
+
     .col-12 {
         margin: 10px 0;
     }
+    
     .col-12 h1:hover{
         color: white;
+    }
+
+    .navbar-brand{
+        margin-left: 35px;
     }
 
 }
