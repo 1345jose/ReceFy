@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Dieta, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -456,6 +456,7 @@ def comentUser(request, usuario_id):
     user = get_object_or_404(MiUsuario, id=usuario_id)
     comentarios = Comentario.objects.filter(usuario=user)
     return render(request, 'usuarios/mi_perfil.html', {'user': user, 'comentarios': comentarios})
+#endregion
 
 
 #region Plan Nutricional (Calendario)
@@ -547,3 +548,44 @@ def detalle_dietas(request, id):
     return render(request, "salud_nutricion/dietas_disponibles/detalle_dietas.html", {"dietas": dietas, "pagina": pagina_actual})
 #endregion
 
+#region Panel Administrativo
+
+def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect("/Usuarios/login")
+    total_usuarios = MiUsuario.objects.count()
+    total_consejeros = Consejero.objects.count()
+    total_recetas = Receta.objects.count()
+    total_dietas = Dieta.objects.count()
+    total_ingredientes = Ingrediente.objects.count()
+
+    context = {
+        "total_usuarios": total_usuarios,
+        "total_consejeros": total_consejeros,
+        "total_recetas": total_recetas,
+        "total_dietas": total_dietas,
+        "total_ingredientes": total_ingredientes,
+    }
+
+    consejeros_recientes = Consejero.objects.order_by('-fecha_registro')[:3]
+    recetas_recientes = Receta.objects.order_by('-fecha_registro_receta')[:3]
+    dietas_recientes = Dieta.objects.order_by('-fecha_registro_dieta')[:3]
+    ingredientes_recientes = Ingrediente.objects.order_by('-fecha_registro_ingredientes')[:3]
+
+    context = {
+        'total_usuarios': total_usuarios,
+        'total_consejeros': total_consejeros,
+        'total_recetas': total_recetas,
+        'total_dietas': total_dietas,
+        'total_ingredientes': total_ingredientes,
+
+        'consejeros_recientes': consejeros_recientes,
+        'recetas_recientes': recetas_recientes,
+        'dietas_recientes': dietas_recientes,
+        'ingredientes_recientes': ingredientes_recientes,
+    }
+
+
+    return render(request, 'administracion/Home_Administracion.html', context)
+
+#endregion

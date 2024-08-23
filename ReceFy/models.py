@@ -136,3 +136,51 @@ class Dieta(models.Model):
         db_table = 'tbl_dietas'
 
 #endregion
+
+#region Consejeros
+
+class Consejero(models.Model):
+    id_consejero = models.AutoField(primary_key=True)
+    imagen = models.ImageField(upload_to="consejeros/")
+    nombre = models.CharField(max_length=225)
+    apellido = models.CharField(max_length=225)
+    descripcion = models.CharField(max_length=255)
+    edad = models.IntegerField()
+    idioma = models.CharField(max_length=225)
+    fecha_nacimiento = models.DateField()
+    titulacion = models.CharField(max_length=225)
+    pais = models.TextField()
+    experiencia = models.CharField(max_length=225)
+    descripcion = models.CharField(max_length=225)
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'tbl_consejeros'
+
+#endregion
+
+#region Ingredientes
+
+class Ingrediente(models.Model):
+    id_ingrediente = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=255, null=True, blank=True)
+    cantidad = models.IntegerField()
+    variedad = models.CharField(max_length=255, null=True, blank=True)
+    usos = models.CharField(max_length=255, null=True, blank=True)
+    p_nutricional = models.CharField(max_length=255, null=True, blank=True)
+    consejos = models.CharField(max_length=255, null=True, blank=True)
+    grasas_saturadas = models.IntegerField(null=True, blank=True)
+    calorias = models.IntegerField(null=True, blank=True)
+    hidratos_de_carbono = models.IntegerField(null=True, blank=True)
+    grasas_trans = models.IntegerField(null=True, blank=True)
+    total_carbohidratos = models.IntegerField(null=True, blank=True)
+    azucares = models.IntegerField(null=True, blank=True)
+    precio = models.FloatField(null=True, blank=True)
+    fecha_registro_ingredientes = models.DateTimeField(auto_now_add=True)
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        db_table = "tbl_ingredientes"
+
+#endregion

@@ -75,6 +75,10 @@ urlpatterns = [
     path('dietas/dieta=<int:id>/', views.detalle_dietas, name='detalle_dietas'),
 
     #endregion
+
+    #region Administracion
+    path("administracion/", views.dashboard, name="home_administracion"),   
+    #endregion
          
 ]
 if settings.DEBUG:

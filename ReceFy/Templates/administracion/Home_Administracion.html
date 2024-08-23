@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/administracion/home_administracion.css' %}">
+</head>
+<body>
+
+
+    <aside class="sidebar">
+        <h2>Panel de Administración</h2>
+        <a href="/"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+        <a href="#"><i class="fas fa-users"></i>Usuarios</a>
+        <a href="#"><i class="fas fa-user-tie"></i>Consejeros</a>
+        <a href="#"><i class="fas fa-utensils"></i>Recetas</a>
+        <a href="#"><i class="fas fa-utensils"></i>Dietas</a>
+        <a href="#"><i class="fas fa-pizza-slice"></i>Ingredientes</a>
+        <a href="#"><i class="fas fa-users-cog"></i>Roles</a>
+        <br><br><br>
+        <h1><a href="/">RC</a></h1>
+    </aside>
+    <main class="content">
+        <div class="card">
+            <div class="text">
+            <h2>ReceFy</h2>
+            <p style="color: #1b5746;">¡ Hola <b style="color: #1f2937;">{{ user.username }}</b> Bienvenido al panel de administración !</p>
+            </div>
+            <div class="card">
+                <h3>Estadísticas Generales</h3>
+                <p>Total de Usuarios: <b>{{ total_usuarios }}</b></p>
+                <p>Total Consejeros: <b>{{ total_consejeros }}</b></p>
+                <p>Total recetas: <b>{{ total_recetas }}</b></p>
+                <p>Total dietas: <b>{{ total_dietas }}</b></p>
+                <p>Total ingredientes: <b>{{ total_ingredientes }}</b></p>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Usuarios</h2>
+            <button>Agregar Nuevo Usuario</button>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo Electrónico</th>
+                        <th>Fecha de Registro</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí puedes añadir un loop para mostrar los usuarios -->
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h2>Consejeros</h2>
+            <p><b>Consejeros más recientes</b></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Titulación</th>
+                        <th>País</th>
+                        <th>Experiencia</th>    
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consejero in consejeros_recientes %}
+                    <tr>
+                        <td>
+                            <a href="#">
+                                <img src="{{ consejero.imagen.url }}" alt="{{ consejero.nombre }}" class="small-img">
+                            </a>
+                        </td>
+                        <td>{{ consejero.nombre }}</td>
+                        <td>{{ consejero.apellido }}</td>
+                        <td>{{ consejero.fecha_nacimiento }}</td>
+                        <td>{{ consejero.titulacion }}</td>
+                        <td>{{ consejero.pais }}</td>
+                        <td>{{ consejero.experiencia }} Años</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="consejeros/listado" class="btn btn-view"><i class="fas fa-eye"></i> Ver Completo</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>   
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Recetas</h2>
+            {% if recetas_recientes %}
+            <p><b>Recetas mas recientes</b></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre del Plato</th>
+                        <th>Categoria</th>
+                        <th>Tiempo de preparacion</th>
+                        <th>Dificultad</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receta in recetas_recientes %}
+                    <tr>
+                        <td>
+                            <a href="#">
+                                <img src="{{ receta.imagen.url }}" alt="{{ receta.nombre_plato }}" class="small-img">
+                            </a>
+                        </td>
+                        <td>{{ receta.nombre_plato }}</td>
+                        <td>{{ receta.categoria }}</td>
+                        <td>{{ receta.tiempo_preparacion }} Minuto(s)</td>
+                        <td>{{ receta.dificultad }}</td>
+                        <td>{{ receta.usuario.first_name }} {% if not receta.usuario.first_name %}Sistema Recetarium{% endif %} {{ receta.usuario.last_name }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="recetas/listado" class="btn btn-view"><i class="fas fa-eye"></i> Ver Completo</a>
+                            </div>
+                        </td>                            
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>No hay recetas aún.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Dietas</h2>
+            {% if dietas_recientes %}
+            <p><b>Dietas Más Recientes</b></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Objetivo</th>
+                        <th>Calorias</th>
+                        <th>Actividad Fisica</th>
+                        <th>Consejero</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dieta in dietas_recientes %}
+                    <tr>
+                        <td>
+                            <a href="#">
+                                <img src="{{ dieta.imagen.url }}" alt="{{ dieta.nombre }}" class="small-img">
+                            </a>
+                        </td>
+                        <td>{{ dieta.nombre }}</td>
+                        <td>{{ dieta.objetivo }}</td>
+                        <td>{{ dieta.calorias }}</td>
+                        <td>{{ dieta.actividad_fisica }}</td>
+                        <td>
+                        {% if dieta.consejero %}
+                            {{ dieta.consejero.nombre }} {{ dieta.consejero.apellido }}
+                        {% else %}
+                            Sistema Recetarium
+                        {% endif %}
+                        </td>
+                        <td>{{ dieta.usuario.first_name }} {% if not dieta.usuario.first_name %}Sistema Recetarium{% endif %} {{ dieta.usuario.last_name }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="dietas/listado" class="btn btn-view"><i class="fas fa-eye"></i> Ver Completo</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No hay Dietas aún.</p>
+        {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Ingredientes</h2>
+            {% if ingredientes_recientes %}
+            <p><b>Ingredientes Más Recientes</b></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Receta</th>
+                        <th>Calorias</th>
+                        <th>Precio</th>
+                        <th>Variedad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ingrediente in ingredientes_recientes %}
+                    <tr>
+                        <td>{{ ingrediente.nombre }}</td>
+                        <td>{{ ingrediente.cantidad }}</td>
+                        <td>{{ ingrediente.receta.nombre_plato }}</td>
+                        <td>{{ ingrediente.calorias }}</td>
+                        <td>$ {{ ingrediente.precio }}</td>
+                        <td>{{ ingrediente.variedad }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="ingredientes/listado" class="btn btn-view"><i class="fas fa-eye"></i> Ver Completo</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No hay ingredientes aún.</p>
+        {% endif %}
+        </div>
+    </main>
+</body>
+</html>
