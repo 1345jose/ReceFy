@@ -184,3 +184,15 @@ class Ingrediente(models.Model):
         db_table = "tbl_ingredientes"
 
 #endregion
+
+#region Roles
+
+class Rol(models.Model):
+    nombre = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=255)
+    permisos = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = "tbl_roles"
+
+#enregion

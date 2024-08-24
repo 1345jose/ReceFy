@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -552,7 +552,7 @@ def detalle_dietas(request, id):
 
 def dashboard(request):
     if not request.user.is_authenticated:
-        return redirect("/Usuarios/login")
+        return redirect("/usuarios/login")
     total_usuarios = MiUsuario.objects.count()
     total_consejeros = Consejero.objects.count()
     total_recetas = Receta.objects.count()
@@ -587,5 +587,53 @@ def dashboard(request):
 
 
     return render(request, 'administracion/Home_Administracion.html', context)
+
+#CRUD ROLES
+
+def listado_roles(request):
+    roles = Rol.objects.all()
+    return render(request, "administracion/cruds/roles/listar.html", {"roles": roles})
+
+def insertar_roles(request):
+    if request.method == "POST":
+        if (
+            request.POST.get("nombre")
+            and request.POST.get("descripcion")
+            and request.POST.get("permisos")
+        ):
+            roles = Rol()
+            roles.nombre = request.POST.get("nombre")
+            roles.descripcion = request.POST.get("descripcion")
+            roles.permisos = request.POST.get("permisos")
+            roles.save()
+            return redirect("/administracion/roles/listado")
+        else:
+            return render(request, "crud_roles/insertar.html")
+    else:
+        return render(request, "administracion/cruds/roles/insertar.html")
+
+def borrar_rol(request, idroles):
+    roles = Rol.objects.filter(id=idroles)
+    roles.delete()
+    return redirect("/administracion/roles/listado")
+
+def actualizar_rol(request, idroles):
+    if request.method == "POST":
+        nombre = request.POST.get("nombre")
+        descripcion = request.POST.get("descripcion")
+        permisos = request.POST.get("permisos")
+
+        if nombre and descripcion and permisos:
+            roles = Rol.objects.get(id=idroles)
+            roles.nombre = nombre
+            roles.descripcion = descripcion
+            roles.permisos = permisos
+            roles.save()
+            return redirect("/administracion/roles/listado")
+    else:
+        roles = Rol.objects.get(id=idroles)
+        return render(request, "administracion/cruds/roles/actualizar.html", {"roles": roles})
+
+#FIN CRUD ROLES
 
 #endregion

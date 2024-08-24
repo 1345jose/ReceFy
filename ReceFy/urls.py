@@ -77,7 +77,15 @@ urlpatterns = [
     #endregion
 
     #region Administracion
-    path("administracion/", views.dashboard, name="home_administracion"),   
+    path("administracion/", views.dashboard, name="home_administracion"),
+
+    #CRUD ROLES
+    path("administracion/roles/listado/", views.listado_roles, name="listado_roles"),
+    path("administracion/roles/insertar/", views.insertar_roles, name="insertar_roles"),
+    path("administracion/roles/borrar/<int:idroles>/", views.borrar_rol, name="borrar_rol"),
+    path("administracion/roles/actualizar/<int:idroles>/" , views.actualizar_rol, name="actualizar_rol"),
+    #FIN CRUD ROLES 
+       
     #endregion
          
 ]
