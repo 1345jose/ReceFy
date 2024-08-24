@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la receta</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/estilos_cruds/formularios.css' %}">
+    <style>
+        .detail-icon {
+            margin-right: 10px;
+        }
+        .ingredient-image {
+            max-width: 100%; /* Ajusta el tamaño máximo de la imagen al contenedor */
+            height: auto; /* Mantiene la proporción de la imagen */
+            display: block; /* Elimina el espacio extra debajo de la imagen */
+            margin: 0 auto; /* Centra la imagen horizontalmente */
+            max-height: 400px; /* Establece una altura máxima para evitar que la imagen sea demasiado grande */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle de la receta: {{ receta.nombre_plato }}</h1>
+        <div>
+            {% if receta.imagen %}
+                <img src="{{ receta.imagen.url }}" alt="Imagen de {{ receta.nombre_plato }}" class="ingredient-image">
+            {% endif %}
+            <br><br>
+            <p><i class="fas fa-list detail-icon"></i><strong>Categoría:</strong> {{ receta.categoria }}</p>
+            <p><i class="fas fa-cloud-sun detail-icon"></i><strong>Temporada:</strong> {{ receta.temporada }}</p>
+            <p><i class="fas fa-map-marker-alt detail-icon"></i><strong>Origen:</strong> {{ receta.origen }}</p>
+            <p><i class="fas fa-lemon detail-icon"></i><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+            <p><i class="fas fa-align-left detail-icon"></i><strong>Descripción:</strong> {{ receta.descripcion }}</p>
+            <p><i class="fas fa-utensils detail-icon"></i><strong>Instrucciones:</strong> {{ receta.instrucciones }}</p>
+            <p><i class="fas fa-clock detail-icon"></i><strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }}</p>
+            <p><i class="fas fa-signal detail-icon"></i><strong>Dificultad:</strong> {{ receta.dificultad }}</p>
+            <p><i class="fas fa-user detail-icon"></i><strong>Usuario:</strong> {% if receta.usuario %}{{ receta.usuario.first_name }} {{ receta.usuario.last_name }}{% else %}Sistema Recetarium{% endif %}</p>
+            <!-- Agrega más detalles según sea necesario -->
+        </div>
+        <br>
+        <a href="{% url 'listar_recetas' %}" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;">Volver al Listado</a>
+    </div>
+</body>
+</html>

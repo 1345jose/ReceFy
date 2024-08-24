@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
+from .forms import IngredienteForm, RecetaForm
 from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -587,6 +589,135 @@ def dashboard(request):
 
 
     return render(request, 'administracion/Home_Administracion.html', context)
+
+#CRUD RECETAS
+
+def listar_recetas(request):
+    recetas = Receta.objects.all().order_by('-fecha_registro_receta')
+    
+    # Paginación
+    paginator = Paginator(recetas, 15)  # 15 recetas por página
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'recetas': page_obj,
+        'paginator': paginator
+    }
+    return render(request, 'administracion/cruds/recetas/listar.html', context)
+
+def insertar_receta(request):
+    if request.method == "POST":
+        form = RecetaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Receta creada exitosamente.')
+            return redirect('listar_recetas')
+        else:
+            messages.error(request, 'Por favor, corrija los errores a continuación.')
+    else:
+        form = RecetaForm()
+
+    return render(request, "administracion/cruds/recetas/insertar.html", {"form": form})
+
+def borrar_receta(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
+
+    if request.method == "POST":
+        receta.delete()
+        messages.success(request, "¡La receta ha sido eliminado correctamente!")
+        return redirect("listar_recetas")
+
+    messages.error(request, "Método no permitido")
+    return redirect("listar_recetas")
+
+def actualizar_receta(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
+    
+    if request.method == "POST":
+        form = RecetaForm(request.POST, instance=receta)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_recetas")
+    else:
+        form = RecetaForm(instance=receta)
+
+    context = {
+        "form": form,
+        "receta": receta,
+    }
+    return render(request, "administracion/cruds/recetas/actualizar.html", context)
+
+def ver_receta(request, receta_id):
+    receta = Receta.objects.filter(id_receta=receta_id).first()
+    if not receta:
+        messages.error(request, "Ingrediente no encontrado.")
+        return redirect("listar_recetas")
+    
+    return render(request, "administracion/cruds/recetas/ver_receta.html", {"receta": receta})
+
+
+#FIN CRUD RECETAS
+
+
+
+#CRUD INGREDIENTES
+
+def listado_ingredientes(request):
+    ingredientes = Ingrediente.objects.all().order_by('-fecha_registro_ingredientes')
+    return render(request, "administracion/cruds/ingredientes/listar.html", {"ingredientes": ingredientes})
+
+def insertar_ingrediente(request):
+    if request.method == "POST":
+        form = IngredienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("listado_ingredientes"))
+    else:
+        form = IngredienteForm()
+
+    context = {"form": form}
+    return render(request, "administracion/cruds/ingredientes/insertar.html", context)
+
+def actualizar_ingrediente(request, pk):
+    ingrediente = get_object_or_404(Ingrediente, pk=pk)
+    
+    if request.method == "POST":
+        form = IngredienteForm(request.POST, instance=ingrediente)
+        if form.is_valid():
+            form.save()
+            return redirect("listado_ingredientes")
+    else:
+        form = IngredienteForm(instance=ingrediente)
+
+    context = {
+        "form": form,
+        "ingrediente": ingrediente,
+    }
+    
+    return render(request, "administracion/cruds/ingredientes/actualizar.html", context)
+
+def borrar_ingrediente(request, pk):
+    ingrediente = get_object_or_404(Ingrediente, pk=pk)
+
+    if request.method == "POST":
+        ingrediente.delete()
+        messages.success(request, "¡El ingrediente ha sido eliminado correctamente!")
+        return redirect("listado_ingredientes")
+
+    messages.error(request, "Método no permitido")
+    return redirect("listado_ingredientes")
+
+def ver_ingrediente(request, ingrediente_id):
+    ingrediente = Ingrediente.objects.filter(id_ingrediente=ingrediente_id).first()
+    if not ingrediente:
+        messages.error(request, "Ingrediente no encontrado.")
+        return redirect("listado_ingredientes")
+    
+    return render(request, "administracion/cruds/ingredientes/ver_ingrediente.html", {"ingrediente": ingrediente})
+
+
+#FIN CRUD INGREDIENTES
 
 #CRUD ROLES
 

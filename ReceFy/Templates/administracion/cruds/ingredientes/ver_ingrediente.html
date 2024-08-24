@@ -1,0 +1,43 @@
+{% load static %}
+<!-- ver_ingrediente.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Ingrediente</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/estilos_cruds/formularios.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Ingrediente: {{ ingrediente.nombre }}</h1>
+        <div>
+            <p><strong><i class="fas fa-info-circle"></i> Descripción:</strong> {{ ingrediente.descripcion }}</p>
+            <p><strong><i class="fas fa-balance-scale"></i> Cantidad:</strong> {{ ingrediente.cantidad }}</p>
+            <p><strong><i class="fas fa-seedling"></i> Variedad:</strong> {{ ingrediente.variedad }}</p>
+            <p><strong><i class="fas fa-utensils"></i> Usos:</strong> {{ ingrediente.usos }}</p>
+            <p><strong><i class="fas fa-leaf"></i> Plan nutricional:</strong> {{ ingrediente.p_nutricional }}</p>
+            <p><strong><i class="fas fa-lightbulb"></i> Consejos:</strong> {{ ingrediente.consejos }}</p>
+            <p><strong><i class="fas fa-bacon"></i> Grasas Saturadas:</strong> {{ ingrediente.grasas_saturadas }}</p>
+            <p><strong><i class="fas fa-bread-slice"></i> Hidratos de Carbono:</strong> {{ ingrediente.hidratos_de_carbono }}</p>
+            <p><strong><i class="fas fa-times-circle"></i> Grasas Trans:</strong> {{ ingrediente.grasas_trans }}</p>
+            <p><strong><i class="fas fa-cookie-bite"></i> Total Carbohidratos:</strong> {{ ingrediente.total_carbohidratos }}</p>
+            <p><strong><i class="fas fa-candy-cane"></i> Azucares:</strong> {{ ingrediente.azucares }}</p>
+            <p><strong><i class="fas fa-dollar-sign"></i> Precio:</strong> {{ ingrediente.precio }}</p>
+            <p><strong><i class="fas fa-book-open"></i> Receta:</strong> {{ ingrediente.receta.nombre_plato }}</p>
+        </div>
+        <br>
+        <a href="{% url 'listado_ingredientes' %}" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;"><i class="fas fa-arrow-left"></i> Volver al Listado</a>
+
+    </div>
+</body>
+</html>

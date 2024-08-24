@@ -211,9 +211,17 @@ body {
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
 .pagination {
     margin: 20px auto;
-    margin-left: 30%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .pagination a {
@@ -221,12 +229,14 @@ body {
     background-color: transparent;
     border: 2px solid #28a56b;
     padding: 8px 16px;
-    margin: 0 5px;
+    margin: 5px; /* Espaciado uniforme entre los enlaces */
     border-radius: 30px;
     text-decoration: none;
-    display: inline-block;
     transition: all 0.3s ease-in-out;
     font-size: 14px;
+    flex: 0 1 auto; /* Permite que el enlace se ajuste a su contenido */
+    min-width: 80px; /* Ancho mínimo para cada enlace de paginación */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadir sombra para un efecto elevado */
 }
 
 .pagination a:hover {
@@ -239,16 +249,51 @@ body {
     background-color: #28a56b;
     border: 2px solid #28a56b;
     padding: 8px 16px;
-    margin: 0 5px;
+    margin: 5px; /* Espaciado uniforme */
     border-radius: 30px;
     font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el elemento actual */
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+@media (max-width: 992px) {
+    .pagination a {
+        font-size: 12px; /* Disminuir el tamaño de la fuente en pantallas más pequeñas */
+        padding: 6px 12px; /* Disminuir el padding */
+        margin: 4px; /* Espaciado reducido */
+    }
+
+    .pagination .current {
+        padding: 6px 12px; /* Disminuir el padding del elemento actual */
+    }
 }
+
+@media (max-width: 768px) {
+    .pagination {
+        flex-direction: column; /* Cambiar a columna en pantallas más pequeñas */
+    }
+
+    .pagination a {
+        width: 100%; /* Hacer que los enlaces ocupen el ancho completo */
+        margin-bottom: 5px; /* Espaciado entre elementos */
+    }
+}
+
+@media (max-width: 576px) {
+    .pagination {
+        margin: 10px 0; /* Espaciado reducido en pantallas muy pequeñas */
+    }
+
+    .pagination a {
+        font-size: 14px; /* Tamaño de fuente aún más pequeño */
+        padding: 4px 8px; /* Padding reducido */
+        margin: 3px 0; /* Espaciado vertical entre elementos */
+    }
+
+    .pagination .current {
+        padding: 4px 8px; /* Padding reducido para el elemento actual */
+    }
+}
+
 
 @media (max-width: 1200px) {
     .container {
