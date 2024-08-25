@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash
+import re
 
 
 def index(request):
@@ -30,7 +31,6 @@ def salud_nutricion(request):
 #endregion
 
 #region Usuarios
-
 def registro_usuario(request):
     pagina_actual = "registro"
     if request.method == "POST":
@@ -39,57 +39,50 @@ def registro_usuario(request):
         password = request.POST.get("password")
         confirmar_contraseña = request.POST.get("confirmar_contraseña")
 
-        # Validar que todos los campos requeridos estén presentes y las contraseñas coincidan
-        if username and email and password and password == confirmar_contraseña:
-            # Verificar si el correo electrónico ya está en uso
-            if MiUsuario.objects.filter(email=email).exists():
-                messages.error(
-                    request,
-                    "El correo electrónico ya está en uso. Por favor, utiliza otro.",
-                )
-                return render(
-                    request, "usuarios/registro.html", {"pagina": pagina_actual}
-                )
+        # Validar que todos los campos requeridos estén presentes
+        if not username or not email or not password or not confirmar_contraseña:
+            messages.error(request, "Por favor, completa todos los campos.")
+            return render(request, "regt.html", {"pagina": pagina_actual})
 
-            # Verificar si el nombre de usuario ya está en uso
-            if MiUsuario.objects.filter(username=username).exists():
-                messages.error(
-                    request,
-                    "El nombre de usuario ya está en uso. Por favor, elige otro.",
-                )
-                return render(
-                    request, "usuarios/registro.html", {"pagina": pagina_actual}
-                )
+        # email valido y personal
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            messages.error(request, "Ingresa un correo electrónico válido.")
+            return render(request, "regt.html", {"pagina": pagina_actual})
 
-            try:
-                # Crear el usuario si el correo electrónico y el nombre de usuario son únicos
-                user = MiUsuario.objects.create_user(
-                    username=username, email=email, password=password
-                )
-                user.save()
-                messages.success(
-                    request, "¡Registro exitoso! Ahora puedes iniciar sesión."
-                )
-                # Renderizar la plantilla con una variable que indique que el registro fue exitoso
-                return render(
-                    request,
-                    "usuairos/registro.html",
-                    {"pagina": pagina_actual, "registro_exitoso": True},
-                )
-            except Exception as e:
-                messages.error(request, f"Error al crear usuario: {e}")
-                return render(
-                    request, "usuarios/registro.html", {"pagina": pagina_actual}
-                )
-        else:
-            # Si los campos no están completos o las contraseñas no coinciden, mostrar el formulario nuevamente con un mensaje de error
-            messages.error(
-                request,
-                "Por favor, completa todos los campos y asegúrate de que las contraseñas coincidan.",
-            )
+        if email.endswith(("edu", "org", "gov", "mil", "net")):
+            messages.error(request, "Por favor, utiliza un correo personal y no institucional o laboral.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-    # Si la solicitud no es POST, renderizar el formulario vacío
+        # Validar que las contraseñas coincidan
+        if password != confirmar_contraseña:
+            messages.error(request, "Las contraseñas no coinciden. Por favor, intenta nuevamente.")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+
+        # contraseña cumpla con los requisitos de complejidad
+        if len(password) < 8 or not re.search(r'[A-Z].*[A-Z]', password) or not re.search(r'\d.*\d.*\d', password) or not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+                messages.error(request, "La contraseña debe tener al menos 8 caracteres, incluyendo 2 letras mayúsculas, 3 números y 1 carácter especial.")
+                return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+
+        # correo electrónico en uso
+        if MiUsuario.objects.filter(email=email).exists():
+            messages.error(request, "El correo electrónico ya está en uso. Por favor, utiliza otro.")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+
+        # Verificar si el nombre de usuario ya está en uso
+        if MiUsuario.objects.filter(username=username).exists():
+            messages.error(request, "El nombre de usuario ya está en uso. Por favor, elige otro.")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+
+        try:
+            # Crear el usuario si el correo electrónico y el nombre de usuario son únicos
+            user = MiUsuario.objects.create_user(username=username, email=email, password=password)
+            user.save()
+            messages.success(request, "¡Registro exitoso! Ahora puedes iniciar sesión.")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual, "registro_exitoso": True})
+        except Exception as e:
+            messages.error(request, f"Hubo un error al crear el usuario: {str(e)}")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+
     return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
 
@@ -637,3 +630,10 @@ def actualizar_rol(request, idroles):
 #FIN CRUD ROLES
 
 #endregion
+
+#region ensayos 
+
+def regi(request):
+    pagina_actual = "loginusuarios"
+    return render(request,'loguear.html',{'pagina': pagina_actual})
+
