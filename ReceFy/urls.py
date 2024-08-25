@@ -79,6 +79,22 @@ urlpatterns = [
     #region Administracion
     path("administracion/", views.dashboard, name="home_administracion"),
 
+    #CRUD RECETAS
+    path("administracion/recetas/listado/", views.listar_recetas, name="listar_recetas"),
+    path("administracion/recetas/insertar/", views.insertar_receta, name="insertar_receta"),
+    path("administracion/recetas/borrar/<int:pk>/", views.borrar_receta, name="borrar_receta"),
+    path("administracion/recetas/actualizar/<int:pk>/", views.actualizar_receta, name="actualizar_receta"),
+    path("administracion/recetas/ver/<int:receta_id>/", views.ver_receta, name="ver_receta"),
+    #FIN CRUD RECETAS
+
+    #CRUD INGREDIENTES
+    path("administracion/ingredientes/listado", views.listado_ingredientes, name="listado_ingredientes"),
+    path("administracion/ingredientes/insertar/", views.insertar_ingrediente, name="insertar_ingrediente"),
+    path("administracion/ingredientes/actualizar/<int:pk>/", views.actualizar_ingrediente, name="actualizar_ingrediente"),
+    path("administracion/ingredientes/borrar/<int:pk>/", views.borrar_ingrediente, name="borrar_ingrediente"),
+    path("administracion/ingredientes/ver/<int:ingrediente_id>/", views.ver_ingrediente, name="ver_ingrediente"),
+    #FIN CRUD INGREDIENTES
+
     #CRUD ROLES
     path("administracion/roles/listado/", views.listado_roles, name="listado_roles"),
     path("administracion/roles/insertar/", views.insertar_roles, name="insertar_roles"),

@@ -13,11 +13,6 @@ class MiUsuario(AbstractUser):
 
 #region Recetas  
 class Receta(models.Model): 
-    STATUS_CHOICES = [
-        ('habilitado', 'Habilitado'),
-        ('inhabilitado', 'Inhabilitado'),
-    ]
-
     id_receta = models.AutoField(primary_key=True)
     nombre_plato = models.CharField(max_length=50)
     categoria = models.CharField(max_length=255)
@@ -31,8 +26,7 @@ class Receta(models.Model):
     imagen = models.ImageField(upload_to="recetas/")
     fecha_registro_receta = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='habilitado', null=True)
-
+    
     class Meta:
         db_table = "tbl_recetas"
         
