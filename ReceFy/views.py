@@ -82,7 +82,6 @@ def registro_usuario(request):
             messages.success(request, "¡Registro exitoso! Ahora puedes iniciar sesión.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual, "registro_exitoso": True})
         except Exception as e:
-            messages.error(request, f"Hubo un error al crear el usuario: {str(e)}")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
     return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
@@ -97,19 +96,17 @@ def loginusuarios(request):
         password = request.POST.get("password")
         if email and password:
             try:
-                # Buscar el usuario por correo electrónico
                 user = MiUsuario.objects.get(email=email)
-                # Autenticar utilizando el nombre de usuario del usuario encontrado
                 user = authenticate(request, username=user.username, password=password)
                 if user is not None:
                     login(request, user)
                     return redirect('/')
                 else:
-                    mensaje = "Correo Electronico o Contraseña incorrectos, Intente de nuevo"  
+                    mensaje = "Correo Electronico o Contraseña incorrectos, Intente de nuevo."  
             except MiUsuario.DoesNotExist:
-                mensaje = "Este usuario NO Exite, Por favor Registrese o Intente de nuevo"
+                mensaje = "Este usuario NO Exite, Por favor Registrese o Intente de nuevo."
         else:
-            mensaje = "Por favor, ingrese ambos campos"
+            mensaje = "Por favor, ingrese ambos campos."
 
     return render(request, "usuarios/login.html", {"pagina": pagina_actual, "mensaje": mensaje})
 
@@ -117,13 +114,15 @@ def logoutusuarios(request):
     logout(request)
     return redirect('/')
 
-@login_required
 def mi_perfil(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
     usuario = request.user
     return render(request,'usuarios/mi_perfil.html',{'usuario':usuario})
 
-@login_required
 def completar_info(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
     pagina_actual = "completar_info"
     usuario = request.user
     if usuario.first_name and usuario.last_name and usuario.telefono and usuario.fecha_nacimiento and usuario.biografia and usuario.pais and usuario.idioma and usuario.edad:
@@ -149,29 +148,31 @@ def completar_info(request):
             usuario.edad = request.POST.get('edad')
         
         usuario.save()
-        return redirect('/')  
+        return redirect('/usuarios/mi_perfil')  
     return render(request,'usuarios/completar_info.html',{'pagina':pagina_actual})
 
-@login_required
 def actualizar_info(request, idusuario):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    if request.user.id != idusuario:
+        return redirect('/usuarios/mi_perfil')
     pagina_actual = "configuracion"
     act = request.user
     if request.method == "POST":
-        if  request.POST.get('first_name') and request.POST.get('last_name') and request.POST.get('biografia') and request.POST.get('telefono') and request.POST.get('fecha_nacimiento') and request.POST.get('edad') and request.POST.get('pais') and request.POST.get('idioma'):
+        if  request.POST.get('first_name') and request.POST.get('last_name') and request.POST.get('biografia') and request.POST.get('telefono') and request.POST.get('fecha_nacimiento') and request.POST.get('pais') and request.POST.get('idioma'):
             act = MiUsuario.objects.get(id=idusuario)
-            act.first_name = request.POST.get('fist_name')
+            act.first_name = request.POST.get('first_name')
             act.last_name = request.POST.get('last_name')
             act.biografia = request.POST.get('biografia')
             act.telefono = request.POST.get('telefono')
             act.fecha_nacimiento = request.POST.get('fecha_nacimiento')
-            act.edad = request.POST.get('edad')
             act.pais = request.POST.get('pais')
             act.idioma = request.POST.get('idioma')
             act.save()
             return redirect('/usuarios/mi_perfil')
     else:
         act = MiUsuario.objects.filter(id=idusuario)
-        return render(request,'configuracion/actualizar.html', {'act':act, 'pagina':pagina_actual})
+        return render(request,'configuracion/actualizar_usuario.html', {'act':act, 'pagina':pagina_actual})
     
 
 
@@ -238,13 +239,13 @@ def rest_email(request):
 
                 return redirect('/configuracion/recuperar_contraseña')
             except User.DoesNotExist:
-                return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'El correo electrónico no está registrado.'})
+                return render(request, 'configuracion/cambiar_contraseña/recuperacion_contraseña.html', {'error': 'El correo electrónico no está registrado.'})
             except Exception as e:
-                return render(request, 'configuracion/recuperacion_contraseña.html', {'error': str(e)})
+                return render(request, 'configuracion/cambiar_contraseña/recuperacion_contraseña.html', {'error': str(e)})
         else:
-            return render(request, 'configuracion/recuperacion_contraseña.html', {'error': 'Por favor, proporciona un correo electrónico válido.'})
+            return render(request, 'configuracion/cambiar_contraseña/recuperacion_contraseña.html', {'error': 'Por favor, proporciona un correo electrónico válido.'})
         
-    return render(request, 'configuracion/recuperacion_contraseña.html',{'pagina':pagina_actual})
+    return render(request, 'configuracion/cambiar_contraseña/recuperacion_contraseña.html',{'pagina':pagina_actual})
 
          
 def passwordUpdate(request,idusuario):
@@ -257,7 +258,7 @@ def passwordUpdate(request,idusuario):
             usuario.save()
             return redirect('/usuarios/login')
     else:   
-        return render(request, 'soporte/passwordUpdate.html',{'pagina':pagina_actual})
+        return render(request, 'configuracion/cambiar_contraseña/passwordUpdate.html',{'pagina':pagina_actual})
 
 def updateUser(request, idusuario):
     if not request.user.is_authenticated:
@@ -281,7 +282,7 @@ def updateUser(request, idusuario):
             messages.success(request, 'La contraseña ha sido cambiada exitosamente.')
             return redirect('/usuarios/login')
     
-    return render(request, 'configuracion/usuario_pass_act.html', {'usuario': usuario, 'pagina': pagina_actual})
+    return render(request, 'configuracion/cambiar_contraseña/usuario_pass_act.html', {'usuario': usuario, 'pagina': pagina_actual})
 
 #endregion
 
@@ -311,7 +312,7 @@ def soporte_tecnico(request):
                 "Tu solicitud ha sido enviada correctamente. Nos pondremos en contacto contigo pronto.",
             )
             # Redirigir a una página de confirmación o regresar al formulario (según el flujo de tu aplicación)
-            return redirect('/')
+            return redirect('/configuracion/soporte_tecnico')
         else:
             # Mostrar mensaje de error si la descripción o el email están vacíos
             messages.error(
@@ -319,7 +320,7 @@ def soporte_tecnico(request):
             )
 
     # Renderizar la plantilla del formulario
-    return render(request, "configuracion/soporte_tecnico.html", {"pagina_actual": pagina_actual})
+    return render(request, "soporte/soporte_tecnico.html", {"pagina": pagina_actual})
     # Renderizar el formulario inicial si no es método POST o si hay errores
 
 #endregion
@@ -762,9 +763,5 @@ def actualizar_rol(request, idroles):
 
 #endregion
 
-#region ensayos 
 
-def regi(request):
-    pagina_actual = "loginusuarios"
-    return render(request,'loguear.html',{'pagina': pagina_actual})
 

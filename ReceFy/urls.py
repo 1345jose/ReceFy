@@ -103,8 +103,6 @@ urlpatterns = [
     #FIN CRUD ROLES 
        
     #endregion
-
-    path("regi/", views.regi , name="regi"),
          
 ]
 if settings.DEBUG:
