@@ -1,0 +1,87 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/configuracion/actualizar_info.css' %}">
+
+<main>
+    <div class="container">
+        <div class="textos">
+            <h1>ReceFy</h1>
+            <h2>Configuracion</h2>
+            <h3>Actualizar Tu Informacion para que tu Perfil este al dia.</h3>
+        </div>
+        <hr>
+        {% for i in act %}
+        <form action="" method="post" >
+            {% csrf_token%}
+               <div class="row">
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Nombre</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ i.first_name }}" >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="">Apellido</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ i.last_name }}" >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Nombre De Usuario</label>
+                                <input type="text" class="form-control" id="username" name="username" value="{{ i.username }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Biografia</label>
+                                <input type="text" class="form-control" id="biografia" name="biografia" value="{{ i.biografia }}" required>
+                            </div>
+                            
+                        </div>
+
+                    <div class="col">
+                        
+                        <div class="form-group">
+                            <label for="">Telefono</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono" value="{{ i.telefono }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="idioma" id="idioma" class="form-control" required>
+                                <option value="" selected disabled>Seleccione un país</option> 
+                                <option value="Brasil">Brasil</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="Mexico">Mexico</option>
+                                <option value="España">España</option>
+                                <option value="Ecuador">Ecuador</option>
+                                <option value="Portugal">Portugal</option>
+                            </select>           
+                         </div>
+                    
+                        <div class="form-group">
+                            <select name="idioma" id="idioma" class="form-control" required>
+                                <option value="" selected disabled>Seleccione un Idioma</option> 
+                                <option value="Español">Español</option>
+                                <option value="Inglés">Inglés/us</option>
+                                <option value="Francés ">Francés </option>
+                                <option value="Portugués">Portugués</option>
+                            </select>
+                        </div>
+            
+
+                        <div class="form-group">
+                            <label for="">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ i.fecha_nacimiento }}" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+
+            {% endfor %}
+        </form>
+    </div>
+</main>
+
+{% include 'inc/footer.html' %}

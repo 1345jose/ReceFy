@@ -1,24 +1,29 @@
-body{
-    background: url('/static/media/principal1.jpg') no-repeat center center/cover;
+
+body {
+    background: url('https://images.pexels.com/photos/7601397/pexels-photo-7601397.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: auto; 
     font-family: "Urbanist", sans-serif;
-    overflow-x: hidden;  
-    overflow-y: auto; 
+
 }
 
 main{
     margin: 0 auto;
-    width: 35%;
-    text-align: center;
+    width: 60%;
 }
 
 .container{
     background-color: rgba(255, 255, 255, 0.486);
-    border: 2px solid  #0d6efd;
-    border-radius: 25px;
     padding: 20px;
     margin-top: 40px;
     margin-bottom: 40px;
-    transition: transform 0.3s ease, border 0.3s ease ;
+    border-radius: 25px;
+    border: 2px solid #0d6efd;
+    text-align: center;
+    transition: border 0.3s ease, transform 0.3s ease;
 }
 
 .container:hover{
@@ -38,35 +43,42 @@ main{
 }
 
 .textos h3{
-    font-size: 15px;
+    font-size: 18px;
 }
 
 hr{
     background-color: #28a56b;
-    border-radius: 15px;
     height: 2px;
-}
-
-.form-group p{
-    font-weight: 600;
+    border-radius: 15px;
 }
 
 .form-control{
+    border: 1px solid gray;
     border-radius: 25px;
+    font-weight: 500;
+    transition: border 0.3s ease;
 }
+
+.form-control:hover{
+    border: 1px solid #28a56b;
+}
+
 
 .btn{
     border-radius: 25px;
+    width: 50%;
+    transition: border 0.4s ease, background-color 0.4s ease ;
 }
 
 .btn:hover{
+    border: 1px solid grey;
     background-color: #114da7;
-
 }
+
 
 @media (max-width: 768px) {
     body {
-        background: url('https://images.pexels.com/photos/4253320/pexels-photo-4253320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+        background: url('https://images.pexels.com/photos/1833349/pexels-photo-1833349.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
         width: 100%;
         height: 100%;
         justify-content: center;
@@ -85,15 +97,20 @@ hr{
         
     }
 
+    .textos h3{
+        font-size: 15px;
+    }
+
     main {
         width: 95%;
     }
 
    .container{
-        margin-top: 15px;
-        margin-bottom: 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
         border: none;
         transition: none;
+        padding: 15px;
    }
 
    .container:hover{
@@ -106,7 +123,7 @@ hr{
 
 @media (max-width: 381px) {
     body {
-        background: url('https://images.pexels.com/photos/4253320/pexels-photo-4253320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+        background: url('https://images.pexels.com/photos/6287493/pexels-photo-6287493.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
         width: 100%;
         height: 100%;
         justify-content: center;

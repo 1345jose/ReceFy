@@ -2,46 +2,66 @@
 {% include 'inc/header.html' %}
 
 <link rel="stylesheet" href="{% static 'Css/usuarios/completar_info.css' %}">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 <main>
-    <div class="form">
-    <div class="texts">
-        <h1>ReceFy</h1>
-        <p>Completa tu informacion para que sea visible en tu perfil para los demas</p>
-    </div>
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Ingresa Tu Nombre" required>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Ingresa Tu Apellido" required>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="biografia" name="biografia" placeholder="Ingresa tu Biografia" required>
-        </div>
-        <div class="form-group">
-            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Ingresa Un Telefono" required>
-        </div>
-        <div class="form-group">
-            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="pais" name="pais" placeholder="Ingresa Tu nacionalidad" required>
-        </div>
-       
-        <div class="form-group">
-            <label for="">Selecciona Tu idiomas</label>
-            <select name="idioma" id="idioma" class="form-control">
-                <option value="español">Español</option>
-                <option value="ingles">Ingles/us</option>
-                <option value="frances">Frances</option>
-                <option value="portugues">Portugues</option>
-            </select>
+    <div class="container">
+        <div class="textos">
+            <h1>ReceFy</h1>
+            <h2>Completa Tu Perfil</h2>
+            <h3>Completa tu informacion para que sea visible en tu perfil para los demas</h3>
         </div>
 
-        <button type="submit" class="btn btn-primary">Enviar Datos</button>
-    </form>
+        <hr>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellido" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="biografia" name="biografia" placeholder="Ingresa tu Biografia" required>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Telefono" required>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required title="Fecha de nacimiento"  style="border-radius: 25px; padding: 8px 12px; border: 1px solid gray;">
+            </div>
+            
+            <div class="form-group">
+                <select name="idioma" id="idioma" class="form-control" required>
+                    <option value="" selected disabled>Seleccione un país</option> 
+                    <option value="Brasil">Brasil</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="España">España</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Portugal">Portugal</option>
+                </select>           
+             </div>
+        
+            <div class="form-group">
+                <select name="idioma" id="idioma" class="form-control" required>
+                    <option value="" selected disabled>Seleccione un Idioma</option> 
+                    <option value="Español">Español</option>
+                    <option value="Inglés">Inglés/us</option>
+                    <option value="Francés ">Francés </option>
+                    <option value="Portugués">Portugués</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar Datos</button>
+        </form>
+
+        <a href="{% url 'mi_perfil' %}" class="btn mt-2" id="atras">Volver</a>
+
     </div>
 </main>
+
+{% include 'inc/footer.html' %}
+
+</body>
+</html>

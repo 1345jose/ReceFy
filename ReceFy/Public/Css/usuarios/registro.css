@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -8,102 +9,148 @@
 }
 
 body {
-    background: url('https://images.pexels.com/photos/7594969/pexels-photo-7594969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+    background: url('https://images.pexels.com/photos/14513894/pexels-photo-14513894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
     overflow: auto;
+    height: 100%;
+    font-family: "Urbanist", sans-serif;
+
 }
 
+main{
+    margin: 0 auto;
+    width: 35%;
+}
 
-.contact-form{
+.container{
+    background-color: rgba(255, 255, 255, 0.486);
+    border: 2px solid #0d6efd;
     border-radius: 25px;
     padding: 20px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.486);
-    width: 620px;
-    border-radius: 15px;
-    transition: transform 0.4s ease;
-
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    transition: border 0.3s ease, transform 0.3s ease;
 }
-    
-.contact-form:hover{
-    transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */}
 
-.contact-form h2{
+.container:hover{
+    border: 2px solid #28a56b;
+    transform: scale(1.03);
+}
+
+.textos h1{
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+}
+
+.textos h2{
     display: none;
 }
 
-.contact-form  p{
-    color: white;
-    font-size: 30px;
-    font-family: "Urbanist", sans-serif;
-
+.textos h3{
+    font-size: 20px;
 }
 
-.contact-form h3{
-    color: white;
-    font-family: 'Courgette', cursive;
-    font-family: 'Lobster', sans-serif;
-    font-size: 55px;
+hr{
+    background-color: #28a56b;
+    height: 2px;
+    border-radius: 15px;
 }
 
-.containers{
-    margin-bottom: 29px;
-}
-
-
-.form-group input{
-    font-family: "Urbanist", sans-serif;
-    font-size: 19px;
+.form-control{
+    border: 1px solid gray;
     border-radius: 25px;
 }
 
-.ui hr{
-    height: 5px;
-    border-radius: 15px;
+.form-control:hover{
+    border: 1px solid #28a56b;
+}
+
+.btn{
+    width: 75%;
+    border-radius: 25px;
+    transition: border 0.4s ease, background-color 0.4s ease ;
+}
+
+.btn:hover{
+    border: 1px solid grey;
     background-color: #28a56b;
-}
-
-.ui button{
-    margin: 0 auto;
-    width: 50%;
-    border-radius: 15px;
-}
-
-.ui p{
-    font-size: 25px;
 }
 
 @media (max-width: 768px) {
     body {
-        background: url('https://images.pexels.com/photos/4252142/pexels-photo-4252142.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+        background: url('https://images.pexels.com/photos/4686826/pexels-photo-4686826.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
         width: 100%;
         height: 100%;
-        overflow: auto;
+        justify-content: center;
+        align-items: center;
+        overflow: auto; 
+    }
+
+    .textos h1{
+        display: none;
+    }
+
+    .textos h2{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+        display: block;
         
     }
-    .contact-form{
-        width: auto;
-        height: auto;
+
+    main {
+        width: 95%;
     }
 
-    .contact-form h2{
-        color: white;
+   .container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        transition: none;
+   }
+
+   .container:hover{
+        border: none;
+        transform: none;
+   }
+    
+}
+
+
+@media (max-width: 381px) {
+    body {
+        background: url('https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        overflow: auto; 
+        
+    }
+    
+    .textos h1{
+        display: none;
+    }
+
+    .textos h2{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
         display: block;
-        font-size: 30px;
-        font-family: "Urbanist", sans-serif;
     }
 
-    .containers{
-        margin-top: 25px;
-        margin-bottom: 55px;
-
-    }
-    .frase{
-        font-size: 15px;
+    main {
+        width: 95%;
     }
 
-    .form-group input{
-        font-family: "Urbanist", sans-serif;
-        font-size: 19px;
-        border-radius: 25px;
-    }
- }
+    .container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        transition: none;
+   }
+
+   .container:hover{
+        border: none;
+        transform: none;
+   }
+    
+}

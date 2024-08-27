@@ -1,0 +1,51 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/soporte/soporte_tecnico.css'%}">
+
+<main>
+    <div class="container">
+        <div class="textos">
+            <h1>ReceFy</h1>
+            <h2>Soporte Tecnico</h2>
+            <h3>Reporta algun posible Error</h3>
+        </div>
+
+        {% if messages %}
+        <div class="mensajes">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <hr>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="form-group position-relative">
+                <i class="fas fa-user position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
+                <input type="text" class="form-control pl-5" placeholder="Nombre" name="nombre" value="{{ user.username }}" required>
+            </div>
+            <div class="form-group position-relative">
+                <i class="fas fa-envelope position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
+                <input type="email" class="form-control pl-5" placeholder="Correo Electrónico" name="email" value="{{ user.email }}" required>
+            </div>
+            <div class="form-group position-relative">
+                <i class="fas fa-comment position-absolute" style="left: 15px; top: 15px;"></i>
+                <textarea class="form-control pl-5" rows="4" placeholder="Descripción del Problema" name="descripcion" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar Reporte</button>
+
+        </form>
+
+        <p class="msg mt-3"><i class="bi bi-info-circle"></i> Algunos errores ya están siendo corregidos por <b>ReceFy</b></p>
+
+        <a href="{% url 'index' %}" class="btn " id="atras">Volver</a>
+
+
+    </div>
+</main>
+
+{% include 'inc/footer.html' %}

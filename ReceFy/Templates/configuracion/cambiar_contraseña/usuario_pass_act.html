@@ -3,10 +3,15 @@
 
 <link rel="stylesheet" href="{% static 'Css/configuracion/usuario_pass_act.css' %}">
 
+<style>
+
+</style>
+
 <main>
     <div class="container">
-        <div class="texto">
-            <h1 class="text-center">ReceFy</h1>
+        <div class="textos">
+            <h1>ReceFy</h1>
+            <h2>Actualiza Tu Contraseña</h2>
             <p class="text-center"><i class="bi bi-info-circle-fill"> <strong>Sugerencia:</strong></i> si quieres cambiar tu contraseña, guárdala y cuídala de terceros, además de aumentarle su seguridad.</p>
         </div>
         <hr>
@@ -21,19 +26,27 @@
       {% endif %}
         <form action="" method="post" onsubmit="return validarContraseñas()">
             {% csrf_token %}
-            <div class="form-group">
-                <i class="fa-solid fa-user-shield"></i> <label for="current_password">Contraseña Actual</label>
-                <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Verifica tu Contraseña para poder cambiarla" required>
+            <div class="form-group position-relative">
+                <i class="fa-solid fa-user-shield position-absolute"
+                    style="left: 15px; top: 25%; transform: translateY(-45%);"></i>
+                <input type="password" class="form-control pl-5" id="current_password" name="current_password"
+                    placeholder="Verifica tu Contraseña para poder cambiarla" required>            
                 <p class="mt-2">Si olvidaste tu contraseña, <a href="{% url 'recuperar_contraseña' %} " class="adf">¡haz click aquí!</a></p>
             </div>
-            <div class="form-group">
-                <i class="fa-solid fa-lock"></i> <label for="new_password">Nueva Contraseña</label>
-                <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Ingresa tu nueva contraseña" required>
-            </div>
+
             <div class="form-group position-relative">
-                <i class="fa-solid fa-lock"></i> <label for="confirm_password">Confirmar Contraseña</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
+                <i class="fa-solid fa-lock position-absolute"
+                    style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
+                <input type="password" class="form-control pl-5" id="new_password" name="new_password" placeholder="Ingresa tu nueva contraseña" required>
             </div>
+            
+            <div class="form-group position-relative">
+                <i class="fa-solid fa-lock position-absolute"
+                   style="left: 15px; top: 50%; transform: translateY(-50%);"></i>                
+                <input type="password" class="form-control pl-5" id="confirm_password" name="confirm_password"
+                       placeholder="Confirmar Contraseña" required>
+            </div>
+            
             <button type="submit" class="btn btn-primary">Cambiar Contraseña <i class="fa-solid fa-user-gear"></i></button>
         </form>
     </div>

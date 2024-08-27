@@ -4,6 +4,8 @@
 body{
     background-color: white;
     font-family: "Urbanist", sans-serif;
+    overflow-x: hidden;  
+    overflow-y: auto; 
 }
 
 .navbar  {
@@ -22,6 +24,7 @@ body{
     margin-bottom: 15px;
 }
 
+
 .navbar-brand{
     margin-left: 95px;
     color: white;
@@ -35,6 +38,10 @@ body{
     color: #28a56b;
 }
 
+.navbar-brand a{
+    color: white;
+}
+
 .container-fluid .tx{
     border: 4px solid #28a56b;
     border-radius: 50px;
@@ -46,6 +53,7 @@ body{
 
 
 .navbar-nav a{
+    font-size: 15px;
     color: white;
     transition: color 0.3s ease, text-decoration 0.3s ease;
 }
@@ -116,16 +124,79 @@ main .servicios{
 
 .carousel{
     margin: 0 auto;
-    height: 100%;
-    width: 80%;
+    height: 80%;
+    width: 70%;
     border-radius: 25px;
 
 }
 
 .carousel-item img{
     border-radius: 25px;
-    height: 20%;
-    width: 100%;
+    height: 500px;
+    width: 75%;
+}
+
+
+.dropdown-menu {
+    transition: all 0.4s ease; 
+    opacity: 0; 
+    display: block; 
+}
+
+.dropdown-menu.show {
+    opacity: 1; 
+    visibility: visible; 
+}
+
+.dropdown-item:hover {
+   background-color: #fff; /
+}
+
+.dropdown-menu a.dropdown-item:active {
+    background-color: transparent; 
+    color: inherit;
+}
+      
+.dropdown-menu {
+    background-color: #165c3b; 
+}
+      
+.dropdown-menu a.dropdown-item:hover {
+    background-color: #e9ecef; 
+    color: #28a56b; 
+}
+
+.option{
+    margin-top: 5px;
+    color: white;
+    font-size: 20px;
+}
+
+#userDropdown{
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#userDropdown:hover{
+    color: #28a56b;
+}
+
+.carousel-caption{
+    margin-bottom: 105px;
+}
+
+#textCar{
+    background-color: rgba(128, 128, 128, 0.699);
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.carousel-caption small{
+    font-size: 25px;
 }
 
 
@@ -205,6 +276,7 @@ footer:hover{
 }
 
 @media (max-width: 768px) {
+    
     main{
         width: 90%;
     }
@@ -220,5 +292,10 @@ footer:hover{
     .navbar-brand{
         margin-left: 35px;
     }
-
+    
+    .carousel-item img{
+        border-radius: 15px;
+        height: 200px;
+        width: 95%;
+    }
 }

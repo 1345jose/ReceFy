@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 * {
@@ -9,155 +10,97 @@
 body {
     background: url('/static/media/iniciar.jpg') no-repeat center center/cover;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     justify-content: center;
     align-items: center;
-    overflow: auto; /* Permitir desplazamiento en la página */
+    overflow: auto; 
+    font-family: "Urbanist", sans-serif;
+
 }
 
-main {
-    width: 75%;
+main{
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 25px;
+    width: 35%; 
 }
 
-.texts{
+.container{
+    background-color: rgba(255, 255, 255, 0.486);
+    border: 2px solid #0d6efd;
+    border-radius: 25px;
+    padding: 20px;
     text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    transition: border 0.3s ease, transform 0.3s ease;
 }
 
-.iniciar{
-    display:none;
+.container:hover{
+    border: 2px solid #28a56b;
+    transform: scale(1.03);
 }
 
-.rc , .frase{
-    color: white;
 
-}
-
-.rc{
+.textos h1{
     font-family: 'Courgette', cursive;
     font-family: 'Lobster', sans-serif;
 }
 
-.iniciar ,.frase{
-    font-family: "Urbanist", sans-serif;
-
+.textos h2{
+    display: none;
 }
 
-a {
-    color: #007bff;
-    text-decoration: none !important;
-    transition: color 0.4s ease;
-}
-a:hover{
-    color: #28a56b;
+.textos h3{
+    font-size: 20px;
 }
 
-.form {
-    background-color: rgba(255, 255, 255, 0.486);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 620px;
-    max-width: 90%;
-    height: 560px;
-    border: 4px solid transparent; /* Agrega el borde */
-    transition: transform 0.5s ease; /* Aplica la transición al cambio de color del borde */
-}
-
-.form:hover {
-    border-color: #28a56b; /* Cambia el color del borde al pasar el ratón por encima */
-    transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
-}
-
-
-.contenido {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-form {
-    margin-top: 17px;
-    width: 100%;
-
-}
-
-form .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-form input[type="email"],
-form input[type="password"] {
-    width: calc(100% - 10px);
-    padding: 10px;
-    border: 2px solid #ccc;
+.mensaje{
+    background-color: rgb(107, 8, 8);
+    border: 1px solid gray;
+    color: white;
     border-radius: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Define la sombra */
-    transition: border-color 0.3s ease; /* Agrega una transición de 0.3 segundos al cambio de color del borde */
+    padding: 5px;
+    font-size: 14px;
+
 }
 
-form input[type="text"]:hover,
-form input[type= "password"]:hover {
-    border-color: #28a56b; /* Cambia el color del borde al pasar el ratón por encima */
-}
-
-
-.red{
-    font-family: "Urbanist", sans-serif;    
-    width: 100%;
-    padding: 10px;
-    font-size: 19px;
+hr{
     background-color: #28a56b;
-    color: white;
-    border: none;
+    height: 2px;
+    border-radius: 15px;
+}
+
+.form-control{
+    border: 1px solid gray;
     border-radius: 25px;
-    cursor: pointer;
+}
+
+.form-control:hover{
+    border: 1px solid #28a56b;
+}
+
+.btn{
+    width: 75%;
+    border-radius: 25px;
+    transition: border 0.4s ease, background-color 0.4s ease ;
+}
+
+.btn:hover{
+    border: 1px solid grey;
+    background-color: #114da7;
+}
+
+#crear{
+    background-color: #28a56b;
+    padding: 5px;
+    width: 75%;
+    border-radius: 25px;
+    color: white;
     transition: background-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Define la sombra */
-
 }
 
-
-form button:hover {
-    background-color: #1e7e4e;
+#crear:hover{
+    background-color: #136d43;
 }
-.crear {
-    font-family: "Urbanist", sans-serif;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 19px;
-    cursor: pointer;
-    transition: background-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease; /* Agrega box-shadow a la transición */
-    text-align: center; /* Alinea el texto en el centro */
-    text-decoration: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Define la sombra */
-}
-
-.crear:hover {
-    background-color: white;
-    color: #007bff;
-}
-
-.texts .mensaje{
-   color: rgb(246, 255, 254);
-   font-family: "Urbanist", sans-serif;    
-   font-weight: 500;
-   background-color: rgba(131, 14, 14, 0.637);
-   border-radius: 15px; 
-   margin-top: 20px; 
-   text-align: center;
-}
-
 
 
 
@@ -171,20 +114,32 @@ form button:hover {
         overflow: auto; 
     }
 
-    .iniciar{
+    .textos h1{
+        display: none;
+    }
+
+    .textos h2{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
         display: block;
-        font-family: "Urbanist", sans-serif;
-        color: white;
+        
     }
 
     main {
-        width: 100%;
-        height: 50%; 
+        width: 95%;
     }
 
-    .form:hover {
-        border: none; 
-    }
+   .container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        transition: none;
+   }
+
+   .container:hover{
+        border: none;
+        transform: none;
+   }
     
 }
 
@@ -196,7 +151,34 @@ form button:hover {
         height: 100%;
         justify-content: center;
         align-items: center;
-        overflow: auto; /* Permitir desplazamiento en la página */
+        overflow: auto; 
         
     }
+    
+    .textos h1{
+        display: none;
+    }
+
+    .textos h2{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+        display: block;
+    }
+
+    main {
+        width: 95%;
+    }
+
+    .container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        transition: none;
+   }
+
+   .container:hover{
+        border: none;
+        transform: none;
+   }
+    
 }
