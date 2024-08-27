@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la dieta</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/estilos_cruds/formularios.css' %}">
+    <style>
+        .detail-icon {
+            margin-right: 10px;
+        }
+        .ingredient-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ dieta.nombre }}</h1>
+        <div>
+            {% if dieta.imagen %}
+                <img src="{{ dieta.imagen.url }}" alt="Imagen de {{ dieta.nombre }}" class="ingredient-image">
+            {% endif %}
+            <br><br>
+            <p><i class="fas fa-tags detail-icon"></i><strong>Categoría:</strong> {{ dieta.categoria }}</p>
+            <p><i class="fas fa-file-alt detail-icon"></i><strong>Descripción:</strong> {{ dieta.descripcion }}</p>
+            <p><i class="fas fa-bullseye detail-icon"></i><strong>Objetivo:</strong> {{ dieta.objetivo }}</p>
+            <p><i class="fas fa-calculator detail-icon"></i><strong>Calorías:</strong> {{ dieta.calorias }}</p>
+            <p><i class="fas fa-medkit detail-icon"></i><strong>Condición Médica:</strong> {{ dieta.condicion_medica }}</p>
+            <p><i class="fas fa-carrot detail-icon"></i><strong>Valor Nutricional:</strong> {{ dieta.valor_nutricional }}</p>
+            <p><i class="fas fa-running detail-icon"></i><strong>Actividad Física:</strong> {{ dieta.actividad_fisica }}</p>
+            <p><i class="fas fa-lightbulb detail-icon"></i><strong>Consejos:</strong> {{ dieta.consejos }}</p>
+            <p><i class="fas fa-mobile-alt detail-icon"></i><strong>Dispositivos:</strong> {{ dieta.dispositivos }}</p>
+            <p><i class="fas fa-book detail-icon"></i><strong>Bibliografía:</strong> {{ dieta.bibliografia }}</p>
+            <p><i class="fas fa-user detail-icon"></i><strong>Usuario:</strong> {% if dieta.user %}{{ dieta.user.first_name }} {{ dieta.user.last_name }}{% else %}Sistema Recetarium{% endif %}</p>
+            <p><i class="fas fa-user-md detail-icon"></i><strong>Consejero:</strong> {% if dieta.consejero %}{{ dieta.consejero.nombre }} {{ dieta.consejero.apellido }}{% else %}Sistema Recetarium{% endif %}</p>
+            
+            <!-- Agrega más detalles según sea necesario -->
+        </div>
+        <br>
+        <a href="{% url 'listar_dietas' %}" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;">Volver al Listado</a>
+    </div>
+</body>
+</html>

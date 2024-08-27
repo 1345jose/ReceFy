@@ -107,30 +107,6 @@ class PlanNutricional(models.Model):
 
 #endregion
 
-#region Dietas Disponibles
-
-class Dieta(models.Model):
-    id = models.AutoField(primary_key=True)
-    imagen = models.ImageField(upload_to="dietas/")
-    nombre = models.CharField(max_length=255)
-    descripcion = models.CharField(max_length=255)
-    objetivo = models.CharField(max_length=255)
-    calorias = models.IntegerField()
-    condicion_medica = models.CharField(max_length=255)
-    valor_nutricional = models.IntegerField()
-    actividad_fisica = models.CharField(max_length=255)
-    consejos = models.CharField(max_length=255)
-    dispositivos = models.CharField(max_length=255)
-    bibliografia = models.CharField(max_length=255)
-    fecha_registro_dieta = models.DateTimeField(auto_now_add=True)
-    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE, null=True)
-    categoria = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = 'tbl_dietas'
-
-#endregion
-
 #region Consejeros
 
 class Consejero(models.Model):
@@ -150,6 +126,31 @@ class Consejero(models.Model):
 
     class Meta:
         db_table = 'tbl_consejeros'
+
+#endregion
+
+#region Dietas Disponibles
+
+class Dieta(models.Model):
+    id = models.AutoField(primary_key=True)
+    imagen = models.ImageField(upload_to="dietas/")
+    nombre = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=255)
+    objetivo = models.CharField(max_length=255)
+    calorias = models.IntegerField()
+    condicion_medica = models.CharField(max_length=255)
+    valor_nutricional = models.IntegerField()
+    actividad_fisica = models.CharField(max_length=255)
+    consejos = models.CharField(max_length=255)
+    dispositivos = models.CharField(max_length=255)
+    bibliografia = models.CharField(max_length=255)
+    fecha_registro_dieta = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE, null=True)
+    consejero = models.ForeignKey(Consejero, related_name="consejero", on_delete=models.CASCADE, null=True)
+    categoria = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'tbl_dietas'
 
 #endregion
 

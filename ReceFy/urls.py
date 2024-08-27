@@ -79,6 +79,14 @@ urlpatterns = [
     #region Administracion
     path("administracion/", views.dashboard, name="home_administracion"),
 
+    #CRUD CONSEJEROS
+    path("administracion/consejeros/listado/", views.listar_consejeros, name="listar_consejeros"),
+    path("administracion/consejeros/insertar/", views.insertar_consejero, name="insertar_consejero"),
+    path("administracion/consejeros/borrar/<int:pk>/", views.borrar_consejero, name="borrar_consejero"),
+    path("administracion/consejeros/actualizar/<int:pk>/", views.actualizar_consejero, name="actualizar_consejero"),
+    path("administracion/consejeros/ver/<int:consejero_id>/", views.ver_consejero, name="ver_consejero"),
+    #FIN CRUD CONSEJEROS
+
     #CRUD RECETAS
     path("administracion/recetas/listado/", views.listar_recetas, name="listar_recetas"),
     path("administracion/recetas/insertar/", views.insertar_receta, name="insertar_receta"),
@@ -86,6 +94,14 @@ urlpatterns = [
     path("administracion/recetas/actualizar/<int:pk>/", views.actualizar_receta, name="actualizar_receta"),
     path("administracion/recetas/ver/<int:receta_id>/", views.ver_receta, name="ver_receta"),
     #FIN CRUD RECETAS
+
+    #CRUD DIETAS
+    path("administracion/dietas/listado/", views.listar_dietas, name="listar_dietas"),
+    path("administracion/dietas/insertar/", views.insertar_dieta, name="insertar_dieta"),
+    path("administracion/dietas/borrar/<int:pk>/", views.borrar_dieta, name="borrar_dieta"),
+    path("administracion/dietas/actualizar/<int:pk>/", views.actualizar_dieta, name="actualizar_dieta"),
+    path("administracion/dietas/ver/<int:dieta_id>/", views.ver_dieta, name="ver_dieta"),
+    # FIN CRUD DIETAS
 
     #CRUD INGREDIENTES
     path("administracion/ingredientes/listado", views.listado_ingredientes, name="listado_ingredientes"),

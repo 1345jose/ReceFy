@@ -79,15 +79,15 @@
                         <td>{{ receta.dificultad }}</td>
                         <td>{{ receta.usuario.first_name|default:"Sistema Recetarium" }} {{ receta.usuario.last_name|default:"" }}</td>
                         <td>
-                            <div class="btn-group">
+                            <div class="acciones">
                                 <button class="btn btn-warning delete-btn" data-url="{% url 'borrar_receta' receta.pk %}" data-id="{{ receta.pk }}">
-                                    <i class="fas fa-ban fa-sm"></i> Borrar
+                                    <i class="fas fa-trash"></i>
                                 </button>
                                 <a href="{% url 'actualizar_receta' receta.pk %}" class="btn btn-info">
-                                    <i class="fas fa-user-edit fa-lg"></i> Actualizar
+                                    <i class="fas fa-user-edit fa-lg"></i>
                                 </a>
                                 <a href="{% url 'ver_receta' receta.id_receta %}" class="btn btn-primary">
-                                    <i class="fas fa-eye"></i> Ver Más
+                                    <i class="fas fa-eye"></i>
                                 </a>
                             </div>
                         </td>

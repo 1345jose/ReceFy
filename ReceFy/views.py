@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .forms import IngredienteForm, RecetaForm
+from .forms import ConsejeroForm, DietaForm, IngredienteForm, RecetaForm
 from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -583,6 +583,73 @@ def dashboard(request):
 
     return render(request, 'administracion/Home_Administracion.html', context)
 
+#CRUD CONSEJEROS
+
+def listar_consejeros(request):
+    consejeros = Consejero.objects.all().order_by('-fecha_registro')
+    
+    paginator = Paginator(consejeros, 15)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'consejeros': page_obj,
+        'paginator': paginator
+    }
+    return render(request, 'administracion/cruds/consejeros/listar.html', context)
+
+def insertar_consejero(request):
+    if request.method == "POST":
+        form = ConsejeroForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Consejero creado exitosamente.')
+            return redirect('listar_consejeros')
+        else:
+            messages.error(request, 'Por favor, corrija los errores a continuación.')
+    else:
+        form = ConsejeroForm()
+
+    return render(request, "administracion/cruds/consejeros/insertar.html", {"form": form})
+
+def borrar_consejero(request, pk):
+    consejero = get_object_or_404(Consejero, pk=pk)
+
+    if request.method == "POST":
+        consejero.delete()
+        messages.success(request, "¡El consejero ha sido eliminado correctamente!")
+        return redirect("listar_consejeros")
+
+    messages.error(request, "Método no permitido")
+    return redirect("listar_consejeros")
+
+def actualizar_consejero(request, pk):
+    consejero = get_object_or_404(Consejero, pk=pk)
+    
+    if request.method == "POST":
+        form = ConsejeroForm(request.POST, instance=consejero)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_consejeros")
+    else:
+        form = ConsejeroForm(instance=consejero)
+
+    context = {
+        "form": form,
+        "consejero": consejero,
+    }
+    return render(request, "administracion/cruds/consejeros/actualizar.html", context)
+
+def ver_consejero(request, consejero_id):
+    consejero = Consejero.objects.filter(id_consejero=consejero_id).first()
+    if not consejero:
+        messages.error(request, "Consejero no encontrado.")
+        return redirect("listar_consejeros")
+    
+    return render(request, "administracion/cruds/consejeros/ver_consejero.html", {"consejero": consejero})
+
+#FIN CRUD CONSEJEROS
+
 #CRUD RECETAS
 
 def listar_recetas(request):
@@ -652,7 +719,67 @@ def ver_receta(request, receta_id):
 
 #FIN CRUD RECETAS
 
+#CRUD DIETAS
 
+def listar_dietas(request):
+    dietas = Dieta.objects.all().order_by('-fecha_registro_dieta')
+    return render(request, "administracion/cruds/dietas/listar.html", {"dietas": dietas})
+
+def insertar_dieta(request):
+    if request.method == "POST":
+        form = DietaForm(request.POST, request.FILES)
+        if form.is_valid():
+            dieta = form.save(commit=False)
+            dieta.usuario = form.cleaned_data['usuario_id']
+            dieta.consejero = form.cleaned_data['consejero_id']
+            dieta.save()  # Guarda la dieta con los campos correctos
+            messages.success(request, 'Dieta creada exitosamente.')
+            return redirect('listar_dietas')
+        else:
+            messages.error(request, 'Por favor, corrija los errores a continuación.')
+    else:
+        form = DietaForm()
+
+    return render(request, "administracion/cruds/dietas/insertar.html", {"form": form})
+
+def borrar_dieta(request, pk):
+    dieta = get_object_or_404(Dieta, pk=pk)
+
+    if request.method == "POST":
+        dieta.delete()
+        messages.success(request, "¡La dieta ha sido eliminado correctamente!")
+        return redirect("listar_dietas")
+
+    messages.error(request, "Método no permitido")
+    return redirect("listar_dietas")
+
+def actualizar_dieta(request, pk):
+    dieta = get_object_or_404(Dieta, pk=pk)
+    
+    if request.method == "POST":
+        form = DietaForm(request.POST, instance=dieta)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_dietas")
+    else:
+        form = DietaForm(instance=dieta)
+
+    context = {
+        "form": form,
+        "dieta": dieta,
+    }
+    
+    return render(request, "administracion/cruds/dietas/actualizar.html", context)
+
+def ver_dieta(request, dieta_id):
+    dieta = Dieta.objects.filter(id=dieta_id).first()
+    if not dieta:
+        messages.error(request, "Dieta no encontrado.")
+        return redirect("listar_dietas")
+    
+    return render(request, "administracion/cruds/dietas/ver_dieta.html", {"dieta": dieta})
+
+#FIN CRUD DIETAS
 
 #CRUD INGREDIENTES
 

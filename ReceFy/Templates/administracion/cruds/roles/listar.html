@@ -63,12 +63,12 @@
                             <td>{{ rol.descripcion }}</td>
                             <td>{{ rol.permisos }}</td>
                             <td>
-                                <div class="btn-group">
+                                <div class="acciones">
                                     <button class="btn btn-warning delete-btn" data-url="{% url 'borrar_rol' rol.id %}" data-id="{{ rol.id }}">
-                                        <i class="fas fa-ban fa-sm"></i> Borrar
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                     <a href="{% url 'actualizar_rol' rol.id %}" class="btn btn-info">
-                                        <i class="fas fa-user-edit fa-lg"></i> Actualizar
+                                        <i class="fas fa-user-edit fa-lg"></i>
                                     </a>
                                 </div>
                             </td>

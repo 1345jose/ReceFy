@@ -426,7 +426,6 @@ document.addEventListener("DOMContentLoaded", function() {
             { term: 'Sudar', definition: 'Dejar que un alimento expulse su jugo mediante la cocción lenta del mismo.' },
             { term: 'Sufratar', definition: 'Napar una pieza de carne o pescado con una salsa, que al enfriarse, permanece sobre el género.' }
         ],
-        "<br><br>"
         V:[
             { term: 'Volcán', definition: 'Recopilar una montaña de harina haciendo un agujero en el centro para derramar los diferentes alimentos necesarios y proceder al amasado.' },
             { term: 'Vinagreta', definition: 'Un aderezo para ensalada hecho con un ácido, aceite y condimentos.' },

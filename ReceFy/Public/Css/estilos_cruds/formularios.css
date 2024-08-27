@@ -1,8 +1,9 @@
 body {
-    background: linear-gradient(135deg, #a9f2d0, #e9ecef);
+    background: linear-gradient(135deg, rgb(17, 75, 48), #e9ecef, #0a722b9a);
     padding: 20px;
     font-family: 'Roboto', sans-serif;
 }
+
 .container {
     max-width: 800px;
     margin: 0 auto;
