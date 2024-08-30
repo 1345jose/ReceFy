@@ -203,4 +203,13 @@ class Rol(models.Model):
     class Meta:
         db_table = "tbl_roles"
 
+class UsuarioRol(models.Model):
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    
+    class Meta:
+        db_table = "tbl_usuariorol"
+        unique_together = ('usuario', 'rol')
+
+
 #enregion

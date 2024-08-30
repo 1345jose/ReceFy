@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import ConsejeroForm, DietaForm, IngredienteForm, RecetaForm
-from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol  
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -36,8 +36,6 @@ def salud_nutricion(request):
     return render(request, "salud_nutricion/salud_nutricion.html", {"pagina": pagina_actual})
 
 #endregion
-
-#region Usuarios
 def registro_usuario(request):
     pagina_actual = "registro"
     if request.method == "POST":
@@ -49,12 +47,12 @@ def registro_usuario(request):
         # Validar que todos los campos requeridos estén presentes
         if not username or not email or not password or not confirmar_contraseña:
             messages.error(request, "Por favor, completa todos los campos.")
-            return render(request, "regt.html", {"pagina": pagina_actual})
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
         # email valido y personal
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             messages.error(request, "Ingresa un correo electrónico válido.")
-            return render(request, "regt.html", {"pagina": pagina_actual})
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
         if email.endswith(("edu", "org", "gov", "mil", "net")):
             messages.error(request, "Por favor, utiliza un correo personal y no institucional o laboral.")
@@ -67,8 +65,8 @@ def registro_usuario(request):
 
         # contraseña cumpla con los requisitos de complejidad
         if len(password) < 8 or not re.search(r'[A-Z].*[A-Z]', password) or not re.search(r'\d.*\d.*\d', password) or not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-                messages.error(request, "La contraseña debe tener al menos 8 caracteres, incluyendo 2 letras mayúsculas, 3 números y 1 carácter especial.")
-                return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+            messages.error(request, "La contraseña debe tener al menos 8 caracteres, incluyendo 2 letras mayúsculas, 3 números y 1 carácter especial.")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
         # correo electrónico en uso
         if MiUsuario.objects.filter(email=email).exists():
@@ -81,12 +79,17 @@ def registro_usuario(request):
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
         try:
-            # Crear el usuario si el correo electrónico y el nombre de usuario son únicos
             user = MiUsuario.objects.create_user(username=username, email=email, password=password)
             user.save()
+
+            rol = get_object_or_404(Rol, id=6)
+            UsuarioRol.objects.create(usuario=user, rol=rol)
+
             messages.success(request, "¡Registro exitoso! Ahora puedes iniciar sesión.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual, "registro_exitoso": True})
+        
         except Exception as e:
+            messages.error(request, f"Ocurrió un error al registrar el usuario: {str(e)}")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
     return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
@@ -1004,8 +1007,17 @@ def listadoUsuarios(request):
     return render(request, 'administracion/cruds/usuarios/listar.html', context)
 
 def borrarUsuario(request, idusuario):
+    # Filtra el usuario por ID
     usuario = MiUsuario.objects.filter(id=idusuario)
-    usuario.delete()
+    
+    # Verifica si se encontró el usuario y elimina
+    if usuario.exists():
+        usuario.delete()
+        messages.success(request, "Usuario eliminado exitosamente.")
+    else:
+        messages.error(request, "El usuario no existe.")
+    
+    # Redirige al listado de usuarios
     return redirect('/administracion/usuarios/listado/')
 
 def actualizarUsuario(request, idusuario):

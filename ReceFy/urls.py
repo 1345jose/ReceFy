@@ -76,12 +76,6 @@ urlpatterns = [
 
     #endregion
 
-    #region Calculadora Imc
-
-    path('salud_nutricion/calculadora_imc/', views.calculadora_imc, name='calculadora_imc'),
-
-    #endregion
-
     #region Administracion
     path("administracion/", views.dashboard, name="home_administracion"),
 
@@ -148,7 +142,7 @@ urlpatterns = [
     path("consejeros/opcion/", views.optionsConsejeros, name="optionsConsejeros"),
 
     #endregion
-
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
