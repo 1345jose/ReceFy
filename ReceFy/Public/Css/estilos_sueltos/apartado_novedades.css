@@ -13,7 +13,6 @@ body {
     background-size: cover;
 }
 
-
 main {
     padding: 20px;
 }
@@ -52,17 +51,15 @@ main {
     font-size: 47px;
 }
 
-
 .nav-pills .nav-link {
-    color: white; /* Color de la letra en blanco */
-    background-color: transparent; /* Fondo transparente cuando no está seleccionado */
-    border-radius: 5px; /* Bordes redondeados para los botones */
+    color: white;
+    background-color: transparent;
+    border-radius: 5px;
 }
 
-/* Estilo para los botones seleccionados (activos) */
 .nav-pills .nav-link.active {
-    background-color: #28a56b; /* Fondo verde cuando el botón está seleccionado */
-    color: white; /* Asegura que la letra siga siendo blanca */
+    background-color: #28a56b;
+    color: white;
 }
 
 h4{
@@ -71,63 +68,61 @@ h4{
     color: white;
     font-family: 'Courgette', cursive;
     font-family: 'Lobster', sans-serif;
-
 }
 
 .consejo-container {
-    background-color: #f0f4f7; /* Color de fondo suave */
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-    padding: 20px; /* Espacio interno */
-    margin-bottom: 20px; /* Espacio inferior entre consejos */
-    border: 1px solid #d1e0e5; /* Borde sutil */
+    background-color: #f0f4f7;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #d1e0e5;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+    align-items: center;
 }
 
 .consejo-container:hover {
-    transform: scale(1.02); /* Aumenta el tamaño solo un poco al pasar el cursor */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más grande para un efecto más pronunciado */
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .consejo-titulo {
     font-size: 1.5rem;
-    color: #28a56b; /* Color del título */
+    color: #28a56b;
     font-weight: bold;
 }
 
 .consejo-descripcion {
     font-size: 1rem;
-    color: #34495e; /* Color del texto de la descripción */
+    color: #34495e;
     margin-top: 10px;
     text-align: justify;
 }
 
 .img-fluid {
-    width: 100%; /* Asegura que la imagen ocupe todo el ancho de la columna */
-    height: auto; /* Mantiene la proporción de la imagen */
-    object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
-    border-radius: 8px; /* Bordes redondeados para las imágenes */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para las imágenes */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Alineación vertical en la columna */
 .col-md-4 {
     display: flex;
-    align-items: center; /* Centra verticalmente el contenido en la columna */
-    justify-content: center; /* Centra horizontalmente el contenido en la columna si es necesario */
+    align-items: center;
+    justify-content: center;
 }
 
 .container-glosario {
-    background-color: #ffffff; /* Fondo blanco para el contenedor */
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 30px; /* Espacio interno */
-    max-width: 1080px; /* Ancho máximo aumentado */
-    width: 100%; /* Ocupa el 100% del ancho disponible */
-    margin: 0 auto; /* Centra horizontalmente */
-    text-align: justify; /* Justifica el texto dentro del contenedor */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 1080px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: justify;
 }
 
 .titles-container {
@@ -152,17 +147,16 @@ h4{
     font-size: 33px;
     font-family: 'Courgette', cursive;
     font-family: 'Lobster', sans-serif;
-    color: #28a56b; /* Color general para todas las letras */
+    color: #28a56b;
     margin-bottom: 10px;
 }
-
 
 .alphabet-list {
     width: 55%;
     height: 25px;
     background: linear-gradient(90deg, #28a56b, #34c759);
     border-radius: 25px;
-    margin: 15px auto 15px 10px; /* Ajuste del margen izquierdo para moverlo a la izquierda */
+    margin: 15px auto 15px 10px;
     text-align: center;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     padding: 3px;
@@ -201,43 +195,46 @@ h4{
     justify-content: flex-end;
     align-items: center;
     margin-top: -45px;
+    flex-wrap: wrap;
 }
 
 .search-bar input {
-    padding: 10px 15px; /* Aumenta el relleno para hacerlo más grande */
-    border: 2px solid #28a56b; /* Borde verde más grueso */
+    padding: 10px 15px;
+    border: 2px solid #28a56b;
     border-right: none;
-    border-radius: 25px 0 0 25px; /* Bordes más redondeados */
-    background-color: #f0f4f7; /* Fondo suave */
-    font-size: 16px; /* Aumenta el tamaño del texto */
-    transition: border-color 0.3s ease, background-color 0.3s ease; /* Transiciones suaves */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    border-radius: 25px 0 0 25px;
+    background-color: #f0f4f7;
+    font-size: 16px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 150px;
 }
 
 .search-bar input:focus {
-    background-color: #ffffff; /* Fondo blanco al enfocar */
-    border-color: #036e3c; /* Borde verde oscuro al enfocar */
-    outline: none; /* Quita el borde azul por defecto */
+    background-color: #ffffff;
+    border-color: #036e3c;
+    outline: none;
 }
 
 .search-bar button {
-    padding: 10px 20px; /* Aumenta el relleno para un botón más grande */
-    border: 2px solid #28a56b; /* Borde verde más grueso */
-    border-radius: 0 25px 25px 0; /* Bordes más redondeados */
-    background-color: #28a56b; /* Color de fondo verde */
-    color: white; /* Texto blanco */
-    font-size: 16px; /* Aumenta el tamaño del texto */
+    padding: 10px 20px;
+    border: 2px solid #28a56b;
+    border-radius: 0 25px 25px 0;
+    background-color: #28a56b;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 0 1 auto;
 }
 
 .search-bar button:hover {
-    background-color: #036e3c; /* Verde más oscuro al pasar el ratón */
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
+    background-color: #036e3c;
+    transform: scale(1.05);
 }
 
-/* Estilo general de la paginación */
 .pagination {
     display: flex;
     justify-content: center;
@@ -261,7 +258,6 @@ h4{
     transition: all 0.3s ease;
 }
 
-/* Efecto al pasar el ratón por encima */
 .pagination .page-link:hover,
 .pagination .page-link:focus {
     color: #28a56b;
@@ -269,16 +265,91 @@ h4{
     border-color: #28a56b;
 }
 
-/* Estilo para el enlace activo */
 .pagination .page-item.active .page-link {
     color: #fff;
     background: #28a56b;
     border-color: #28a56b;
 }
 
-/* Estilo para los elementos deshabilitados */
 .pagination .page-item.disabled .page-link {
     color: #6c757d;
     background: #f5f5f5;
     border-color: #ddd;
+}
+
+@media (max-width: 768px) {
+    body {
+        background-color: #000000a8; /* Fondo alternativo en móviles */
+        background-image: none; /* Ocultar la imagen de fondo en móviles */
+        background-color: #1c1c1c; /* Color de fondo sólido */
+    }
+
+    /* Ajuste del tamaño del logo y títulos en dispositivos móviles */
+    .logo h1, .pagina h2 {
+        font-size: 28px;
+    }
+
+    .slogan h1 {
+        font-size: 18px;
+        margin-right: 0;
+    }
+
+    .titles-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .alphabet-list {
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    .search-bar {
+        margin-top: 20px;
+    }
+
+    /* Ajuste del tamaño de la paginación en dispositivos móviles */
+    .pagination .page-link {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .textos {
+        color: white;
+    }
+
+    .alphabet-list {
+        width: 10px;
+        height: 30px;
+        margin: 10px auto;
+        padding: 5px;
+    }
+
+    .alphabet-list a {
+        font-size: 10px;
+        padding: 2px 6px;
+        margin: 0 2px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    body {
+        background-size: contain;
+        background-position: center top;
+        background-attachment: scroll;
+    }
+}
+
+@media (max-width: 480px) {
+    .alphabet-list {
+        width: 270px !important;
+        height: 35px;
+        margin-left: -15px;
+    }
+
+    .alphabet-list a {
+        font-size: 9px;
+        padding: 1px 4px;
+        margin: 0 1px;
+    }
 }

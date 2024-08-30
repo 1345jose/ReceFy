@@ -76,6 +76,12 @@ urlpatterns = [
 
     #endregion
 
+    #region Calculadora Imc
+
+    path('salud_nutricion/calculadora_imc/', views.calculadora_imc, name='calculadora_imc'),
+
+    #endregion
+
     #region Administracion
     path("administracion/", views.dashboard, name="home_administracion"),
 

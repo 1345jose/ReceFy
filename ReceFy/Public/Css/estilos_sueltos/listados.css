@@ -5,83 +5,54 @@
 /* Estilos generales */
 body {
     margin: auto;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    overflow: auto;
-    background: linear-gradient(315deg, rgb(25, 100, 65) 3%, rgba(36, 121, 36, 0.514) 38%, rgb(35, 146, 109) 68%, rgb(33, 71, 54) 98%);
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-    background-attachment: fixed;
+    font-family: 'Urbanist', sans-serif;
+    background-color: #222;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
 }
 
-@keyframes gradient {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
+h3 {
+    font-family: 'Lobster', cursive;
 }
 
-/* Efecto de ola */
-.wave {
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 1000% 1000% 0 0;
-    position: fixed;
-    width: 200%;
-    height: 12em;
-    animation: wave 10s -3s linear infinite;
-    transform: translate3d(0, 0, 0);
-    opacity: 0.8;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
+body.light-mode {
+    background-color: #eae4e4; /* Color de fondo claro */
+    color: #222; /* Color de texto claro */
 }
 
-.wave:nth-of-type(2) {
-    bottom: -1.25em;
-    animation: wave 18s linear reverse infinite;
+.iconos_sol_luna {
+    font-size: 20px; /* Tamaño del icono */
+    color: #ffffff; /* Color blanco por defecto (para tema oscuro) */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
+    margin-left: 88%;
+    margin-top: 10px;
 }
 
-.wave:nth-of-type(3) {
-    bottom: -2.5em;
-    animation: wave 20s -1s reverse infinite;
-}
-
-@keyframes wave {
-    2% { transform: translateX(1); }
-    25% { transform: translateX(-25%); }
-    50% { transform: translateX(-50%); }
-    75% { transform: translateX(-25%); }
-    100% { transform: translateX(1); }
-}
-
-/* Contenedor principal */
-.container {
-    width: auto;
-}
-
-.container hr {
-    background-color: white;
-    border-radius: 25px;
-}
-
-/* Encabezado */
-.encabezado {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 3.5vw;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+body.light-mode .iconos_sol_luna {
+    color: #000000; /* Color negro en modo claro */
 }
 
 .logo {
-    margin-left: 25px;
+    margin-left: 30px;
 }
 
 .logo h1, .pagina h2 {
-    font-family: 'Lobster', sans-serif;
+    font-family: 'Lobster', cursive;
     color: rgb(255, 255, 255);
     transition: color 0.3s ease, font-size 0.3s ease;
     text-align: center;
-    font-size: 42px;
+}
+
+.pagina {
+    position: absolute; /* Posiciona .pagina de forma absoluta */
+    left: 50%; /* Mueve horizontalmente el centro del elemento */
+    transform: translateX(-50%); /* Ajusta el desplazamiento para centrar */
+    text-align: center; /* Asegura que el texto esté centrado */
+}
+
+.pagina h2 {
+    font-size: 43px;
 }
 
 .logo a {
@@ -93,93 +64,138 @@ body {
 .logo i {
     color: white;
     margin-right: 8px;
+    transition: color 0.4s ease;
+}
+
+.logo i:hover {
+    color: #28a56b;
+}
+
+.slogan a {
+    text-decoration: none;
 }
 
 .slogan h1 {
+    text-decoration: none;
     margin-right: 115px;
     color: #ffffff;
     font-family: "Urbanist", sans-serif;
-    font-size: 20px;
+    font-size: 24px;
+    transition: color 0.3s ease;
 }
 
 .logo:hover h1, .pagina h2:hover {
-    font-size: 47px;
+    font-size: 45px;
 }
 
-h3{
-    font-size: 22px;
+.slogan h1:hover {
+    color: #28a56b !important;
 }
 
-/* Tarjetas */
-.card {
-    margin: 15px 0; /* Reduce el margen para que ocupen menos espacio */
-    border: 1px solid #49484869;
-    border-radius: 12px; /* Reduce el radio del borde */
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1); /* Reduce el tamaño de la sombra */
-    transition: transform 0.4s ease;
-    text-align: center;
-    height: auto;
-    max-width: 300px; /* Establece un ancho máximo para las tarjetas */
-    margin-left: auto; /* Centra las tarjetas horizontalmente */
-    margin-right: auto; /* Centra las tarjetas horizontalmente */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.card:hover {
-    transform: scale(1.03); /* Reduce el efecto de escalado */
+body.light-mode .pagina h2,
+body.light-mode .logo h1,
+body.light-mode .slogan h1 {
+    color: green; /* Color negro para h2 y h1 en modo claro */
 }
 
-.card a {
-    text-decoration: none;
-    color: inherit;
+body.light-mode .logo i {
+    color: green; /* Color verde para iconos en modo claro */
 }
 
-.card-img-top {
-    width: 100%;
-    height: 150px; /* Reduce la altura de la imagen */
-    object-fit: cover;
-    border-top-left-radius: 12px; /* Ajusta el radio del borde */
-    border-top-right-radius: 12px; /* Ajusta el radio del borde */
+.titulos_comidas {
+    color: white;
 }
 
-.card-body {
-    height: 180px; /* Reduce la altura del cuerpo de la tarjeta */
-    padding: 15px; /* Reduce el padding */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+body.light-mode .titulos_comidas{
+    color: #000000bf;
 }
 
-.card-body h2 {
-    font-size: 28px; /* Reduce el tamaño de la fuente del título */
-    font-family: 'Lobster', sans-serif;
-}
-
-.card hr {
-    background-color: #28a56b;
-    height: 3px; /* Reduce el grosor de la línea */
-}
-
-.card-title {
-    font-size: 18px; /* Reduce el tamaño de la fuente del título */
-    margin-bottom: 8px; /* Reduce el margen inferior */
-    color: #333;
-}
-
-.card-text {
-    font-size: 14px; /* Reduce el tamaño de la fuente del texto */
-    color: #666;
-    display: flex;
-    justify-content: space-between;
-}
-
-.card-text span {
+/* Estilos para el buscador */
+.search-container {
     display: flex;
     align-items: center;
+    position: relative;
+    width: 100%;
 }
 
-.card-text span i {
-    margin-right: 4px; /* Reduce el margen derecho del ícono */
+#searchInput {
+    width: 100%;
+    padding: 10px 40px 10px 40px; /* Ajusta el padding a la izquierda para dar espacio al icono */
+    border: 2px solid #28a56b;
+    border-radius: 25px; /* Borde más redondeado */
+    font-size: 16px;
+    background-color: white; /* Fondo blanco */
+    color: #333; /* Color del texto oscuro para contraste */
+    transition: border-color 0.3s, background-color 0.3s; /* Transiciones suaves */
+}
+
+#searchInput:focus {
+    border-color: #28a56b; /* Color del borde al enfocar */
+    outline: none;
+    background-color: #f0f0f0; /* Fondo más claro al enfocar */
+}
+
+/* Estilo del icono de búsqueda */
+.search-icon {
+    position: absolute;
+    top: 12px;
+    right: 15px; /* Ajusta la posición a la izquierda */
+    color: #28a56b;
+    font-size: 20px;
+    transition: color 0.3s; /* Transición suave */
+}
+
+.search-icon:hover {
+    color: #fff; /* Cambia a blanco al pasar el mouse */
+}
+
+body.light-mode #searchInput {
+    border: 2px solid green;
+}
+
+body.light-mode .search-icon{
+    color: green;
+}
+
+body.light-mode .search-icon:hover{
+    color: black;
+    cursor: pointer;
+}
+
+/* Estilos de las categorías */
+.category-link {
+    color: #28a56b;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+    border-radius: 15px;
+}
+
+.category-link:hover {
+    border-color: #28a56b;
+    color: #fff;
+}
+
+body.light-mode .category-link{
+    color: green;
+}
+
+body.light-mode .category-link:hover{
+    border-color: green;
+    color: #000000c1;
+    text-decoration: none;
+}
+
+.botones{
+    text-align: center;
 }
 
 .category-container {
@@ -237,12 +253,16 @@ h3{
     transition: transform 0.3s ease;
 }
 
+body.light-mode .slider-btn{
+    color: green;
+}
+
 .slider-btn.left-btn {
-    left: -30px; /* Ajusta según tu diseño */
+    left: -100px; /* Ajusta según tu diseño */
 }
 
 .slider-btn.right-btn {
-    right: -30px; /* Ajusta según tu diseño */
+    right: -100px; /* Ajusta según tu diseño */
 }
 
 .slider-btn:hover {
@@ -258,213 +278,138 @@ h3{
 }
 
 
-/* Contenedor de búsqueda */
-.search-container {
-    margin-bottom: 18px;
-    position: relative;
-    background-color: white;
-    border-radius: 22px;
-    padding: 4px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    width: 88%;
-    margin-left: 40px;
+
+/* Estilos de las tarjetas de recetas */
+.recipe-card {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en múltiples líneas */
 }
 
-.search-container input[type="text"] {
-    width: calc(100% - 38px);
-    padding: 10px;
-    border: none;
-    border-radius: 22px;
-    font-size: 15px;
-    background-color: transparent;
-    outline: none;
-    transition: all 0.3s ease-in-out;
-    color: #343a40;
-}
-
-.search-container input[type="text"]:focus {
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.2);
-}
-
-.search-container .search-icon {
-    position: absolute;
-    right: 9px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #6c757d;
-    transition: all 0.3s ease-in-out;
-}
-
-.search-container .search-icon:hover {
-    color: #28a745;
-    transform: scale(1.1);
-}
-
-
-.category-link {
-    display: inline-block;
-    padding: 10px 15px;
-    color: #fff;
-    background-color: #28a56b;
-    border-radius: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-decoration: none;
-    position: relative;
+.card {
+    background-color: #333;
+    border-radius: 10px;
     overflow: hidden;
-    z-index: 1;
-    transition: all 0.4s ease-in-out;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    border-color: white;
-    font-size: 0.9rem;
-    margin-left: 15px;
+    transition: transform 0.3s;
+    margin: 10px; /* Espacio entre las tarjetas */
+    width: 90%; /* Ajustar el ancho de las tarjetas */
+    max-width: 400px; /* Ancho máximo para las tarjetas */
+    height: 300px; /* Altura fija para las tarjetas */
 }
 
-.category-link:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 250%;
-    height: 250%;
-    background: rgba(255, 255, 255, 0.15);
-    transition: all 0.75s ease-in-out;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0.1);
-    z-index: -1;
-}
-
-.category-link:hover {
-    color: #fff;
-    background-color: #1f8c59;
+.card:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    text-decoration: none;
 }
 
-.category-link:hover:before {
-    transform: translate(-50%, -50%) scale(1);
+body.light-mode .card{
+    background-color: #fff;
+    border-color: #0000006e;
 }
 
-.category-link:active {
-    transform: scale(1);
-    box-shadow: none;
-}
-
-.category-section {
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #f1f1f1;
-    border-radius: 8px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    opacity: 0;
-    transform: translateY(40px);
-    text-align: center; /* Centra los botones */
-}
-
-.category-section:target {
-    opacity: 1;
-    transform: translateY(0);
-    background-color: #e9ecef;
-}
-
-.category-section h2 {
-    font-size: 1.8rem;
-    color: #28a56b;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-
-.mensaje {
-    background: url('https://images.pexels.com/photos/2015191/pexels-photo-2015191.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
-    border-radius: 25px;
-    padding: 20px;
-    height: 250px;
-    position: relative; /* Necesario para que el ::before se posicione correctamente */
-    transition: transform 0.3s; /* Agrega transición para un efecto suave al resaltar */
-}
-
-.mensaje::before { 
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.card-img-top {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.322);
-    border-radius: 25px;
-    z-index: 1; 
+    height: 150px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Mantiene la proporción de la imagen */
 }
 
-.mensaje:hover {
-    transform: scale(1.05); /* Ajusta la escala para resaltar la carta al pasar el cursor */
-}
-
-.mensaje > * {
-    position: relative;
-    z-index: 2; /* Asegura que el contenido esté por encima del ::before */
+.card-body {
+    padding: 15px;
+    text-align: center;
+    height: calc(300px - 150px); /* Ajusta la altura del cuerpo de la tarjeta */
 }
 
 
-.mensaje .rc{
-    margin-top: 50px;
-    font-size: 45px;
-    font-family: 'Courgette', cursive;
-    font-family: 'Lobster', sans-serif;
-}
-
-.mensaje p{
-    color: white;
-    font-weight: 500;
+.card-title {
     font-size: 20px;
+    font-family: 'Courgette', cursive;
+    
+    color: #28a56b;
 }
 
+body.light-mode .card-title {
+    color: green;
+}
 
-/* Estilos para pantallas más pequeñas */
+/* Estilos de los iconos dentro de la tarjeta */
+.card-body span {
+    display: inline-block;
+    margin: 5px 0;
+    color: #fff;
+}
+
+body.light-mode .card-body span {
+    color: #000000c1;
+}
+
+/* Estilos de los mensajes cuando no hay recetas */
+h3 {
+    color: wheat;
+    text-align: center;
+}
+
+/* Estilos de separación */
+hr {
+    border-top: 1px solid #28a56b;
+    margin: 20px 0;
+}
+
+body.light-mode hr{
+    color: green;
+}
+
+/* Estilos responsivos */
 @media (max-width: 768px) {
-    .card {
-        width: 100%;
-        height: 300px;
-        margin: 10px 0;
-        box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card-img-top {
-        height: 150px;
-    }
-
-    .card-body {
-        padding: 10px;
-        height: 150px;
+    .slider-container {
+        position: relative;
         overflow: hidden;
+        border-radius: 10px; /* Esquinas redondeadas para el contenedor */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para un efecto de elevación */
+    }
+    .slider-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform; /* Mejora de rendimiento para animaciones */
     }
 
-    .card-body h2 {
-        font-size: 18px;
-        margin: 0;
+
+    #searchInput {
+        margin-bottom: 10px;
     }
 
-    .card-text {
-        font-size: 14px;
+    .recipe-card {
         flex-direction: column;
+        align-items: flex-start; /* Cambiar de center a flex-start para alinear a la izquierda */
     }
 
-    .card-text span {
-        margin-bottom: 5px;
+    .card {
+        margin: 15px 0 15px 0; /* Ajustar margen a solo arriba y abajo */
+        width: 100%; /* Establecer un ancho fijo en píxeles */
+        max-width: none; /* Eliminar el ancho máximo */
+        height: 370px; /* Altura fija */
+        padding-left: 0; /* Agregar padding izquierdo si es necesario */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadir sombra si lo deseas */
     }
 
-    .card-text span i {
-        margin-right: 3px;
-    }
-
-    .card-text span:not(:nth-of-type(1)):not(:nth-of-type(2)) {
+    .slider-btn {
         display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .category-link {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .slider-btn {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 22px;
     }
 }

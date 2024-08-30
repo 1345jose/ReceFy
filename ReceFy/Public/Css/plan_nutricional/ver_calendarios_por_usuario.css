@@ -108,6 +108,14 @@ h1, h2 {
     display: flex;
     gap: 10px; /* Espacio entre los botones */
     align-items: center;
+    justify-content: flex-start; /* Alineación en PC */
+}
+
+.calendar-buttons .btn {
+    flex: 1; /* Permite que los botones crezcan uniformemente */
+    padding: 10px 15px; /* Espaciado interno para hacer los botones más grandes y agradables */
+    border-radius: 8px; /* Esquinas redondeadas para un diseño más suave */
+    font-size: 16px; /* Aumenta el tamaño de la fuente para mejor legibilidad */
 }
 
 /* Estilos para los botones individuales */
@@ -142,4 +150,34 @@ h1, h2 {
 .btn-danger:hover {
     background-color: #c82333;
     border-color: #bd2130;
+}
+
+@media (max-width: 768px) {
+
+    .calendar-item{
+        margin-left: -30px;
+        width: 330px;
+    }
+    .calendar-buttons .btn {
+        width: 40px; /* Ajusta el ancho según sea necesario */
+        height: 40px; /* Ajusta la altura */
+        display: flex; /* Para centrar el icono */
+        justify-content: center;
+        align-items: center;
+        padding: 0; /* Elimina el espaciado interno */
+    }
+
+    .calendar-buttons .btn i {
+        font-size: 18px; /* Tamaño más pequeño del icono */
+        /* Puedes ajustar este tamaño según lo desees */
+    }
+
+    /* Opcional: centrar botones si es necesario */
+    .calendar-buttons {
+        justify-content: center; /* Centrar en móviles */
+    }
+
+    .calendar-content h3 {
+        font-size: 20px;
+    }
 }

@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<div class="iconos_sol_luna">
+    <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+    <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+</div>
+
 
 <!-- BUSCADOR Y FILTROS -->
 <div class="container mt-4">
@@ -13,21 +18,22 @@
         <i class="fas fa-search search-icon"></i>
     </div>
     <br>
-    <h3 style="color: white;">
+    <h3 class="titulos_comidas">
         <i class="fas fa-tags"></i> Categoría de las recetas    
     </h3>
     <hr>
+    <div class="botones">
         <a href="#category-desayuno" class="category-link">Desayunos</a>
         <a href="#category-entrante" class="category-link">Entradas</a>
         <a href="#category-platos-principales" class="category-link">Platos Fuertes</a>
         <a href="#category-postre" class="category-link">Postres</a>
         <a href="#category-sopa" class="category-link">Sopas</a>
-    
+    </div>
 </div>
 
 <div class="container mt-5">
     <div class="category-container" id="category-desayuno">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-mug-hot"></i> Desayunos
         </h3>
         <hr>
@@ -39,21 +45,23 @@
                 <div class="slider" id="slider-desayuno">
                     <div class="slider-track">
                         {% for receta in recetas_desayuno %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
-                                        {% if receta.imagen and receta.imagen.url %}
-                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
-                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
-                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
-                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                            {% if receta.imagen and receta.imagen.url %}
+                                                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                                <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                                <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                                <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -73,7 +81,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-entrante">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-leaf"></i> Entradas
         </h3>
         <hr>
@@ -85,21 +93,23 @@
                 <div class="slider" id="slider-entrante">
                     <div class="slider-track">
                         {% for receta in recetas_entradas %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
-                                        {% if receta.imagen and receta.imagen.url %}
-                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
-                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
-                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
-                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                            {% if receta.imagen and receta.imagen.url %}
+                                                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                                <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                                <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                                <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -119,7 +129,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-platos-principales">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-utensils"></i>  Platos Principales
         </h3>
         <hr>
@@ -131,21 +141,23 @@
                 <div class="slider" id="slider-platos-principales">
                     <div class="slider-track">
                         {% for receta in recetas_platos_principales %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
-                                        {% if receta.imagen and receta.imagen.url %}
-                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
-                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
-                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
-                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                            {% if receta.imagen and receta.imagen.url %}
+                                                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                                <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                                <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                                <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -165,7 +177,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-postre">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-birthday-cake"></i> Postres
         </h3>
         <hr>
@@ -177,21 +189,23 @@
                 <div class="slider" id="slider-postre">
                     <div class="slider-track">
                         {% for receta in recetas_postres %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
-                                        {% if receta.imagen and receta.imagen.url %}
-                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
-                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
-                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
-                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                            {% if receta.imagen and receta.imagen.url %}
+                                                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                                <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                                <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                                <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -211,7 +225,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-sopa">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-cloud"></i> Sopas
         </h3>
         <hr>
@@ -223,21 +237,23 @@
                 <div class="slider" id="slider-sopa">
                     <div class="slider-track">
                         {% for receta in recetas_sopas %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_receta' receta.id_receta %}">
-                                        {% if receta.imagen and receta.imagen.url %}
-                                            <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ receta.nombre_plato }}</h2>
-                                            <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
-                                            <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
-                                            <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}">
+                                            {% if receta.imagen and receta.imagen.url %}
+                                                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                                <span><i class="fas fa-folder"></i> {{ receta.categoria }}</span>
+                                                <span><i class="fas fa-clock"></i> {{ receta.tiempo_preparacion }} Minutos</span>
+                                                <span><i class="fas fa-star"></i> {{ receta.dificultad }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -260,3 +276,5 @@
 <!-- Script de búsqueda y slider -->
 
 <script src="{% static 'js/sliders_listados.js' %}"></script>
+<script src="{% static 'js/funcion_temas.js' %}"></script>
+

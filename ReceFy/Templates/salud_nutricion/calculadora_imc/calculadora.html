@@ -1,0 +1,83 @@
+{% load static %}
+
+{% include "inc/header.html" %}
+
+<link rel="stylesheet" href="{% static 'css/estilos_sueltos/calculadora_imc.css' %}">
+
+<body>
+    <main>
+        <div class="container">
+            <div class="titulos">
+                <h1>Calculadora IMC</h1>
+                <h2>Ingresa tus datos y te recomendaremos las mejores dietas para tu salud</h2>
+                <hr>
+                <br>
+            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" id="estatura" name="estatura" placeholder="Ingrese su estatura (Ej: 1.60)" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="peso" name="peso" placeholder="Ingrese su peso (Ej: 80 Kg)" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;">Calcular</button>
+                <br><br>
+                <a href="/salud-nutricion"><button type="button" class="btn btn-primary" style="background-color: 0d6efd; border-color: 0d6efd;">Cancelar</button></a>
+                <br><br>
+            </form> 
+        </div>
+        
+        {% if mensaje_error %}
+        <div id="resultadoContainer">
+            <div class="alert alert-danger">
+                {{ mensaje_error }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if imc %}
+        <div id="resultadoContainer">
+            <div class="alert alert-success">
+                Tu IMC es {{ imc|floatformat:2 }} ({{ resultado }}).
+                <br><br>
+                Algunas de las dietas para que puedas mejorar tu salud son:
+            </div>
+            {% if dietas %}
+            <div class="row">
+                {% for dieta in dietas %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card recipe-card">
+                        <a href="{% url 'detalle_dietas' dieta.id %}">
+                            {% if dieta.imagen and dieta.imagen.url %}
+                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                            {% else %}
+                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                <div class="card-text">
+                                    <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                    <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                    <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-warning">
+                No hay dietas disponibles para este resultado.
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </main>
+    <br><br>
+    {% include "inc/footer.html" %}
+    <script src="{% static 'js/calculadora.js' %}"></script>
+</body>
+</html>

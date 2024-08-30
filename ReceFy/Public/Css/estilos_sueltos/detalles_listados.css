@@ -1,26 +1,89 @@
-@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-
 body {
-    font-family: 'Asap', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(315deg, #1d4d28 3%, #4b6c4e 38%, #239b6d 68%, #214836 98%);
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-    background-attachment: fixed;
+    margin: auto;
+    font-family: 'Urbanist', sans-serif;
+    background-color: #222; /* Color de fondo oscuro */
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
+body.light-mode {
+    background-color: #f9f9f9; /* Color de fondo claro */
+    color: #222; /* Color de texto claro */
+}
+
+.iconos_sol_luna {
+    font-size: 20px; /* Tamaño del icono */
+    color: #ffffff; /* Color blanco por defecto (para tema oscuro) */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
+    margin-left: 88%;
+    margin-top: 10px;
+}
+
+body.light-mode .iconos_sol_luna {
+    color: #000000; /* Color negro en modo claro */
+}
+
+.iconos_sol_luna:hover {
+    color: #28a56b; /* Color verde al hacer hover */
+}
+
+.logo {
+    margin-left: 30px;
+}
+
+.logo h1, .pagina h2 {
+    font-family: 'Lobster', cursive;
+    color: rgb(255, 255, 255);
+    transition: color 0.3s ease, font-size 0.3s ease;
+    text-align: center;
+}
+
+.pagina {
+    position: absolute; /* Posiciona .pagina de forma absoluta */
+    left: 50%; /* Mueve horizontalmente el centro del elemento */
+    transform: translateX(-50%); /* Ajusta el desplazamiento para centrar */
+    text-align: center; /* Asegura que el texto esté centrado */
+}
+
+.pagina h2 {
+    font-size: 40px;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo i {
+    color: white;
+    margin-right: 8px;
+    transition: color 0.4s ease;
+}
+
+.logo i:hover {
+    color: #28a56b;
+}
+
+.slogan a {
+    text-decoration: none;
+}
+
+.slogan h1 {
+    text-decoration: none;
+    margin-right: 115px;
+    color: #ffffff;
+    font-family: "Urbanist", sans-serif;
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.logo:hover h1, .pagina h2:hover {
+    font-size: 45px;
+}
+
+.slogan h1:hover {
+    color: #28a56b !important;
 }
 
 .container {
@@ -29,41 +92,64 @@ body {
     padding: 20px;
 }
 
+body.light-mode .pagina h2,
+body.light-mode .logo h1,
+body.light-mode .slogan h1 {
+    color: #28a56b; /* Color negro para h2 y h1 en modo claro */
+}
+
+body.light-mode .logo i {
+    color: #28a56b; /* Color verde para iconos en modo claro */
+}
+
 .card {
-    left: -70px;
-    border-radius: 20px;
+    background-color: #333; /* Fondo de tarjeta oscuro */
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 1400px; /* Cambia esto para que se ajuste al ancho del contenedor */
-    width: 1400px; /* Asegúrate de que ocupe el 100% del ancho disponible */
-    margin: auto; /* Centra la tarjeta horizontalmente */
+    transition: transform 0.3s;
+    margin: 10px; /* Espacio entre las tarjetas */
+    width: 90%; /* Ajustar el ancho de las tarjetas */
+    max-width: 400px; /* Ancho máximo para las tarjetas */
+    height: auto; /* Altura auto para las tarjetas */
+}
+
+body.light-mode .card{
+    background-color: #ffffff; /* Fondo de tarjeta claro */
+    color: #222; /* Color de texto en tarjeta clara */
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    transform: scale(1.05);
 }
 
-.card-img-top {
+.card-img-left {
     width: 100%;
     height: 400px;
     object-fit: cover;
-    border-bottom: 4px solid #28a56b;
+    border-radius: 10px 10px 0 0;
 }
 
 .card-body {
-    padding: 30px;
-    background: #fff;
+    padding: 20px;
+    background: #333; /* Fondo de cuerpo de tarjeta oscuro */
     border-radius: 0 0 20px 20px;
+}
+
+body.light-mode .card-body {
+    background: #ffffff; /* Fondo de cuerpo de tarjeta claro */
+    color: #222; /* Color de texto en cuerpo de tarjeta clara */
 }
 
 h1.display-3 {
     font-family: 'Lobster', cursive;
-    color: #333;
-    font-size: 3rem;
+    color: #28a56b;
+    font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
+}
+
+h1.display-3.light-mode {
+    color: #28a56b; /* Color de h1 en modo claro */
 }
 
 h2 {
@@ -75,16 +161,22 @@ h2 {
     padding-bottom: 10px;
 }
 
+h2.light-mode {
+    color: #28a56b; /* Color de h2 en modo claro */
+    border-bottom: 2px solid #28a56b; /* Borde de h2 en modo claro */
+}
+
 .sec-comentarios {
-    background: #f9f9f9; /* Fondo gris claro para la sección de comentarios */
-    border-radius: 15px; /* Bordes redondeados */
-    padding: 30px; /* Espaciado interno aumentado */
-    box-shadow: 0 0 20px rgba(0,0,0,0.2); /* Sombra más pronunciada */
-    animation: fadeIn 1s ease-in-out; /* Animación de entrada */
-    margin-top: 30px; /* Espaciado superior */
-    max-width: 1570px; /* Ancho máximo de la sección de comentarios */
-    margin-left: auto; /* Centrar horizontalmente */
-    margin-right: auto; /* Centrar horizontalmente */
+    background: #222;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+    margin-top: 30px;
+}
+
+body.light-mode .sec-comentarios {
+    background: #ffffff; /* Fondo claro para sección de comentarios */
 }
 
 @keyframes fadeIn {
@@ -98,68 +190,152 @@ h2 {
 
 .sec-comentarios h2 {
     font-family: 'Lobster', cursive;
-    color: #333;
-    font-size: 2.5rem; /* Tamaño de fuente aumentado */
-    margin-bottom: 30px; /* Espaciado inferior aumentado */
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+body.light-mode .sec-comentarios h2 {
+    color: #222; /* Color de h2 en modo claro */
 }
 
 .form-group {
-    margin-bottom: 30px; /* Espaciado inferior del grupo de formulario aumentado */
+    margin-bottom: 30px;
 }
 
 textarea.form-control {
-    border-radius: 15px; /* Bordes redondeados del área de texto */
-    border: 1px solid #ddd; /* Borde gris claro */
-    padding: 20px; /* Espaciado interno aumentado */
-    font-size: 1.1rem; /* Tamaño de fuente aumentado */
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.1); /* Sombra interna más pronunciada */
-    transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    font-size: 1.1rem;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
 textarea.form-control:focus {
-    box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra al enfocarse */
-    border-color: #28a56b; /* Borde verde al enfocarse */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-color: #28a56b;
+}
+
+textarea.form-control.light-mode {
+    border-color: #ccc; /* Color del borde en modo claro */
 }
 
 button.btn-primary {
-    background-color: #28a56b; /* Color de fondo del botón */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados del botón */
-    padding: 15px 25px; /* Espaciado interno ajustado */
-    color: white; /* Color del texto del botón */
-    font-size: 1.2rem; /* Tamaño de fuente del botón */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
-    width: 60px;
+    background-color: #28a56b;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 25px;
+    color: white;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+}
+
+button.btn-primary.light-mode {
+    background-color: #28a56b; /* Color del botón en modo claro */
 }
 
 button.btn-primary:hover {
-    background-color: #1e8e4d; /* Color de fondo del botón al pasar el ratón */
-    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+    background-color: #1e8e4d;
+    transform: scale(1.05);
+}
+
+button.btn-primary.light-mode:hover {
+    background-color: #1a7b4d; /* Color del botón al pasar el ratón en modo claro */
 }
 
 .comentarios {
-    margin-top: 30px; /* Espaciado superior aumentado */
+    margin-top: 30px;
 }
 
 .comentario {
-    background: #fff; /* Fondo blanco para cada comentario */
-    border-radius: 10px; /* Bordes redondeados de cada comentario */
-    padding: 20px; /* Espaciado interno aumentado */
-    margin-bottom: 20px; /* Espaciado inferior entre comentarios */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra más pronunciada */
-    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+    background: #222;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+body.light-mode .comentario {
+    background: #ffffff; /* Fondo claro para comentarios */
 }
 
 .comentario:hover {
-    background-color: #f1f1f1; /* Fondo gris claro al pasar el ratón */
-    /* También se podría agregar un borde o efecto adicional aquí si se desea */
+    background-color: #000000;
+}
+
+body.light-mode .comentario:hover {
+    background-color: #f0f0f0; /* Fondo al pasar el ratón en modo claro */
 }
 
 .comentario p {
-    margin: 0 0 10px; /* Margen inferior ajustado en los párrafos dentro del comentario */
+    margin: 0 0 10px;
 }
 
 .comentario .fecha {
-    font-size: 0.9rem; /* Tamaño de fuente para la fecha */
-    color: #777; /* Color gris para la fecha */
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.mensaje_error_comentario {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+body.light-mode .mensaje_error_comentario{
+    color: #000000;
+}
+
+.comentario_titulo{
+    color: white;
+}
+
+
+
+@media (max-width: 768px) {
+    h1.display-3 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .sec-comentarios {
+        padding: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-img-left {
+        height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    h1.display-3 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-img-left {
+        height: 200px;
+    }
+
+    textarea.form-control {
+        font-size: 1rem;
+    }
+
+    button.btn-primary {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
 }

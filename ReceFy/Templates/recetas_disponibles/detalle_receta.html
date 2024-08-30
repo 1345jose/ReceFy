@@ -3,9 +3,13 @@
 
 <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/detalles_listados.css' %}">
 
+<div class="iconos_sol_luna">
+    <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+    <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+</div>
+
 <div class="container mt-5">
     <div class="row">
-        <!-- Ajuste para que la tarjeta sea más ancha -->
         <div class="col-lg-10 mx-auto">
             <div class="card border-0 shadow-lg rounded-4" style="max-width: 900px; margin: auto; display: flex;">
                 <!-- Imagen a la izquierda -->
@@ -75,13 +79,13 @@
         {% endif %}
     </div>
 {% empty %}
-    <li>No hay comentarios aún. Sé el primero en comentar.</li>
+    <li class="mensaje_error_comentario">No hay comentarios aún. Sé el primero en comentar.</li>
 {% endfor %}
 
     
     </div>
 </div>
 <br><br><br><br>
-
+ <script src="{% static 'js/funcion_temas.js' %}"></script>
 
 {% include 'inc/footer.html' %}

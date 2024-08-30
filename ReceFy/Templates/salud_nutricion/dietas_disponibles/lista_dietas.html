@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<div class="iconos_sol_luna">
+    <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+    <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+</div>
+
 <!-- BUSCADOR Y FILTROS -->
 <div class="container mt-4">
     <div class="search-container">
@@ -12,20 +17,22 @@
         <i class="fas fa-search search-icon"></i>
     </div>
     <br>
-    <h3 style="color: white;">
+    <h3 class="titulos_comidas">
         <i class="fas fa-tags"></i> Categoría de las dietas    
     </h3>
     <hr>
-    <a href="#category-dietas-subir-peso" class="category-link">Subir de Peso</a>
-    <a href="#category-dietas-bajar-peso" class="category-link">Bajar de Peso</a>
-    <a href="#category-dietas-deshidratacion" class="category-link">Deshidratación</a>
-    <a href="#category-dietas-cardiovasculares" class="category-link">Cardiovasculares</a>
-    <a href="#category-dietas-diabetes" class="category-link">Diabetes</a>
+    <div class="botones">
+        <a href="#category-dietas-subir-peso" class="category-link">Subir de Peso</a>
+        <a href="#category-dietas-bajar-peso" class="category-link">Bajar de Peso</a>
+        <a href="#category-dietas-deshidratacion" class="category-link">Deshidratación</a>
+        <a href="#category-dietas-cardiovasculares" class="category-link">Cardiovasculares</a>
+        <a href="#category-dietas-diabetes" class="category-link">Diabetes</a>
+    </div>
 </div>
 
 <div class="container mt-5">
     <div class="category-container" id="category-dietas-subir-peso">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-arrow-up"></i> Dietas para Subir de Peso
         </h3>
         <hr>
@@ -62,7 +69,7 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         {% else %}
-            <h3 style="color: wheat; text-align: center;">
+            <h3 class="titulos_comidas">
                 No hay dietas disponibles en esta categoría.
             </h3>
         {% endif %}
@@ -71,7 +78,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-dietas-bajar-peso">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-arrow-down"></i> Dietas para Bajar de Peso
         </h3>
         <hr>
@@ -108,7 +115,7 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         {% else %}
-            <h3 style="color: wheat; text-align: center;">
+            <h3 class="titulos_comidas">
                 No hay dietas disponibles en esta categoría.
             </h3>
         {% endif %}
@@ -117,7 +124,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-dietas-deshidratacion">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-tint"></i> Dietas para Deshidratación
         </h3>
         <hr>
@@ -154,7 +161,7 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         {% else %}
-            <h3 style="color: wheat; text-align: center;">
+            <h3 class="titulos_comidas">
                 No hay dietas disponibles en esta categoría.
             </h3>
         {% endif %}
@@ -163,7 +170,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-dietas-cardiovasculares">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-heartbeat"></i> Dietas Cardiovasculares
         </h3>
         <hr>
@@ -200,7 +207,7 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         {% else %}
-            <h3 style="color: wheat; text-align: center;">
+            <h3 class="titulos_comidas">
                 No hay dietas disponibles en esta categoría.
             </h3>
         {% endif %}
@@ -209,7 +216,7 @@
     <br><br><br>
 
     <div class="category-container" id="category-dietas-diabetes">
-        <h3 style="color: white;">
+        <h3 class="titulos_comidas">
             <i class="fas fa-blood-drop"></i> Dietas para Diabetes
         </h3>
         <hr>
@@ -246,7 +253,7 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         {% else %}
-            <h3 style="color: wheat; text-align: center;">
+            <h3 class="titulos_comidas">
                 No hay dietas disponibles en esta categoría.
             </h3>
         {% endif %}
@@ -258,3 +265,5 @@
 {% include 'inc/footer.html' %}
 
 <script src="{% static 'js/sliders_listados.js' %}"></script>
+<script src="{% static 'js/funcion_temas.js' %}"></script>
+

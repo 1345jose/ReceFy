@@ -2,11 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* Estilos generales */
-
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
 body {
     margin: 0;
     font-family: 'Urbanist', sans-serif;
@@ -18,18 +19,64 @@ body {
 }
 
 .container {
+    max-width: 1000px;
     width: 90%;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Responsivo para dispositivos móviles */
+
+@media (max-width: 768px) {
+    body {
+        background: url('https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed; /* Mantener el fondo fijo */
+        background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+        width: 100%;
+        height: auto; /* Asegura que el contenido no desborde */
+        overflow: auto; /* Permite desplazamiento si es necesario */
+    }
+
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .fancy-input {
+        font-size: 1.2em;
+        padding: 8px 15px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    /* Evitar que el contenido se desborde */
+    .container {
+        overflow-x: auto;
+    }
+
+    /* Scroll horizontal para tablas en pantallas pequeñas */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
 h1 {
     text-align: center;
     color: #4CAF50;
-
     font-family: 'Courgette', cursive;
 }
 
@@ -152,13 +199,6 @@ table td input::before {
 table td input:hover::before,
 table td input:focus::before {
     opacity: 1; /* Hacer visible el efecto */
-}
-
-/* Animación de pulsación para el input enfocado */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
 }
 
 .alert {

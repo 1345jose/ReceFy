@@ -3,6 +3,11 @@
 
 <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/detalles_listados.css' %}">
 
+<div class="iconos_sol_luna">
+    <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+    <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+</div>
+
 <div class="container mt-5">
     <div class="row">
         <!-- Ajuste para que la tarjeta sea más ancha -->
@@ -88,5 +93,5 @@
 
 <br><br><br><br>
 
-
+<script src="{% static 'js/funcion_temas.js' %}"></script>
 {% include 'inc/footer.html' %}

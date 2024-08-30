@@ -890,5 +890,65 @@ def actualizar_rol(request, idroles):
 
 #endregion
 
+#region Calculadora Imc
+
+def calculadora_imc(request):
+    pagina_actual = "calculadora_imc"
+    dietas = None
+    imc = None
+    resultado = ''
+    mensaje_error = ''
+
+    if request.method == 'POST':
+        estatura = request.POST.get('estatura')
+        peso = request.POST.get('peso')
+
+        # Validar entrada
+        if not estatura or not peso:
+            mensaje_error = 'Por favor, completa ambos campos.'
+        else:
+            # Convertir valores
+            estatura = estatura.replace(',', '.')
+            peso = peso.replace(',', '.')
+
+            try:
+                estatura = float(estatura)
+                peso = float(peso)
+
+                # Validar si los valores son numéricos y razonables
+                if estatura <= 0 or peso <= 0:
+                    mensaje_error = 'Por favor, ingresa valores numéricos válidos.'
+                elif estatura < 0.5 or estatura > 2.5:
+                    mensaje_error = 'Por favor, ingresa una estatura válida entre 0.5 y 2.5 metros.'
+                else:
+                    # Calcular IMC
+                    imc = peso / (estatura * estatura)
+
+                    # Determinar resultado
+                    if imc < 18.5:
+                        resultado = 'Bajo peso'
+                        dietas = Dieta.objects.filter(categoria='Dietas para subir de peso')
+                    elif imc >= 18.5 and imc <= 24.9:
+                        resultado = 'Normal'
+                        dietas = Dieta.objects.filter(categoria='Mantener peso')
+                    elif imc >= 25 and imc <= 29.9:
+                        resultado = 'Sobrepeso'
+                        dietas = Dieta.objects.filter(categoria='Bajar de peso')
+                    else:
+                        resultado = 'Obesidad'
+                        dietas = Dieta.objects.filter(categoria='Bajar de peso')
+            except ValueError:
+                mensaje_error = 'Por favor, ingresa valores numéricos válidos.'
+
+    return render(request, "salud_nutricion/calculadora_imc/calculadora.html", {
+        "pagina": pagina_actual,
+        "imc": imc,
+        "resultado": resultado,
+        "dietas": dietas,
+        "mensaje_error": mensaje_error,
+    })
+
+#endregion
+
 
 
