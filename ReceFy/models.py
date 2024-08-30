@@ -39,6 +39,8 @@ class Comentario(models.Model):
     usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
     contenido = models.CharField(max_length=1500) 
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+    me_gusta = models.IntegerField(default=0) 
+
 
     class Meta:
         db_table = "tbl_comentarios"

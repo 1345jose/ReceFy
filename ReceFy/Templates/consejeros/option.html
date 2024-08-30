@@ -1,0 +1,120 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<style>
+    body {
+    background: url('/static/media/iniciar.jpg') no-repeat center center/cover;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: auto; 
+    font-family: "Urbanist", sans-serif;
+
+    }
+
+    main{
+        margin: auto;
+        width: 75%;
+    }
+
+    .container{
+        background-color: gray;
+        border: 1px solid #0d6efd;
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 25px;
+    }
+    
+    .textos{
+        text-align: center;
+    }
+
+    .textos h1{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+    }
+
+
+    hr{
+        background-color: #28a56b;
+        height: 3px;
+        border-radius: 25px;
+    }
+
+    .row{
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+    }
+    .col{
+        border-radius: 25px;
+        padding: 20px;
+        text-align: center;
+        color: white;
+    }
+
+    #postulacion {
+        background: url('https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center; /* Centra la imagen */
+        background-size: cover;
+        border-radius: 25px; 
+    }    
+
+    #ver{
+        background: url('https://images.pexels.com/photos/4590940/pexels-photo-4590940.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center; /* Centra la imagen */
+        background-size: cover;
+        border-radius: 25px; 
+    }
+
+    .col::before {
+        content: ''; 
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.178); 
+        border-radius: 25px;
+    }
+
+
+    
+
+</style>
+
+<main>
+
+    <div class="container">
+    
+        <div class="textos">
+            <h1>ReceFy</h1>
+            <h2>Bienvenido a Consejeros</h2>
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col" id="postulacion">
+                <h1>Postulate A Consejero</h1>
+                <p>Envianos tu hoja de vida para entrar en el proceso de seleccion, los consejeros se encargan de ayudar a los usuarios en su proceso de cocinar y mejorar su experiencia a la hora de elaborar sus Recetas.</p>
+                <small>ReceFy</small>
+            </div>
+
+            <div class="col" id="ver">
+                <h1>Busca un Consejero</h1>
+                <p>¡Encuentra un consejero aqui! , Busca la ayuda de un profesional en distintas area de Gastronomia, Nutricionistas y especialistas de distintas areas de la salud... todos estos profesionales te ayudaran y te acompañaran en los procesos que necesites.</p>
+                <small>ReceFy</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% include 'inc/footer.html' %}
+
+</body>
+</html>

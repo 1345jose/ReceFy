@@ -1,65 +1,6 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar Receta: {{ receta.nombre_plato }}</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap" rel="stylesheet">
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="{% static 'css/estilos_cruds/formularios.css' %}">
-    <style>
-        .file-drop-area {
-            border: 2px dashed #28a56b;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 10px;
-        }
-        .file-drop-area .icon {
-            font-size: 3rem;
-            color: #28a56b;
-        }
-        .btn-create {
-            background-color: #28a56b;
-            border-color: #28a56b;
-            color: white;
-        }
-        .btn-create:hover {
-            background-color: #1a9045;
-            border-color: #1a9045;
-        }
-        .btn-back {
-            background-color: gray;
-            border-color: gray;
-            color: white;
-        }
-        .btn-back:hover {
-            background-color: gray;
-            border-color: gray;
-        }
-        .selected-image {
-            margin-top: 20px;
-        }
-        .selected-image img {
-            max-width: 100%;
-            display: block;
-            margin-top: 10px;
-        }
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px; /* Espacio entre los botones */
-        }
-    </style>
-</head>
+{% include 'administracion/sethings/forms.html' %}
+
 <body>
     <div class="container">
         <h1>Actualizar Receta: {{ receta.nombre_plato }}</h1>
