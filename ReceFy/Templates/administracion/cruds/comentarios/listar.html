@@ -1,0 +1,65 @@
+{% load static %}
+{% include 'administracion/sethings/links.html' %}
+        
+<main>
+         
+<div class="table-responsive mt-4">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Receta</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Contenido</th>
+                <th scope="col">Fecha Publicacion</th>
+                <th scope="col">Me Gustas</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for us in comentario %}
+            <tr>
+                <td>{{ us.id }}</td>
+                <td>{{ us.receta.nombre_plato }}</td> 
+                <td>{{ us.usuario.username }}</td> 
+                <td>{{ us.contenido }}</td>
+                <td>{{ us.fecha_creacion }}</td>
+                <td>{{ us.me_gusta }}</td>
+                <td>
+                    <div class="acciones">
+                        <button class="btn btn-warning delete-btn" data-url="{% url 'borrar_comentario' us.id %}" data-id="{{ us.id }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        
+                        </a>
+                        <a href="" class="btn btn-info">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</main>
+    
+<div class="pagination">
+    <span class="step-links">
+        {% if comentarios.has_previous %}
+            <a href="?page=1">&laquo; Primera</a>
+            <a href="?page={{ comentarios.previous_page_number }}">Anterior</a>
+        {% endif %}
+        <span class="current">
+            Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}.
+        </span>
+        {% if comentarios.has_next %}
+            <a href="?page={{ comentarios.next_page_number }}">Siguiente</a>
+            <a href="?page={{ comentarios.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+    {% include 'administracion/sethings/src.html' %}

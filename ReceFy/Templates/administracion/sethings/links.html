@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Dietas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="{% static 'css/estilos_cruds/listados.css' %}">
+    <style>
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            font-size: 2rem;
+            color: #28a56b;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .back-link:hover {
+            color: #1a9045;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{% url 'home_administracion' %}" class="back-link">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="container mt-4">
+        <h2 class="text-center mb-4 glow-text">Registros Disponibles</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar Registros ...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div id="reloadIcon" class="text-center">
+            <i class="fas fa-sync-alt"></i>
+        </div>
+
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

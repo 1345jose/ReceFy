@@ -117,9 +117,32 @@ urlpatterns = [
     path("administracion/roles/borrar/<int:idroles>/", views.borrar_rol, name="borrar_rol"),
     path("administracion/roles/actualizar/<int:idroles>/" , views.actualizar_rol, name="actualizar_rol"),
     #FIN CRUD ROLES 
-       
+    
+    #CRUD USUARIOS
+    path("administracion/usuarios/listado/", views.listadoUsuarios, name="listado_usuarios"),
+    path("administracion/usuarios/borrrar/<int:idusuario>/", views.borrarUsuario , name="borrar_usuario"),
+    path("administracion/usuarios/actualizar/<int:idusuario>/", views.actualizarUsuario, name="actualizarUsuario"),
+    #FIN CRUD USUARIOS
+
+    #CRUD COMENTARIOS
+    path("administracion/comentarios/listado/", views.listadoComentarios, name="listado_comentarios"),
+    path("administracion/comentarios/borrar/<int:idcomentario>/", views.borrarComentario, name="borrar_comentario"),
+
+    #FIN CRUD COMENTARIOS
+
+    #ESTADISTICAS GENERALES
+
+    path("administracion/estadisticas/generales/", views.Estadisticas_generales, name="estadisticas"),
+    #FIN ESTADISTICAS
+
     #endregion
-         
+        
+    #region Consejeros
+
+    path("consejeros/opcion/", views.optionsConsejeros, name="optionsConsejeros"),
+
+    #endregion
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

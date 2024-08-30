@@ -10,6 +10,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash
+from django.http import JsonResponse
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+
 import re
 
 
@@ -566,6 +571,8 @@ def dashboard(request):
     consejeros_recientes = Consejero.objects.order_by('-fecha_registro')[:3]
     recetas_recientes = Receta.objects.order_by('-fecha_registro_receta')[:3]
     dietas_recientes = Dieta.objects.order_by('-fecha_registro_dieta')[:3]
+    usuarios_recientes = MiUsuario.objects.order_by('-date_joined')[:3]
+    comentarios_recientes = Comentario.objects.order_by('-fecha_creacion')[:3]
     ingredientes_recientes = Ingrediente.objects.order_by('-fecha_registro_ingredientes')[:3]
 
     context = {
@@ -576,6 +583,8 @@ def dashboard(request):
         'total_ingredientes': total_ingredientes,
 
         'consejeros_recientes': consejeros_recientes,
+        'comentarios_recientes': comentarios_recientes,
+        'usuarios_recientes': usuarios_recientes,
         'recetas_recientes': recetas_recientes,
         'dietas_recientes': dietas_recientes,
         'ingredientes_recientes': ingredientes_recientes,
@@ -583,6 +592,69 @@ def dashboard(request):
 
 
     return render(request, 'administracion/Home_Administracion.html', context)
+
+#estadisticas
+def Estadisticas_generales(request):
+    # Obtener los totales de los diferentes modelos
+    total_usuarios = MiUsuario.objects.count()
+    total_consejeros = Consejero.objects.count()
+    total_recetas = Receta.objects.count()
+    total_dietas = Dieta.objects.count()
+    total_ingredientes = Ingrediente.objects.count()
+
+    # Crear el diccionario de contexto
+    context = {
+        "total_usuarios": total_usuarios,
+        "total_consejeros": total_consejeros,
+        "total_recetas": total_recetas,
+        "total_dietas": total_dietas,
+        "total_ingredientes": total_ingredientes,
+    }
+
+    plt.switch_backend('Agg')
+
+    fig, ax = plt.subplots(figsize=(8, 5), dpi=100)
+    labels = ['Usuarios', 'Consejeros', 'Recetas', 'Dietas', 'Ingredientes']
+    totals = [total_usuarios, total_consejeros, total_recetas, total_dietas, total_ingredientes]
+
+    bars = ax.bar(labels, totals, color='none', edgecolor=['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'], linewidth=2, width=0.5)
+
+    ax.set_xlabel('Categorías', fontsize=12, fontweight='bold', color='#333333')
+    ax.set_ylabel('Totales', fontsize=12, fontweight='bold', color='#333333')
+    ax.set_title('Totales por Categoría', fontsize=14, fontweight='bold', color='#333333')
+    ax.tick_params(axis='both', which='major', labelsize=10, colors='#333333')
+
+    for bar in bars:
+        yval = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2, yval + 0.2, int(yval), va='bottom', ha='center', fontsize=10, fontweight='bold', color='#333333')
+
+    # Configuración de ejes y fondo
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_color('#cccccc')
+    ax.spines['left'].set_linewidth(1)
+    ax.spines['bottom'].set_color('#cccccc')
+    ax.spines['bottom'].set_linewidth(1)
+    
+    ax.set_facecolor('#ffffff')
+    fig.patch.set_facecolor('#f9f9f9')
+
+    plt.tight_layout()
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png', bbox_inches='tight', transparent=True)
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+
+    graphic = base64.b64encode(image_png).decode('utf-8')
+
+    context['graphic'] = graphic
+
+    return render(request, "administracion/cruds/estadisticas/general.html", context)
+
+
+#fin estadisticas 
 
 #CRUD CONSEJEROS
 
@@ -657,7 +729,7 @@ def listar_recetas(request):
     recetas = Receta.objects.all().order_by('-fecha_registro_receta')
     
     # Paginación
-    paginator = Paginator(recetas, 15)  # 15 recetas por página
+    paginator = Paginator(recetas, 15) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -888,7 +960,94 @@ def actualizar_rol(request, idroles):
 
 #FIN CRUD ROLES
 
+#CRUD USUARIOS
+
+
+def listadoUsuarios(request):
+    usuarios = MiUsuario.objects.all().order_by('-date_joined')
+
+    paginator = Paginator(usuarios, 15) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'usuarios': page_obj,
+        'paginator': paginator
+    }
+
+    return render(request, 'administracion/cruds/usuarios/listar.html', context)
+
+def borrarUsuario(request, idusuario):
+    usuario = MiUsuario.objects.filter(id=idusuario)
+    usuario.delete()
+    return redirect('/administracion/usuarios/listado/')
+
+def actualizarUsuario(request, idusuario):
+    usuario = get_object_or_404(MiUsuario, id=idusuario)
+    if request.method == "POST":
+        imagen2 = request.FILES.get('imagen2')
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        fecha_nacimiento = request.POST.get('fecha_nacimiento')
+        biografia = request.POST.get('biografia')
+        pais = request.POST.get('pais')
+        idioma = request.POST.get('idioma')
+        telefono = request.POST.get('telefono')
+
+        if username and first_name and last_name and email and fecha_nacimiento and biografia and pais and idioma and telefono:
+            usuario.username = username
+            usuario.first_name = first_name
+            usuario.last_name = last_name
+            usuario.email = email
+            usuario.fecha_nacimiento = fecha_nacimiento
+            usuario.biografia = biografia
+            usuario.pais = pais
+            usuario.idioma = idioma
+            usuario.telefono = telefono
+
+            if imagen2:
+                usuario.imagen2 = imagen2 
+                
+            usuario.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Faltan campos obligatorios.'}, status=400)
+    
+    return render(request, 'administracion/cruds/usuarios/actualizar.html', {'st': usuario})
+#FIN CRUD USUARIOS
+
+#CRUD COMENTARIOS
+
+def listadoComentarios(request):
+    comentario = Comentario.objects.all().order_by('-fecha_creacion')
+
+    paginator = Paginator(comentario, 15) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'comentario': page_obj,
+        'paginator': paginator
+    }
+
+    return render(request,'administracion/cruds/comentarios/listar.html', context)
+
+def borrarComentario(request, idcomentario):
+    comentario = Comentario.objects.filter(id=idcomentario)
+    comentario.delete()
+    return redirect('/administracion/comentarios/listado/')
+
+#FIN CRUD COMENT
+
 #endregion
 
+#region Consejeros
 
+def optionsConsejeros(request):
+    pagina_actual = "option"
+    return render(request,'consejeros/option.html',{"pagina": pagina_actual})
+
+#endregion
 

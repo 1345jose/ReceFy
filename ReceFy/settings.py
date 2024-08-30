@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'ReceFy.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "recefy_db",
+        "NAME": "recefy",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "localhost",

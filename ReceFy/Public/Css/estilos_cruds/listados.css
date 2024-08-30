@@ -1,10 +1,10 @@
 body {
-    background-color: #f8f9fa;
-    font-family: 'Asap', sans-serif;
+    background: url('https://images.pexels.com/photos/15529651/pexels-photo-15529651/free-photo-of-comida-plato-restaurante-cena.jpeg') no-repeat center center/cover;
+    font-family: "Urbanist", sans-serif;
     line-height: 1.6;
-    color: #343a40;
+    color: #2e3338;
     min-height: 100vh;
-    font-size: 16px; /* Asegura un tamaño de fuente mínimo para evitar el zoom */
+    font-size: 16px; 
 }
 
 .table-responsive {
@@ -12,11 +12,11 @@ body {
     width: 100%;
     overflow-x: auto; 
     -webkit-overflow-scrolling: touch; 
-    max-width: 100%; /* Permite que la tabla ocupe todo el ancho disponible */
+    max-width: 100%; 
 }
 
 .table {
-    background-color: #ffffff;
+    background-color: #ffffffb6;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -79,7 +79,7 @@ body {
 @keyframes glow {
     0% {
         text-shadow: 0 0 10px #1a7b31;
-        color: black;
+        color: white;
         transform: scale(1);
     }
     50% {
@@ -89,7 +89,7 @@ body {
     }
     100% {
         text-shadow: 0 0 10px #1a7b31;
-        color: black;
+        color: white;
         transform: scale(1);
     }
 }
@@ -118,7 +118,7 @@ body {
     padding: 8px;
     border: none;
     border-radius: 25px;
-    font-size: 16px; /* Asegura un tamaño de fuente mínimo para evitar el zoom */
+    font-size: 16px; 
     background-color: transparent;
     outline: none;
     transition: all 0.3s ease-in-out;
@@ -147,17 +147,17 @@ body {
 
 #reloadIcon {
     display: block;
-    margin: 10px auto; /* Centrado horizontalmente */
+    margin: 10px auto; 
     cursor: pointer;
     color: #28a745;
     transition: all 0.3s ease-in-out;
     font-size: 24px;
-    animation: none; /* No hay animación por defecto */
+    animation: none;
 }
 
 #reloadIcon:hover {
     transform: scale(1.1);
-    animation: rotate 0.6s ease-in-out; /* Aplica la animación de rotación */
+    animation: rotate 0.6s ease-in-out;
 }
 
 @keyframes rotate {
@@ -173,6 +173,12 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
+}
+
+.float-end{
+    color: white;
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
 }
 
 .pagination {
@@ -221,21 +227,36 @@ body {
 }
 
 .acciones .btn {
-    color: white; /* Color del texto */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave para cambios */
-    border: none; /* Elimina el borde por defecto */
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+    border: none; 
 }
 
 .acciones .btn-warning {
-    background-color: rgba(0, 128, 0, 0.768); /* Color de fondo del botón de eliminar (naranja) */
+    background-color: rgb(175, 8, 8); 
+}
+
+.acciones .btn-warning:hover{
+    background-color: rgb(197, 0, 0); 
+
 }
 
 .acciones .btn-info {
-    background-color: rgba(0, 128, 0, 0.768); /* Color de fondo del botón de editar (azul claro) */
+    background-color: rgba(0, 55, 128, 0.979); 
+}
+
+.acciones .btn-info:hover{
+    background-color: rgba(1, 85, 196, 0.979); 
+
 }
 
 .acciones .btn-primary {
-    background-color: rgba(0, 128, 0, 0.768); /* Color de fondo del botón de ver (azul oscuro) */
+    background-color: rgb(7, 124, 75); 
+}
+
+.acciones .btn-primary:hover{
+    background-color: rgb(9, 153, 93); 
+
 }
 
 .acciones .btn:hover {
@@ -245,7 +266,6 @@ body {
 
 .acciones i {
     font-size: 18px; /* Tamaño del ícono */
-    color: white; /* Color de los íconos */
 }
 
 
