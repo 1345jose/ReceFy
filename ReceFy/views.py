@@ -1046,7 +1046,7 @@ def borrarComentario(request, idcomentario):
 #region Consejeros
 
 def optionsConsejeros(request):
-    pagina_actual = "option"
+    pagina_actual = "options"
     return render(request,'consejeros/option.html',{"pagina": pagina_actual})
 
 #endregion
