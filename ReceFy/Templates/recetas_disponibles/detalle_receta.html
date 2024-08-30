@@ -3,10 +3,12 @@
 
 <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/detalles_listados.css' %}">
 
+
 <div class="iconos_sol_luna">
     <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
     <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
 </div>
+
 
 <div class="container mt-5">
     <div class="row">
@@ -27,6 +29,8 @@
                             <p><i class="fas fa-cogs"></i> <strong>Instrucciones:</strong> {{ receta.instrucciones }}</p>
                             <p><i class="fas fa-clock"></i> <strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }}</p>
                             <p><i class="fas fa-tachometer-alt"></i> <strong>Dificultad:</strong> {{ receta.dificultad }}</p>
+                            <small>ReceFy.com</small>
+
                         </div>
                         <div class="col-md-6">
                             {% if receta.usuario %}
@@ -34,6 +38,22 @@
                             {% else %}
                                 <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema Recetarium</p>
                             {% endif %}
+
+                            <div class="me-gusta-section mt-4">
+                                {% if user.is_authenticated %}
+                                    <form action="" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="receta_id" value="{{ receta.id_receta }}">
+                                        <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
+                                            <i class="bi bi-heart-fill"></i> <span>{{ receta_me_gusta_count }}</span>
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <i class="bi bi-heart-fill"></i> {{ receta_me_gusta_count }} 
+                                    <p><a href="{% url 'login' %}">Inicia sesión</a> para Añadir a " me gusta ".</p>
+                                {% endif %}
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -64,23 +84,28 @@
 
         {% for comentario in comentarios %}
     <div class="comentario">
-        <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
-        <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
-        {% if user.is_authenticated %}
-        <form method="post" style="display:inline;">
-            {% csrf_token %}
-            <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
-            <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
-                <i class="fas fa-thumbs-up"></i> {{ comentario.me_gusta_count }}
-            </button>
-        </form>
-        {% else %}
+        <div class="row">
+            <div class="col">
+                <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
+                <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
+                {% if user.is_authenticated %}
+                <form method="post" style="display:inline;" >
+                    {% csrf_token %}
+                    <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                    <button type="submit" name="me_gusta" class="float-end" style="background:none; border:none; cursor:pointer;">
+                        <i class="fas fa-thumbs-up float-end"></i> <span>{{ comentario.me_gusta_count }}</span>
+                    </button>
+                </form>
+                {% else %}
+            </div>
+             
+        </div>
         <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
         {% endif %}
     </div>
-{% empty %}
-    <li class="mensaje_error_comentario">No hay comentarios aún. Sé el primero en comentar.</li>
-{% endfor %}
+    {% empty %}
+        <li class="mensaje_error_comentario">No hay comentarios aún. Sé el primero en comentar.</li>
+    {% endfor %}
 
     
     </div>
