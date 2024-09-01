@@ -26,6 +26,8 @@ class Receta(models.Model):
     imagen = models.ImageField(upload_to="recetas/")
     fecha_registro_receta = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.SET_NULL, null=True, blank=True)
+    me_gusta = models.IntegerField(default=0)
+
     
     class Meta:
         db_table = "tbl_recetas"
@@ -46,12 +48,21 @@ class Comentario(models.Model):
         db_table = "tbl_comentarios"
         
 class MeGusta(models.Model):
-    comentario = models.ForeignKey(Comentario, related_name='megustas', on_delete=models.CASCADE)
+    comentario = models.ForeignKey(Comentario, related_name='megustas', on_delete=models.CASCADE,null=True,blank=True)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
-    fecha = models.DateTimeField(auto_now_add=True)
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE,null=True,blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = "tbl_like_c"
-        unique_together = ('comentario', 'usuario') 
+        unique_together = (('comentario', 'usuario'), ('receta', 'usuario'))
+
+    def __str__(self):
+        if self.comentario:
+            return f'Like by {self.usuario} on Comment {self.comentario.id}'
+        elif self.receta:
+            return f'Like by {self.usuario} on Recipe {self.receta.id}'
+        else:
+            return f'Like by {self.usuario}'
 
 #endregion
 

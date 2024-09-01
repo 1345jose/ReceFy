@@ -366,42 +366,68 @@ def lista_recetas(request):
 def detalle_receta(request, id_receta):
     pagina_actual = "detalle_receta"
     receta = get_object_or_404(Receta, pk=id_receta)
-    
     comentarios = receta.comentarios.all()
 
     if request.method == 'POST':
         if 'contenido' in request.POST:
             contenido = request.POST.get('contenido')
-            if contenido:
+            if contenido and request.user.is_authenticated:
                 Comentario.objects.create(
                     receta=receta,
                     usuario=request.user,
                     contenido=contenido
                 )
             return redirect('detalle_receta', id_receta=id_receta)
-        
+
         if 'me_gusta' in request.POST:
-            comentario_id = request.POST.get('comentario_id')
-            if comentario_id:
-                comentario = get_object_or_404(Comentario, pk=comentario_id)
-                
-                me_gusta, created = MeGusta.objects.get_or_create(
-                    comentario=comentario,
-                    usuario=request.user
-                )
-                
-                if not created:
-                    me_gusta.delete()
-                return redirect('detalle_receta', id_receta=id_receta)
+            if request.user.is_authenticated:
+                # Manejo de "me gusta" en receta
+                receta_id = request.POST.get('receta_id')
+                if receta_id:
+                    receta = get_object_or_404(Receta, pk=receta_id)
+                    me_gusta, created = MeGusta.objects.get_or_create(
+                        receta=receta,
+                        usuario=request.user
+                    )
+                    if not created:
+                        me_gusta.delete()
+                    
+                    # Actualiza el conteo de "me gusta" en el modelo Receta
+                    receta_me_gusta_count = MeGusta.objects.filter(receta=receta).count()
+                    receta.me_gusta = receta_me_gusta_count
+                    receta.save()
+                    
+                    return redirect('detalle_receta', id_receta=id_receta)
+
+                # Manejo de "me gusta" en comentario
+                comentario_id = request.POST.get('comentario_id')
+                if comentario_id:
+                    comentario = get_object_or_404(Comentario, pk=comentario_id)
+                    me_gusta, created = MeGusta.objects.get_or_create(
+                        comentario=comentario,
+                        usuario=request.user
+                    )
+                    if not created:
+                        me_gusta.delete()
+                    
+                    # Actualiza el conteo de "me gusta" para el comentario
+                    comentario_me_gusta_count = MeGusta.objects.filter(comentario=comentario).count()
+                    comentario.me_gusta = comentario_me_gusta_count
+                    comentario.save()
+                    
+                    return redirect('detalle_receta', id_receta=id_receta)
 
     # Contar el total de "Me gusta" para cada comentario
     for comentario in comentarios:
-        comentario.me_gusta_count = comentario.megustas.count()
+        comentario.me_gusta_count = MeGusta.objects.filter(comentario=comentario).count()
     
+    receta_me_gusta_count = MeGusta.objects.filter(receta=receta).count()
+
     return render(request, "recetas_disponibles/detalle_receta.html", {
-        "receta": receta, 
-        "pagina": pagina_actual,  
-        'comentarios': comentarios
+        "receta": receta,
+        "pagina": pagina_actual,
+        "comentarios": comentarios,
+        "receta_me_gusta_count": receta_me_gusta_count
     })
 
 

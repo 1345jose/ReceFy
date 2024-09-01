@@ -245,6 +245,24 @@ button.btn-primary.light-mode:hover {
     background-color: #1a7b4d; /* Color del botón al pasar el ratón en modo claro */
 }
 
+/* likes al detalle */
+.me-gusta-section{
+    font-size: 20px;
+}
+.me-gusta-section i{
+    color: #28a56b;
+    transition: color 0.3s ease;
+}
+
+.me-gusta-section i:hover{
+    color: #126941;
+}
+
+
+.me-gusta-section span{
+    color: #28a56b;
+}
+
 .comentarios {
     margin-top: 30px;
 }
@@ -255,7 +273,7 @@ button.btn-primary.light-mode:hover {
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 
 body.light-mode .comentario {
@@ -263,7 +281,18 @@ body.light-mode .comentario {
 }
 
 .comentario:hover {
-    background-color: #000000;
+    color: #000000;
+    background-color: #f5ececb9;
+}
+
+
+.comentario i{
+    font-size: 25px;
+    margin-top: 15px;
+    color:  #1a7b4d;
+}
+.comentario span{
+    color: #1a7b4d;
 }
 
 body.light-mode .comentario:hover {
@@ -315,6 +344,16 @@ body.light-mode .mensaje_error_comentario{
     .card-img-left {
         height: 250px;
     }
+    .comentario{
+        background-color: #126941;
+    }
+    .comentario i {
+        color: white;/* Fondo al pasar el ratón en modo claro */
+    }
+
+    .comentario span{
+        color: white;
+    }
 }
 
 @media (max-width: 576px) {
@@ -332,6 +371,16 @@ body.light-mode .mensaje_error_comentario{
 
     textarea.form-control {
         font-size: 1rem;
+    }
+    .comentario{
+        background-color: #126941;
+    }
+    .comentario i {
+        color: white;/* Fondo al pasar el ratón en modo claro */
+    }
+
+    .comentario span{
+        color: white;
     }
 
     button.btn-primary {
