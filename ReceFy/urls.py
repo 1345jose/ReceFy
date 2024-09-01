@@ -68,6 +68,7 @@ urlpatterns = [
     path('ver_calendarios/', views.ver_calendarios, name='ver_calendarios'),
     path('calendario/<int:id>/', views.ver_calendario, name='ver_calendario'),
     path('plan/eliminar/<int:id_plan>', views.Eliminar_Plan, name="Eliminar_Plan"),
+    path('calendario/<int:calendario_id>/pdf/', views.generar_pdf, name='generar_pdf'),
     #endregion
 
     #region Dietas Disponibles
