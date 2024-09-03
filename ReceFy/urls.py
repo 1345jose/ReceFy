@@ -28,6 +28,7 @@ urlpatterns = [
     
     #region Salud Nutricion
     path('salud-nutricion/', views.salud_nutricion, name="salud_nutricion"),
+    path('salud-nutricion/calculadora_imc', views.calculadora_imc, name="calculadora_imc"),
     #endregion
 
 
@@ -77,12 +78,6 @@ urlpatterns = [
 
     #endregion
 
-    #region Calculadora Imc
-
-    path('salud_nutricion/calculadora_imc/', views.calculadora_imc, name='calculadora_imc'),
-
-    #endregion
-
     #region Administracion
     path("administracion/", views.dashboard, name="home_administracion"),
 
@@ -123,6 +118,7 @@ urlpatterns = [
     path("administracion/roles/insertar/", views.insertar_roles, name="insertar_roles"),
     path("administracion/roles/borrar/<int:idroles>/", views.borrar_rol, name="borrar_rol"),
     path("administracion/roles/actualizar/<int:idroles>/" , views.actualizar_rol, name="actualizar_rol"),
+    path("administracion/roles/editar/<int:idinter>/", views.editarRolu, name="editarRolu"),
     #FIN CRUD ROLES 
     
     #CRUD USUARIOS
@@ -143,6 +139,15 @@ urlpatterns = [
     #FIN ESTADISTICAS
 
     #endregion
+
+    #region Mensajes Usuarios (por terminar)
+
+    path('usuarios/lista', views.lista_usuarios, name='lista_usuarios'),
+    path('chat/<int:usuario_id>/', views.chat_view, name='chat'),
+    path('chat/enviar/', views.enviar_mensaje, name='enviar_mensaje'),
+
+
+    #endregion
         
     #region Consejeros
 
@@ -150,7 +155,7 @@ urlpatterns = [
     path("consejeros_disponibles/", views.consejeros_disponibles, name="consejeros_disponibles"),
 
     #endregion
-
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

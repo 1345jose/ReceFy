@@ -34,6 +34,39 @@
                 {% endfor %}
             </tbody>
         </table>
+        <br>
+        <table class="table table-bordered table-hover">
+            <h1 class="float-end">Roles a Usuarios</h1>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id Usuario</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Id Rol</th>                    
+                    <th scope="col">Rol</th>
+                    
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario_rol in usuarios_roles %}
+                <tr>
+                    <td>{{ usuario_rol.usuario.id }}</td> 
+                    <td>{{ usuario_rol.usuario.username }}</td>
+                    <td>{{ usuario_rol.rol.id }}</td> 
+                    <td>{{ usuario_rol.rol.nombre }}</td> 
+                    <td>
+                        <div class="acciones">
+                          
+                            <a href="{% url 'editarRolu' usuario_rol.id %}" class="btn btn-info">
+                                <i class="fas fa-user-edit fa-lg"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            
+            </tbody>
+        </table>
     </div>
 </main>
             <div class="float-button">

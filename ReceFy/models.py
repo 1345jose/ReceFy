@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
+
 
 class MiUsuario(AbstractUser):
     imagen1 = models.ImageField(upload_to='perfil_usuario/', blank=True, null=True)
@@ -204,4 +206,58 @@ class Rol(models.Model):
     class Meta:
         db_table = "tbl_roles"
 
+class UsuarioRol(models.Model):
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('usuario', 'rol')
+        db_table = 'tbl_usuarior'
+
 #enregion
+
+#region Mensajes Usuarios
+
+class Mensajes(models.Model):
+    emisor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # Usando el modelo de usuario personalizado
+        on_delete=models.CASCADE,
+        related_name='mensajes_enviados'
+    )
+    receptor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # Usando el modelo de usuario personalizado
+        on_delete=models.CASCADE,
+        related_name='mensajes_recibidos'
+    )
+    contenido = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "tbl_mensajes_usuarios"
+
+    def __str__(self):
+        return f"Mensaje de {self.emisor} a {self.receptor} en {self.fecha_creacion}"
+
+class Amistad(models.Model):
+    usuario1 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  
+        on_delete=models.CASCADE,
+        related_name='amistades_usuario1'
+    )
+    usuario2 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  
+        on_delete=models.CASCADE,
+        related_name='amistades_usuario2'
+    )
+    
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    aceptada = models.BooleanField(default=False) 
+    class Meta:
+        db_table = "tbl_amistades"
+        unique_together = ('usuario1', 'usuario2')  
+
+    def __str__(self):
+        return f"Amistad entre {self.usuario1} y {self.usuario2}"
+    
+
+#endregion

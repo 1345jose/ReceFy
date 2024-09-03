@@ -108,17 +108,7 @@
                 {% endif %}
             {% else %}
             {% endif %}
-            <h2>Comentarios de {{ user.username }}</h2>
-<ul>
-    {% for comentario in comentarios %}
-        <li>
-            <p>{{ comentario.usuario.contenido }}</p>
-            <small>{{ comentario.fecha_creacion|date:"Y-m-d" }}</small>
-        </li>
-    {% empty %}
-        <li>{{ user.username }} no ha hecho ningún comentario aún.</li>
-    {% endfor %}
-</ul>
+           
 
         </div>
     </main>

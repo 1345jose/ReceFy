@@ -1,0 +1,169 @@
+{% include 'inc/header.html' %}
+
+<style>
+  body {
+    background: url('https://images.pexels.com/photos/27643017/pexels-photo-27643017/free-photo-of-comida-plato-restaurante-cena.jpeg') no-repeat center center/cover;
+}
+
+main {
+    margin: auto;
+    width: 50%;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.795);
+    padding: 20px;
+    border-radius: 25px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column; 
+    height: 500px; 
+}
+
+#chat-messages {
+    flex-grow: 1; /* Permite que el contenedor de mensajes crezca */
+    overflow-y: auto; /* Añade scroll vertical si es necesario */
+    margin-bottom: 10px; /* Espacio debajo de los mensajes */
+}
+
+#contenido {
+    border-radius: 25px;
+    width: 100%;
+}
+
+.mensaje {
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    position: relative;
+    display: inline-block;
+    clear: both;
+}
+
+.mensaje.enviado {
+    background-color: #d1e7dd; 
+    float: right;
+    text-align: right; 
+}
+
+.mensaje.recibido {
+    background-color: #f8d7da; 
+    float: left;
+    text-align: left; 
+}
+
+.mensaje p {
+    margin: 0;
+}
+
+.mensaje small {
+    display: block;
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+</style>
+<main>
+    <div id="chat-container" class="container">
+        <div id="chat-messages" style="height: 400px; overflow-y: auto;">
+            {% for mensaje in mensajes %}
+            <div class="mensaje {% if mensaje.emisor == request.user %}enviado{% else %}recibido{% endif %}">
+                <p>{{ mensaje.contenido }}</p>
+                <!-- Añade un atributo data para almacenar la fecha de creación -->
+                <small data-fecha="{{ mensaje.fecha_creacion|date:'c' }}"></small>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Mueve el formulario aquí, fuera del contenedor de mensajes -->
+        <form id="chat-form" method="post" class="mt-3">
+            {% csrf_token %}
+            <input type="hidden" id="receptor_id" value="{{ receptor.id }}">
+            <div class="input-group">
+                <input id="contenido" class="form-control" placeholder="Escribe tu mensaje...">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Función para calcular el tiempo transcurrido
+        function calcularTiempoTranscurrido(fecha) {
+            const now = new Date();
+            const then = new Date(fecha);
+            const diff = now - then; // Diferencia en milisegundos
+
+            const minutos = Math.floor(diff / (1000 * 60));
+            const horas = Math.floor(diff / (1000 * 60 * 60));
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            if (minutos < 1) return "hace un momento";
+            if (minutos < 60) return `hace ${minutos} minutos`;
+            if (horas < 24) return `hace ${horas} horas`;
+            return `hace ${dias} días`;
+        }
+
+        // Actualizar el tiempo transcurrido para cada mensaje
+        function actualizarTiempos() {
+            $('#chat-messages .mensaje small').each(function() {
+                const fecha = $(this).data('fecha');
+                $(this).text(calcularTiempoTranscurrido(fecha));
+            });
+        }
+
+        // Llamar a actualizarTiempos inmediatamente y luego cada 60 segundos
+        actualizarTiempos();
+        setInterval(actualizarTiempos, 60000);
+
+        // Enviar mensaje vía AJAX
+        $('#chat-form').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{% url 'enviar_mensaje' %}",
+                method: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                    'contenido': $('#contenido').val(),
+                    'receptor_id': $('#receptor_id').val()
+                },
+                success: function(data) {
+                    $('#chat-messages').append(
+                        `<div class="mensaje enviado"><p>${data.mensaje}</p><small data-fecha="${data.fecha}">hace un momento</small></div>`
+                    );
+                    $('#contenido').val('');
+                    // Mantener el scroll al final
+                    $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+                    actualizarTiempos(); // Actualiza los tiempos transcurridos
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
+                    alert('No se pudo enviar el mensaje.');
+                }
+            });
+        });
+
+        // Cargar mensajes nuevos cada 2 segundos
+        setInterval(function() {
+            $.ajax({
+                url: "{% url 'chat' receptor.id %}",
+                method: 'GET',
+                success: function(data) {
+                    var nuevosMensajes = $(data).find('#chat-messages').html();
+                    $('#chat-messages').html(nuevosMensajes);
+                    $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+                    actualizarTiempos(); // Actualiza los tiempos transcurridos
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
+                }
+            });
+        }, 2000);
+    });
+</script>

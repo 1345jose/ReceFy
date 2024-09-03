@@ -1,0 +1,8 @@
+<h1>Encuentra Nuevos Usuarios</h1>
+<ul>
+    {% for usuario in usuarios %}
+        <li>
+            <a href="{% url 'chat' usuario.id %}">{{ usuario.username }}</a>
+        </li>
+    {% endfor %}
+</ul>
