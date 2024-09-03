@@ -41,7 +41,7 @@
                         <td>{{ meal.name }}</td>
                         {% for day in days %}
                         <td>
-                            <input type="text" name="{{ meal.name }}_{{ day }}" class="form-control">
+                            <textarea name="{{ meal.name }}_{{ day }}" class="form-control auto-resize-input"></textarea>
                         </td>
                         {% endfor %}
                     </tr>
@@ -61,6 +61,7 @@
 {% include "inc/footer.html" %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -86,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const tr of table.querySelectorAll("tbody tr")) {
             const rowData = [];
             for (const td of tr.querySelectorAll("td")) {
-                rowData.push(td.textContent.trim());
+                rowData.push(td.querySelector('textarea').value.trim());
             }
             data.push(rowData);
         }
@@ -99,15 +100,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
         doc.save(`${calendarName}.pdf`);
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
+    // Auto-resize textareas on input
+    const inputs = document.querySelectorAll('.auto-resize-input');
+
+    inputs.forEach(input => {
+        input.style.overflow = 'hidden';  // Hide scrollbars
+        input.style.resize = 'none';      // Disable manual resizing
+        input.style.height = 'auto';      // Set initial height
+        input.style.height = input.scrollHeight + 'px'; // Adjust height to content
+
+        input.addEventListener('input', function() {
+            this.style.height = 'auto';  // Reset height
+            this.style.height = this.scrollHeight + 'px';  // Adjust height to content
+        });
+    });
+
+    // Auto-hide alerts after 3 seconds
     const alerts = document.querySelectorAll('.alert');
 
     alerts.forEach(alert => {
         setTimeout(() => {
             alert.classList.add('hide');
-        }, 3000); // Ocultar después de 3 segundos
+        }, 3000); // Hide after 3 seconds
     });
 });
 </script>

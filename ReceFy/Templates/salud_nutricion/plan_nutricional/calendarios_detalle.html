@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,198 +6,168 @@
     <title>Calendario: {{ calendario.nombre }}</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    padding: 0;
-    overflow-x: hidden;
-    background: linear-gradient(135deg, #28a56b 0%, #4CAF50 100%); /* Gradiente de fondo */
-}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #1e1d1dfa;
+        }
 
-main {
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        main {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.container {
-    width: 95%; /* Ajustado para mayor ancho */
-    max-width: 1600px; /* Aumento del ancho máximo */
-    margin: 0 auto;
-    padding: 50px; /* Aumento del padding */
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    overflow-x: auto;
-    margin-left: -20px;
-}
+        .container {
+            width: 90%; /* Reducido para hacer la tabla más pequeña */
+            max-width: 1000px; /* Aumento del ancho máximo */
+            margin: 0 auto;
+            padding: 30px; /* Aumento del padding */
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+        }
 
-h1 {
-    margin-top: -10px;
-    text-align: center;
-    color: white;
-    margin-bottom: 40px;
-    font-size: 50px;
-    font-weight: 700;
-    position: relative;
-    font-family: 'Courgette', cursive;
-    font-family: 'Lobster', sans-serif;
+        h1 {
+            margin-top: -10px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 40px;
+            font-weight: 700;
+            position: relative;
+            font-family: 'Courgette', cursive;
+            font-family: 'Lobster', sans-serif;
+        }
 
-}
+        h1::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: white;
+            border-radius: 5px;
+        }
 
-h1::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -15px;
-    transform: translateX(-50%);
-    width: 80px; /* Aumento del ancho de la barra */
-    height: 5px; /* Aumento del alto de la barra */
-    background-color: white;
-    border-radius: 5px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Reducido para hacer la tabla más compacta */
+            border-spacing: 0;
+            font-size: 1rem; /* Tamaño de fuente reducido */
+            overflow-x: auto;
+        }
 
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px; /* Espaciado entre filas */
-    font-size: 1.4rem; /* Tamaño de fuente */
-    overflow-x: auto; /* Asegura que la tabla sea desplazable en móviles */
-}
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px; /* Padding reducido */
+            text-align: left;
+            vertical-align: middle;
+            position: relative;
+            background-color: #fafafa;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 20px; /* Padding */
-    text-align: center;
-    vertical-align: middle;
-    position: relative;
-    background-color: #fafafa;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-th {
-    background-color: #4CAF50;
-    color: white;
-    font-weight: 700;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+        td {
+            background-color: #fff;
+        }
 
-td {
-    background-color: #fff;
-}
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
 
-tr:nth-child(even) td {
-    background-color: #f9f9f9;
-}
+        tr:hover td {
+            background-color: #e7f3fe;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-tr:hover td {
-    background-color: #e7f3fe;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        td[contenteditable="true"] {
+            background-color: #fff;
+            cursor: text;
+        }
 
-td[contenteditable="true"] {
-    background-color: #fff;
-    cursor: text;
-}
+        td[contenteditable="true"]:focus {
+            outline: 2px solid #4CAF50;
+            background-color: #e7f3fe;
+        }
 
-td[contenteditable="true"]:focus {
-    outline: 2px solid #4CAF50;
-    background-color: #e7f3fe;
-}
+        /* Ajustes responsivos */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 3rem;
+            }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    h1 {
-        font-size: 3rem; /* Tamaño de fuente más pequeño en pantallas medianas */
-    }
+            .container {
+                padding: 20px;
+            }
+        }
 
-    .container {
-        padding: 40px; /* Reduce el padding */
-    }
-}
+        @media (max-width: 992px) {
+            table {
+                font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+            }
 
-@media (max-width: 992px) {
-    table {
-        font-size: 1.2rem; /* Aumento del tamaño de la fuente en dispositivos más pequeños */
-    }
+            th, td {
+                padding: 8px; /* Reduce el padding */
+            }
 
-    th, td {
-        padding: 15px; /* Reduce el padding para mayor espacio */
-    }
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
 
-    h1 {
-        font-size: 2.5rem; /* Tamaño de fuente más pequeño */
-    }
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.8rem; /* Tamaño de fuente aún más pequeño */
+                overflow-x: auto;
+            }
 
-    h1::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: -15px;
-        transform: translateX(-50%);
-        width: 80px; /* Aumento del ancho de la barra */
-        height: 5px; /* Aumento del alto de la barra */
-        background-color: white;
-        border-radius: 5px;
-    }
-}
+            th, td {
+                padding: 6px;
+            }
 
-@media (max-width: 768px) {
-    table {
-        font-size: 1rem; /* Tamaño de fuente aún más pequeño en móviles */
-        overflow-x: auto; /* Permitir desplazamiento horizontal en móviles */
-    }
+            h1 {
+                font-size: 2rem;
+            }
 
-    th, td {
-        padding: 10px; /* Reduce el padding para más espacio */
-    }
+            .container {
+                padding: 15px;
+            }
 
-    h1 {
-        font-size: 2rem; /* Tamaño de fuente aún más pequeño */
-    }
+            main {
+                padding: 20px;
+            }
+        }
 
-    .container {
-        padding: 20px; /* Reduce el padding para dispositivos móviles */
-    }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
 
-    main {
-        padding: 20px; /* Reduce el padding del main */
-    }
+            .container {
+                padding: 10px;
+            }
 
-    h1::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -15px;
-    transform: translateX(-50%);
-    width: 80px; /* Aumento del ancho de la barra */
-    height: 5px; /* Aumento del alto de la barra */
-    background-color: white;
-    border-radius: 5px;
-}
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.5rem; /* Tamaño de fuente más pequeño para móviles */
-    }
-
-    .container {
-        padding: 15px; /* Reduce el padding */
-    }
-
-    table {
-        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-    }
-
-    h1::before {
-        display: none;
-}
-}
+            table {
+                font-size: 0.7rem;
+            }
+        }
 
     </style>
 </head>

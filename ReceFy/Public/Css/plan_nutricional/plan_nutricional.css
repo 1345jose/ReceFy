@@ -12,20 +12,21 @@ body {
     margin: 0;
     font-family: 'Urbanist', sans-serif;
     overflow: auto;
-    background-image: url('https://images.pexels.com/photos/54455/cook-food-kitchen-eat-54455.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-color: #1e1d1dfa;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
 
 .container {
-    max-width: 1000px;
-    width: 90%;
+    max-width: 1250px;
+    width: 100%;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 38px;
 }
 
 /* Responsivo para dispositivos móviles */
@@ -42,6 +43,7 @@ body {
     .container {
         width: 95%;
         padding: 10px;
+        margin-left: 10px;
     }
 
     h1 {
@@ -78,17 +80,22 @@ h1 {
     text-align: center;
     color: #4CAF50;
     font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+    width: auto; /* Cambia de 120% a auto para que ajuste al contenido */
+    margin: 0 auto; /* Centra la tabla horizontalmente */
+    margin-left: 10px; /* Desplaza la tabla un poco más a la izquierda */
+    border-collapse: collapse; /* Mantiene el colapso de bordes */
 }
 
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
+    width: 120px; /* Establece un ancho fijo que coincida con el tamaño del input */
 }
 
 th {
@@ -97,8 +104,7 @@ th {
 }
 
 td[contenteditable="true"] {
-    background-color: #f9f9f9;
-    cursor: pointer;
+    width: 120px; /* Asegúrate de que las celdas de edición también tengan el mismo ancho */
 }
 
 td[contenteditable="true"]:focus {
@@ -145,7 +151,7 @@ td[contenteditable="true"]:focus {
     margin-bottom: 10px;
 }
 
-table td input {
+.auto-resize-input {
     border: none; /* Sin borde visible */
     border-radius: 12px; /* Bordes redondeados */
     padding: 10px;
@@ -158,16 +164,17 @@ table td input {
     text-align: center; /* Centra el texto */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
     position: relative; /* Para el pseudo-elemento */
+    width: 120px;
 }
 
 /* Estilo al pasar el mouse sobre el input */
-table td input:hover {
+.auto-resize-input:hover {
     background-color: #f0f8f0; /* Fondo más claro al pasar el mouse */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
 }
 
 /* Estilo para el input cuando está enfocado */
-table td input:focus {
+.auto-resize-input:focus {
     background-color: #e7ffe7; /* Fondo verde claro cuando está enfocado */
     box-shadow: 0 0 10px rgba(0, 150, 0, 0.5); /* Sombra verde clara cuando está enfocado */
     outline: none; /* Elimina el borde predeterminado del navegador */

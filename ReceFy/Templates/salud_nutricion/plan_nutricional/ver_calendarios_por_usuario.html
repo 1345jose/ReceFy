@@ -21,11 +21,11 @@
                     <a href="{% url 'ver_calendario' calendario.id %}" class="btn btn-info">
                         <i class="fas fa-eye"></i> <!-- Icono de ver -->
                     </a>
-                    <a href="#" class="btn btn-primary">
-                        <i class="fas fa-edit"></i> <!-- Icono de actualizar -->
-                    </a>
                     <a href="#" data-url="{% url 'Eliminar_Plan' calendario.id %}" onclick="borrarPlan(event, this);" class="btn btn-danger">
                         <i class="fas fa-trash"></i> <!-- Icono de eliminar -->
+                    </a>
+                    <a href="{% url 'generar_pdf' calendario.id %}" class="btn btn-primary">
+                        <i class="fas fa-file-pdf"></i> <!-- Icono de actualizar -->
                     </a>
                 </div>
             </div>

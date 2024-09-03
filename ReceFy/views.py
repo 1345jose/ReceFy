@@ -15,8 +15,21 @@ import matplotlib.pyplot as plt
 from django.db import IntegrityError
 from io import BytesIO
 import base64
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 from django.db.models import Q
 import re
+
+#region Importaciones Sistema Generado de PDF
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.units import inch
+import io
+#endregion
 
 
 def index(request):
@@ -552,6 +565,159 @@ def Eliminar_Plan(request,id_plan):
     plan = PlanNutricional.objects.filter(id=id_plan)
     plan.delete()
     return redirect('/ver_calendarios/')
+
+def generar_pdf(request, calendario_id):
+    # Obtener el objeto calendario
+    calendario = get_object_or_404(PlanNutricional, id=calendario_id)
+    
+    # Configurar la respuesta HTTP con el nombre del calendario
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{calendario.nombre}.pdf"'
+    
+    # Crear el documento PDF
+    doc = SimpleDocTemplate(response, pagesize=letter)
+    elements = []
+
+    # Definir estilos
+    styles = getSampleStyleSheet()
+    
+    # Registrar la fuente Lobster
+    pdfmetrics.registerFont(TTFont('Lobster', 'ReceFy/Public/Fonts/Lobster-Regular.ttf'))  # Cambia la ruta al archivo de la fuente
+
+    # Crear un estilo para el título del calendario
+    title_style = ParagraphStyle(
+        name='CalendarTitleStyle',
+        fontName='Lobster',  # Usa la fuente Lobster
+        fontSize=14,
+        leading=12,  # Reduce el espacio entre líneas
+        leftIndent=20,  # Alejamiento del borde izquierdo
+    )
+
+    # Crear un estilo para el título "ReceFy" con la misma fuente y tamaño
+    recefy_style = ParagraphStyle(
+        name='ReceFyStyle',
+        fontName='Lobster',  # Cambia la fuente a Lobster
+        fontSize=14,
+        leading=12,  # Reduce el espacio entre líneas
+        textColor=colors.HexColor('#28a56b'),  # Color verde
+        alignment=2,  # Alineado a la derecha
+    )
+
+    # Crear los párrafos de los títulos
+    calendar_title = Paragraph(calendario.nombre, title_style)
+    recefy_title = Paragraph("ReceFy", recefy_style)
+
+    # Crear una tabla para alinear los títulos
+    title_table = Table([[calendar_title, recefy_title]], colWidths=[doc.width * 0.45, doc.width * 0.45])
+    title_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),  # Alineación vertical en la parte superior
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Alineación horizontal centrada
+    ]))
+    
+    elements.append(title_table)
+
+    # Añadir un pequeño espaciador después de los títulos
+    elements.append(Spacer(1, 0.2 * inch))  # Ajusta la altura según lo necesites
+
+    # Crear una tabla de comidas
+    small_font_style = ParagraphStyle(
+        name='SmallFontStyle',
+        fontSize=8,
+        leading=10,
+        spaceAfter=5,
+    )
+
+    meal_data = [
+        ['Comida', 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        ['Desayuno', 
+         Paragraph(str(calendario.desayuno_domingo), small_font_style),
+         Paragraph(str(calendario.desayuno_lunes), small_font_style),
+         Paragraph(str(calendario.desayuno_martes), small_font_style),
+         Paragraph(str(calendario.desayuno_miercoles), small_font_style),
+         Paragraph(str(calendario.desayuno_jueves), small_font_style),
+         Paragraph(str(calendario.desayuno_viernes), small_font_style),
+         Paragraph(str(calendario.desayuno_sabado), small_font_style)],
+        ['Media Mañana', 
+         Paragraph(str(calendario.media_manana_domingo), small_font_style),
+         Paragraph(str(calendario.media_manana_lunes), small_font_style),
+         Paragraph(str(calendario.media_manana_martes), small_font_style),
+         Paragraph(str(calendario.media_manana_miercoles), small_font_style),
+         Paragraph(str(calendario.media_manana_jueves), small_font_style),
+         Paragraph(str(calendario.media_manana_viernes), small_font_style),
+         Paragraph(str(calendario.media_manana_sabado), small_font_style)],
+        ['Almuerzo', 
+         Paragraph(str(calendario.almuerzo_domingo), small_font_style),
+         Paragraph(str(calendario.almuerzo_lunes), small_font_style),
+         Paragraph(str(calendario.almuerzo_martes), small_font_style),
+         Paragraph(str(calendario.almuerzo_miercoles), small_font_style),
+         Paragraph(str(calendario.almuerzo_jueves), small_font_style),
+         Paragraph(str(calendario.almuerzo_viernes), small_font_style),
+         Paragraph(str(calendario.almuerzo_sabado), small_font_style)],
+        ['Merienda', 
+         Paragraph(str(calendario.merienda_domingo), small_font_style),
+         Paragraph(str(calendario.merienda_lunes), small_font_style),
+         Paragraph(str(calendario.merienda_martes), small_font_style),
+         Paragraph(str(calendario.merienda_miercoles), small_font_style),
+         Paragraph(str(calendario.merienda_jueves), small_font_style),
+         Paragraph(str(calendario.merienda_viernes), small_font_style),
+         Paragraph(str(calendario.merienda_sabado), small_font_style)],
+        ['Cena', 
+         Paragraph(str(calendario.cena_domingo), small_font_style),
+         Paragraph(str(calendario.cena_lunes), small_font_style),
+         Paragraph(str(calendario.cena_martes), small_font_style),
+         Paragraph(str(calendario.cena_miercoles), small_font_style),
+         Paragraph(str(calendario.cena_jueves), small_font_style),
+         Paragraph(str(calendario.cena_viernes), small_font_style),
+         Paragraph(str(calendario.cena_sabado), small_font_style)],
+    ]
+
+    # Crear la tabla de comidas con columnas más estrechas
+    meal_table = Table(meal_data, colWidths=[doc.width * 0.12] * 8)
+    meal_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#4CAF50')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#cccccc')),
+        ('FONTSIZE', (0, 0), (-1, -1), 8),
+        ('LEFTPADDING', (0, 0), (-1, -1), 5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+        ('TOPPADDING', (0, 0), (-1, -1), 5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#fafafa')),
+        ('BACKGROUND', (0, 1), (-1, 1), colors.HexColor('#f9f9f9')),
+        ('BACKGROUND', (0, 2), (-1, 2), colors.white),
+        ('BACKGROUND', (0, 3), (-1, 3), colors.HexColor('#f9f9f9')),
+        ('BACKGROUND', (0, 4), (-1, 4), colors.white),
+        ('BACKGROUND', (0, 5), (-1, 5), colors.HexColor('#f9f9f9')),
+        ('BACKGROUND', (0, 6), (-1, 6), colors.white),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+    ]))
+
+    # Añadir la tabla de comidas
+    elements.append(meal_table)
+
+    # Añadir un espaciador grande antes de la fecha de creación
+    elements.append(Spacer(1, 0.6 * inch))  # Ajusta la altura según lo necesites
+
+    # Crear un estilo para la fecha de creación
+    date_style = ParagraphStyle(
+        name='DateStyle',
+        fontName='Helvetica',
+        fontSize=10,
+        alignment=1,  # Alineado al centro
+    )
+
+    # Añadir la fecha de creación centrada
+    creation_date = Paragraph(f"Fecha de creación: {calendario.fecha_creacion.strftime('%d/%m/%Y')}", date_style)
+    elements.append(creation_date)
+
+    # Construir el PDF
+    doc.build(elements)
+
+    return response
+
+
 
 #endregion
 
