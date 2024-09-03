@@ -136,6 +136,7 @@ class Consejero(models.Model):
     experiencia = models.CharField(max_length=225)
     descripcion = models.CharField(max_length=225)
     fecha_registro = models.DateTimeField(auto_now_add=True)
+    categoria = models.CharField(max_length=255, null=True)
 
     class Meta:
         db_table = 'tbl_consejeros'

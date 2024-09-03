@@ -1,0 +1,490 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<style>
+    .botones {
+        text-align: center;
+    }
+
+    .botones .nav-pills .nav-link {
+        color: white;
+        background-color: transparent;
+        border-radius: 5px;
+        padding: 10px 20px;
+    }
+
+    .botones .nav-pills .nav-link.active {
+        background-color: #28a56b;
+        color: white;
+    }
+
+    body.light-mode .botones .nav-pills .nav-link {
+        color: black;
+    }
+
+    body.light-mode .botones .nav-pills .nav-link.active {
+        background-color: green;
+        color: white;
+    }
+
+    /* Estilo para las imágenes de las cards */
+    .recipe-card .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    /* Estilo para el contenido de las cards */
+    .card-body {
+        text-align: center;
+        min-height: 150px !important;
+    }
+
+    .card-title {
+        margin: 10px 0;
+        font-size: 1.25rem;
+    }
+
+    .card-body span {
+        display: block;
+        margin: 5px 0;
+        font-size: 0.9rem;
+    }
+
+    /* Ocultar contenedores por defecto */
+    #consejeros-container,
+    #mensaje-bienvenida {
+        display: none;
+    }
+
+    /* Mostrar contenedores activos */
+    #pills-home-tab.active ~ #consejeros-container {
+        display: flex;
+    }
+
+    #pills-profile-tab.active ~ #mensaje-bienvenida {
+        display: block;
+    }
+
+    .slider-container {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .slider-track {
+        display: flex;
+    }
+
+    .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .left-btn {
+        left: 0;
+    }
+
+    .right-btn {
+        right: 0;
+    }
+    .pagination {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    color: #28a56b;
+    background-color: transparent;
+    border: 2px solid #28a56b;
+    padding: 8px 16px;
+    margin: 5px; /* Espaciado uniforme entre los enlaces */
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+    flex: 0 1 auto; /* Permite que el enlace se ajuste a su contenido */
+    min-width: 80px; /* Ancho mínimo para cada enlace de paginación */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadir sombra para un efecto elevado */
+}
+
+.pagination a:hover {
+    background-color: #28a56b;
+    color: #fff;
+}
+
+.pagination .current {
+    color: #fff;
+    background-color: #28a56b;
+    border: 2px solid #28a56b;
+    padding: 8px 16px;
+    margin: 5px; /* Espaciado uniforme */
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el elemento actual */
+}
+
+@media (max-width: 992px) {
+    .pagination a {
+        font-size: 12px; /* Disminuir el tamaño de la fuente en pantallas más pequeñas */
+        padding: 6px 12px; /* Disminuir el padding */
+        margin: 4px; /* Espaciado reducido */
+    }
+
+    .pagination .current {
+        padding: 6px 12px; /* Disminuir el padding del elemento actual */
+    }
+}
+
+
+</style>
+
+<link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<div class="iconos_sol_luna">
+    <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+    <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+</div>
+
+<div class="container mt-4">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar consejeros por su nombre...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+    <br>
+    <div class="botones">
+        <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Todos los Consejeros</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Consejeros Por Categoria</a>
+            </li>
+        </ul>
+    </div>
+    <br><br>
+
+    <!-- Contenedor de Consejeros -->
+    <div id="consejeros-container" class="row">
+        {% for consejero in consejeros %}
+            <div class="col-6 col-md-4 mb-4">
+                <div class="recipe-card">
+                    <div class="card">
+                        <a href="#">
+                            {% if consejero.imagen and consejero.imagen.url %}
+                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                            {% else %}
+                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
+                                <span><i class="fas fa-user"></i>  {{ consejero.categoria }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if consejeros.has_previous %}
+                    <a href="?page=1">&laquo; Primera</a>
+                    <a href="?page={{ consejeros.previous_page_number }}">Anterior</a>
+                {% endif %}
+                <span class="current">
+                    Página {{ consejeros.number }} de {{ consejeros.paginator.num_pages }}.
+                </span>
+                {% if consejeros.has_next %}
+                    <a href="?page={{ consejeros.next_page_number }}">Siguiente</a>
+                    <a href="?page={{ consejeros.paginator.num_pages }}">Última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div> <!-- Cierra el contenedor de las tarjetas -->
+    
+    <!-- Contenedor del mensaje de bienvenida -->
+    <div id="mensaje-bienvenida" style="display: none;">
+        <h3 class="titulos_comidas">
+            <i class="fas fa-tags"></i> Categoría de los Consejeros    
+        </h3>
+        <hr>
+        <div class="botones">
+            <a href="#category-nutricionista" class="category-link">Nutricionistas</a>
+            <a href="#category-especialitas-en-reposteria" class="category-link">Especialistas en Reporteria</a>
+            <a href="#category-asesor_en_nutricion_deportiva" class="category-link">Asesor en Nutrición Deportiva</a>
+            <a href="#category-dietista" class="category-link">Dietista</a>
+        </div> 
+        <br><br><br>
+        <div class="category-container" id="category-nutricionista">
+            <h3 class="titulos_comidas">
+                <i class="fas fa-balance-scale"></i> Nutricionistas
+            </h3>
+            <hr>
+            {% if consejeros_nutricionistas %}
+                <button class="slider-btn left-btn" onclick="slide('left', 'nutricionista')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-container">
+                    <div class="slider" id="slider-nutricionista">
+                        <div class="slider-track">
+                            {% for consejero in consejeros_nutricionistas %}
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="#">
+                                            {% if consejero.imagen and consejero.imagen.url %}
+                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn right-btn" onclick="slide('right', 'nutricionista')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            {% else %}
+                <h3 class="titulos_comidas">
+                    No hay nutricionistas en estos momentos
+                </h3>
+            {% endif %}
+        </div>
+
+        <br><br><br>
+
+        <div class="category-container" id="category-especialitas-en-reposteria">
+            <h3 class="titulos_comidas">
+                <i class="fas fa-birthday-cake"></i> Especialistas en Reportería
+            </h3>
+            <hr>
+            {% if consejeros_especialistas_en_reposteria %}
+                <button class="slider-btn left-btn" onclick="slide('left', 'especialistas_en_reposteria')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-container">
+                    <div class="slider" id="slider-especialistas_en_reposteria">
+                        <div class="slider-track">
+                            {% for consejero in consejeros_especialistas_en_reposteria %}
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="#">
+                                            {% if consejero.imagen and consejero.imagen.url %}
+                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn right-btn" onclick="slide('right', 'especialistas_en_reposteria')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            {% else %}
+                <h3 class="titulos_comidas">
+                    No hay especialistas en repostería en estos momentos
+                </h3>
+            {% endif %}
+        </div>
+
+        <br><br><br>
+
+        <div class="category-container" id="category-asesor_en_nutricion_deportiva">
+            <h3 class="titulos_comidas">
+                <i class="fas fa-running"></i> Asesores en Nutrición Deportivas
+            </h3>
+            <hr>
+            {% if consejeros_asesor_en_nutricion_deportiva %}
+                <button class="slider-btn left-btn" onclick="slide('left', 'asesor_en_nutricion_deportiva')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-container">
+                    <div class="slider" id="slider-asesor_en_nutricion_deportiva">
+                        <div class="slider-track">
+                            {% for consejero in consejeros_asesor_en_nutricion_deportiva %}
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="#">
+                                            {% if consejero.imagen and consejero.imagen.url %}
+                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn right-btn" onclick="slide('right', 'asesor_en_nutricion_deportiva')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            {% else %}
+                <h3 class="titulos_comidas">
+                    No hay asesores en nutrición deportivas disponibles en estos momentos
+                </h3>
+            {% endif %}
+        </div>
+
+        <br><br><br>
+
+        <div class="category-container" id="category-dietista">
+            <h3 class="titulos_comidas">
+                <i class="fas fa-apple-alt"></i> Dietistas
+            </h3>
+            <hr>
+            {% if consejeros_dietista %}
+                <button class="slider-btn left-btn" onclick="slide('left', 'dietista')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-container">
+                    <div class="slider" id="slider-dietista">
+                        <div class="slider-track">
+                            {% for consejero in consejeros_dietista %}
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="#">
+                                            {% if consejero.imagen and consejero.imagen.url %}
+                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn right-btn" onclick="slide('right', 'dietista')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            {% else %}
+                <h3 class="titulos_comidas">
+                    No hay Dietistas en estos momentos
+                </h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Asegura que "Todos los Consejeros" esté visible al cargar la página
+        document.getElementById('consejeros-container').style.display = 'flex';
+        document.getElementById('mensaje-bienvenida').style.display = 'none';
+    });
+
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let cards = document.querySelectorAll('.recipe-card');
+
+        cards.forEach(function(card) {
+            let nombre = card.querySelector('.card-title').textContent.toLowerCase();
+            if (nombre.includes(filter)) {
+                card.parentElement.style.display = ''; // Mostrar card
+            } else {
+                card.parentElement.style.display = 'none'; // Ocultar card
+            }
+        });
+    });
+
+    document.getElementById('pills-profile-tab').addEventListener('click', function() {
+        document.getElementById('consejeros-container').style.display = 'none';
+        document.getElementById('mensaje-bienvenida').style.display = 'block';
+    });
+
+    document.getElementById('pills-home-tab').addEventListener('click', function() {
+        document.getElementById('consejeros-container').style.display = 'flex';
+        document.getElementById('mensaje-bienvenida').style.display = 'none';
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const sliders = document.querySelectorAll('.slider');
+    const slideTime = 3000; // Cambiar de imagen cada 3 segundos
+
+    sliders.forEach(slider => {
+        const slides = slider.querySelector('.slider-track');
+        const totalSlides = slides.children.length;
+        let currentIndex = 0;
+
+        // Si no hay tarjetas, no hace nada
+        if (totalSlides === 0) return;
+
+        // Función para mostrar la tarjeta actual
+        function showSlide(index) {
+            slides.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        // Avance automático solo si hay 3 o más tarjetas
+        if (totalSlides >= 3) {
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                // Si es la última fila y tiene 1 o 2 tarjetas, regresar al inicio
+                if (totalSlides - currentIndex <= 2 && currentIndex !== 0) {
+                    currentIndex = 0;
+                }
+                showSlide(currentIndex);
+            }, slideTime);
+        } else {
+            // Si hay menos de 3 tarjetas, siempre mostrar la primera tarjeta
+            showSlide(currentIndex);
+        }
+
+        // Botón de navegación manual
+        slider.querySelectorAll('.slider-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const direction = this.dataset.direction;
+
+                if (direction === 'left') {
+                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                } else if (direction === 'right') {
+                    // Si es la última fila y tiene 1 o 2 tarjetas, regresar al inicio
+                    if (totalSlides - currentIndex <= 2 && currentIndex === totalSlides - 1) {
+                        currentIndex = 0;
+                    } else {
+                        currentIndex = (currentIndex + 1) % totalSlides;
+                    }
+                }
+                showSlide(currentIndex);
+            });
+        });
+    });
+});
+</script>
+
+<script src="{% static 'js/funcion_temas.js' %}"></script>
+<script src="{% static 'js/sliders_listados.js' %}"></script>
+
+<br><br><br>
+{% include 'inc/footer.html' %}

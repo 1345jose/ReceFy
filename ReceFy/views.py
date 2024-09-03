@@ -1300,5 +1300,29 @@ def optionsConsejeros(request):
     pagina_actual = "options"
     return render(request,'consejeros/option.html',{"pagina": pagina_actual})
 
+def consejeros_disponibles(request):
+    consejeros = Consejero.objects.all()
+    consejeros_nutricionistas = Consejero.objects.filter(categoria="Nutricionista")
+    consejeros_especialistas_en_reposteria = Consejero.objects.filter(categoria="Especialista en Reposteria")
+    consejeros_asesor_en_nutricion_deportiva = Consejero.objects.filter(categoria = "Asesor en Nutricion Deportiva")
+    consejeros_dietista = Consejero.objects.filter(categoria = "Dietista")
+
+    paginator = Paginator(consejeros, 15) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "consejeros": consejeros,
+        "consejeros_nutricionistas": consejeros_nutricionistas,
+        "consejeros_especialistas_en_reposteria": consejeros_especialistas_en_reposteria,
+        "consejeros_asesor_en_nutricion_deportiva": consejeros_asesor_en_nutricion_deportiva,
+        "consejeros_dietista": consejeros_dietista,
+        "pagina": "consejeros_disponibles",
+        'consejeros': page_obj,
+        'paginator': paginator
+    }
+
+    return render(request, 'consejeros/consejeros_disponibles.html', context)
+
 #endregion
 

@@ -147,6 +147,7 @@ urlpatterns = [
     #region Consejeros
 
     path("consejeros/opcion/", views.optionsConsejeros, name="optionsConsejeros"),
+    path("consejeros_disponibles/", views.consejeros_disponibles, name="consejeros_disponibles"),
 
     #endregion
 
