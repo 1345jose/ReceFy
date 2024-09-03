@@ -8,11 +8,11 @@
     <main>
         <div class="container">
             <div class="titulos">
-                <h1>Calculadora IMC</h1>
-                <h2>Ingresa tus datos y te recomendaremos las mejores dietas para tu salud</h2>
-                <hr>
-                <br>
+                <h1>ReceFy</h1>
+                <h2>Calculadora IMC</h2>
+                <h3>Ingresa tus datos y te recomendaremos las mejores dietas para tu salud</h3>
             </div>
+            <hr>
             <form action="" method="post">
                 {% csrf_token %}
                 <div class="form-group">
@@ -22,9 +22,9 @@
                     <input type="number" class="form-control" id="peso" name="peso" placeholder="Ingrese su peso (Ej: 80 Kg)" required>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;">Calcular</button>
+                <button type="submit" class="btn btn-primary" id="calcular">Calcular</button>
                 <br><br>
-                <a href="/salud-nutricion"><button type="button" class="btn btn-primary" style="background-color: 0d6efd; border-color: 0d6efd;">Cancelar</button></a>
+                <a href="{% url 'salud_nutricion' %}" class="btn btn-primary">Cancelar</a>
                 <br><br>
             </form> 
         </div>

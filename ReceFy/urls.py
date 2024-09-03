@@ -28,6 +28,7 @@ urlpatterns = [
     
     #region Salud Nutricion
     path('salud-nutricion/', views.salud_nutricion, name="salud_nutricion"),
+    path('salud-nutricion/calculadora_imc', views.calculadora_imc, name="calculadora_imc"),
     #endregion
 
 

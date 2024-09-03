@@ -8,10 +8,13 @@
 }
 
 body {
-    background: url('https://images.pexels.com/photos/1639563/pexels-photo-1639563.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed; /* Mantener el fondo fijo */
-    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    background: url('https://images.pexels.com/photos/943694/pexels-photo-943694.jpeg') no-repeat center center fixed; /* Mantener el fondo fijo */
+    background-size: cover;
     width: 100%;
-    color: white;
+    font-family: "Urbanist", sans-serif;
+    overflow-x: hidden;  
+    overflow-y: auto; 
+
 }
 
 main {
@@ -29,6 +32,7 @@ main {
     margin-bottom: 40px;
     width: 80%; /* Reduce el ancho del contenedor */
     max-width: 500px; /* Establece un ancho máximo */
+    transition: border 0.3s ease, transform 0.3s ease;
 }
 
 .container:hover {
@@ -43,7 +47,11 @@ main {
 }
 
 .titulos h2 {
-    font-size: 24px;
+    display: none;
+}
+
+.titulos h3{
+    font-size: 20px;
 }
 
 hr {
@@ -72,16 +80,19 @@ hr {
     background-color: #114da7;
 }
 
-#crear {
+ 
+
+#calcular {
     background-color: #28a56b;
     padding: 5px;
     width: 75%;
     border-radius: 25px;
     color: white;
+    border: gray;
     transition: background-color 0.3s ease;
 }
 
-#crear:hover {
+#calcular:hover {
     background-color: #136d43;
 }
 
@@ -165,32 +176,57 @@ hr {
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .container {
-        width: 70%; /* Reducir el ancho del contenedor */
-        margin-left: auto;
-        margin-right: auto;
+        width: 95%; 
+        margin-top: 5px;
+    }
+
+    .container{
+        border: none;
+    }
+
+    .container:hover{
+        border: none;
+        transform: none;
+    }
+
+    .titulos h1{
+        display: none;
+        
+    }
+
+    .container h2{
+        display: block;
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+        font-size: 35px;
+    }
+
+    .container h3{
+        font-size: 18px;
+        font-family: "Urbanist", sans-serif;
+
     }
 
     .card {
-        flex: 1 1 100%; /* Ocupa el 100% del ancho */
+        flex: 1 1 100%; 
     }
 }
 
 @media (max-width: 480px) {
     body {
-        background: url('https://images.pexels.com/photos/784632/pexels-photo-784632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed; /* Mantener el fondo fijo */
-        background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+        background: url('https://images.pexels.com/photos/784632/pexels-photo-784632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed; 
+        background-size: cover; 
         width: 100%;
-        height: auto; /* Asegura que el contenido no desborde */
-        overflow: auto; /* Permite desplazamiento si es necesario */
+        overflow: auto; 
     }
 
     .container {
-        width: 90%;
+        width: 95%;
         padding: 10px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+        margin-top: 5px;
+    }   
 
+    
     .card-img-top {
         height: 150px;
     }
