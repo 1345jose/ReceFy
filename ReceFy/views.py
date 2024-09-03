@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import ConsejeroForm, DietaForm, IngredienteForm, RecetaForm
-from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol  
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol , Mensajes
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -12,9 +12,10 @@ from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
 import matplotlib.pyplot as plt
+from django.db import IntegrityError
 from io import BytesIO
 import base64
-
+from django.db.models import Q
 import re
 
 
@@ -87,7 +88,11 @@ def registro_usuario(request):
 
             messages.success(request, "¡Registro exitoso! Ahora puedes iniciar sesión.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual, "registro_exitoso": True})
-        
+
+        except IntegrityError as e:
+            messages.error(request, f"Ocurrió un error de integridad al registrar el usuario: {str(e)}")
+            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+
         except Exception as e:
             messages.error(request, f"Ocurrió un error al registrar el usuario: {str(e)}")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
@@ -942,10 +947,11 @@ def ver_ingrediente(request, ingrediente_id):
 #FIN CRUD INGREDIENTES
 
 #CRUD ROLES
-
 def listado_roles(request):
-    roles = Rol.objects.all()
-    return render(request, "administracion/cruds/roles/listar.html", {"roles": roles})
+    roles = Rol.objects.all()  
+    usuarios_roles = UsuarioRol.objects.all()   
+    return render(request, "administracion/cruds/roles/listar.html", {"roles": roles, 'usuarios_roles': usuarios_roles } )
+
 
 def insertar_roles(request):
     if request.method == "POST":
@@ -987,6 +993,25 @@ def actualizar_rol(request, idroles):
         roles = Rol.objects.get(id=idroles)
         return render(request, "administracion/cruds/roles/actualizar.html", {"roles": roles})
 
+def editarRolu(request, idinter):
+    if request.method == "POST":
+        if request.POST.get('usuario_id') and request.POST.get('rol_id'):
+            usuario_id = request.POST.get('usuario_id')  
+            rol_id = request.POST.get('rol_id')         
+            
+            mant = UsuarioRol.objects.get(id=idinter)
+            mant.usuario_id = MiUsuario.objects.get(id=usuario_id)
+            mant.rol_id = Rol.objects.get(id=rol_id)
+            mant.save()
+            return redirect('/administracion/roles/listado')
+    else:
+        mant = UsuarioRol.objects.get(id=idinter) 
+        usuario = MiUsuario.objects.all()
+        rol = Rol.objects.all()
+        return render(request, 'administracion/cruds/roles/editarRolu.html', {"mant": mant, "usuario": usuario, "rol": rol})
+
+
+
 #FIN CRUD ROLES
 
 #CRUD USUARIOS
@@ -1007,17 +1032,14 @@ def listadoUsuarios(request):
     return render(request, 'administracion/cruds/usuarios/listar.html', context)
 
 def borrarUsuario(request, idusuario):
-    # Filtra el usuario por ID
     usuario = MiUsuario.objects.filter(id=idusuario)
     
-    # Verifica si se encontró el usuario y elimina
     if usuario.exists():
         usuario.delete()
         messages.success(request, "Usuario eliminado exitosamente.")
     else:
         messages.error(request, "El usuario no existe.")
     
-    # Redirige al listado de usuarios
     return redirect('/administracion/usuarios/listado/')
 
 def actualizarUsuario(request, idusuario):
@@ -1106,16 +1128,12 @@ def calculadora_imc(request):
                 estatura = float(estatura)
                 peso = float(peso)
 
-                # Validar si los valores son numéricos y razonables
                 if estatura <= 0 or peso <= 0:
                     mensaje_error = 'Por favor, ingresa valores numéricos válidos.'
                 elif estatura < 0.5 or estatura > 2.5:
                     mensaje_error = 'Por favor, ingresa una estatura válida entre 0.5 y 2.5 metros.'
                 else:
-                    # Calcular IMC
                     imc = peso / (estatura * estatura)
-
-                    # Determinar resultado
                     if imc < 18.5:
                         resultado = 'Bajo peso'
                         dietas = Dieta.objects.filter(categoria='Dietas para subir de peso')
@@ -1149,3 +1167,39 @@ def optionsConsejeros(request):
 
 #endregion
 
+
+#region Mensajes Usuarios
+@login_required
+def lista_usuarios(request):
+    usuarios = MiUsuario.objects.exclude(id=request.user.id)
+    return render(request, 'chat/lista_usuarios.html', {'usuarios': usuarios})
+
+@login_required
+def chat_view(request, usuario_id):
+    receptor = get_object_or_404(MiUsuario, id=usuario_id)
+    mensajes = Mensajes.objects.filter(
+        (Q(emisor=request.user) & Q(receptor=receptor)) | (Q(emisor=receptor) & Q(receptor=request.user))
+    ).order_by('fecha_creacion')
+
+    return render(request, 'chat/chat.html', {'receptor': receptor, 'mensajes': mensajes})
+
+
+@login_required
+def enviar_mensaje(request):
+    if request.method == 'POST':
+        contenido = request.POST.get('contenido')
+        receptor_id = request.POST.get('receptor_id')
+        receptor = MiUsuario.objects.get(id=receptor_id)
+
+        mensaje = Mensajes.objects.create(
+            emisor=request.user,
+            receptor=receptor,
+            contenido=contenido
+        )
+
+        return JsonResponse({'mensaje': mensaje.contenido, 'fecha': mensaje.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S')})
+    return JsonResponse({'error': 'Solicitud inválida'}, status=400)
+
+
+
+#endregion
