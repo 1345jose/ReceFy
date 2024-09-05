@@ -23,8 +23,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Iniciar el carrusel automático
-    startAutoSlide();
+    // Iniciar el carrusel automático solo en dispositivos PC
+    if (window.innerWidth > 768) {
+        startAutoSlide();
+    }
 });
 
 function startAutoSlide() {
@@ -60,3 +62,14 @@ function slide(direction, category) {
         behavior: "smooth"
     });
 }
+
+// Escuchar cambios en el tamaño de la ventana para controlar el slider automático
+window.addEventListener('resize', function() {
+    if (window.innerWidth <= 768) {
+        // Si el tamaño es menor o igual a 768px, podrías considerar detener el slider automático aquí
+        // Si no necesitas implementar lógica adicional, simplemente deja esto vacío
+    } else {
+        // Reiniciar el slider automático si se vuelve a un tamaño mayor a 768px
+        startAutoSlide();
+    }
+});

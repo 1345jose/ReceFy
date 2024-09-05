@@ -1,0 +1,426 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('https://images.pexels.com/photos/1556688/pexels-photo-1556688.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center;
+    background-size: cover;
+    height: 100vh; /* Asegura que el cuerpo ocupe la altura completa de la pantalla */
+    width: 100vw; /* Asegura que el cuerpo ocupe el ancho completo de la pantalla */
+    font-family: "Urbanist", sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.light-mode {
+    background: url('https://images.pexels.com/photos/257794/pexels-photo-257794.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center;
+    background-size: cover;
+}
+
+header {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.logo h1, .pagina h2 {
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+    color: rgb(255, 255, 255);
+    transition: color 0.3s ease, font-size 0.3s ease;
+    text-align: center;
+}
+
+.pagina {
+    position: relative; /* Cambiado a relativo para mantener el centrado */
+    text-align: center; /* Asegura que el texto esté centrado */
+}
+
+.pagina h2 {
+    margin-top: 10px;
+    font-size: 40px;
+}
+
+body.light-mode .pagina h2 {
+    color: #1f1e1e;
+}
+
+h2 {
+    color: #28a56b;
+    font-size: 27px;
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 20px;
+    font-family: 'Lobster', sans-serif;
+}
+
+hr {
+    color: #28a56b;
+}
+
+
+body.light-mode hr {
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light-mode #moon-icon {
+    background-color: white;
+    color: #1f1e1e;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #333;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+    margin-top: -9px;
+    transition: transform 0.3s ease;
+
+}
+
+.sidebar h2, .sidebar h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #cbd5e0;
+    padding: 10px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    transition: color 0.5s ease;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.37);
+    color: #fff;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar h1 {
+    color: white;
+    font-size: 35px;
+    font-weight: 100;
+    font-family: 'Courgette', cursive;
+    font-family: 'Lobster', sans-serif;
+}
+
+body.light-mode .sidebar {
+    background-color: #156a43;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+    flex: 1;
+    transition: margin-left 0.3s ease;
+    overflow-x: hidden; /* Evita desbordamiento horizontal en la sección de contenido */
+}
+
+.text h2 {
+    text-align: center;
+    font-size: 35px;
+}
+
+.text p {
+    text-align: center;
+    font-size: 20px;
+}
+
+button {
+    background-color: #1f1e1e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+button:hover {
+    background-color: black;
+}
+
+.close-button {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.sidebar.open .close-button {
+    display: block;
+}
+
+/* Estilos para el detalle del consejero */
+.detalle_consejero {
+    display: flex; /* Usar flexbox para alinear imagen y texto */
+    align-items: center; /* Centrar verticalmente */
+    margin: 20px auto; /* Espaciado entre el título y el detalle y centrar horizontalmente */
+    max-width: 700px; /* Máxima anchura para evitar que se extienda demasiado */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.consejero-imagen {
+    width: 150px; /* Ajustar el tamaño de la imagen */
+    height: 180px; /* Ajustar el tamaño de la imagen */
+    border-radius: 50%; /* Hacer la imagen redonda */
+    margin-right: 15px; /* Espaciado entre la imagen y el texto */
+}
+
+body.light-mode .consejero-imagen{
+    border: 2px solid green; /* Borde del color especificado */
+
+}
+
+.consejero-info h1 {   
+    margin: 0; /* Eliminar margen del h4 */
+    color: white; /* Color del texto (puedes ajustarlo) */
+    font-family: 'Lobster', sans-serif; /* Asegúrate de aplicar una fuente atractiva */
+}
+
+.consejero-info h3 {   
+    margin: 0; /* Eliminar margen del h4 */
+    color: #28a56b;
+}
+
+body.light-mode .consejero-info h3{
+    color: white;
+}
+
+.consejero-item {
+    margin-bottom: 10px; /* Espaciado entre los botones */
+}
+
+.consejero-visitado {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #1f1e1e;
+    color: white;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.consejero-visitado .eliminar-consejero {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px; 
+    display: none;
+}
+
+.consejero-visitado:hover .eliminar-consejero {
+    display: inline;
+}
+
+.consejero-visitado:hover {
+    background-color: #156a43;
+    color: white;
+}
+
+body.light-mode .consejero-visitado{
+    background-color: white;
+    color: #1f1e1e;
+}
+
+body.light-mode .eliminar-consejero{
+    color: #1f1e1e;
+}
+
+.chat-container {
+    background-color: #333333c7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-right: 150px;
+    margin-top: -40px;
+}
+
+.chat-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chat-box {
+    max-height: 700px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.chat-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    width: fit-content;
+    max-width: 85%;
+}
+
+.chat-message.received {
+    background-color: #1f1e1e;
+    color: white;
+    align-self: flex-start;
+    border-top-left-radius: 0;
+}
+
+.chat-message.sent {
+    background-color: #156a43;
+    color: white;
+    align-self: flex-end;
+    border-top-right-radius: 0;
+    margin-left: auto;
+    margin-right: 20px;
+    max-width: 75%;
+}
+
+.message-sender {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.chat-input {
+    display: flex;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #1f1e1e;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 1em;
+    background-color: #1f1e1e;
+    color: white;
+}
+
+
+.chat-input button {
+    padding: 10px 15px; /* Reducir espaciado interno del botón */
+    font-size: 1em; /* Ajustar tamaño de fuente */
+    background-color: #156a43;
+}
+
+body.light-mode .chat-container{
+    background-color: rgba(255, 255, 255, 0.723);
+}
+
+body.light-mode .chat-message.sent{
+    background-color: #28a56b;
+}
+
+body.light-mode .chat-message.received{
+    background-color: white;
+    color: #1f1e1e;
+}
+
+body.light-mode .chat-input input{
+    background-color: white;
+    color: #1f1e1e;
+    border: 1px solid white;
+}
+
+
+
+/* Media Queries para responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .text h2 {
+        font-size: 30px;
+    }
+
+    .text p {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        display: flex;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 1000;
+        height: 100%;
+        width: 180px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .close-button {
+        display: block;
+    }
+}

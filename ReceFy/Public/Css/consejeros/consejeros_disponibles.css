@@ -1,0 +1,139 @@
+.botones {
+    text-align: center;
+}
+
+.botones .nav-pills .nav-link {
+    color: white;
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.botones .nav-pills .nav-link.active {
+    background-color: #28a56b;
+    color: white;
+}
+
+body.light-mode .botones .nav-pills .nav-link {
+    color: black;
+}
+
+body.light-mode .botones .nav-pills .nav-link.active {
+    background-color: green;
+    color: white;
+}
+
+/* Estilo para las imágenes de las cards */
+.recipe-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Estilo para el contenido de las cards */
+.card-body {
+    text-align: center;
+    min-height: 150px !important;
+}
+
+.card-title {
+    margin: 10px 0;
+    font-size: 1.25rem;
+}
+
+.card-body span {
+    display: block;
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+/* Ocultar contenedores por defecto */
+#consejeros-container,
+#mensaje-bienvenida {
+    display: none;
+}
+
+/* Mostrar contenedores activos */
+#pills-home-tab.active ~ #consejeros-container {
+    display: flex;
+}
+
+#pills-profile-tab.active ~ #mensaje-bienvenida {
+    display: block;
+}
+
+.slider-container {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.slider-track {
+    display: flex;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.left-btn {
+    left: 0;
+}
+
+.right-btn {
+    right: 0;
+}
+.pagination {
+margin: 20px auto;
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.pagination a {
+color: #28a56b;
+background-color: transparent;
+border: 2px solid #28a56b;
+padding: 8px 16px;
+margin: 5px; /* Espaciado uniforme entre los enlaces */
+border-radius: 30px;
+text-decoration: none;
+transition: all 0.3s ease-in-out;
+font-size: 14px;
+flex: 0 1 auto; /* Permite que el enlace se ajuste a su contenido */
+min-width: 80px; /* Ancho mínimo para cada enlace de paginación */
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadir sombra para un efecto elevado */
+}
+
+.pagination a:hover {
+background-color: #28a56b;
+color: #fff;
+}
+
+.pagination .current {
+color: #fff;
+background-color: #28a56b;
+border: 2px solid #28a56b;
+padding: 8px 16px;
+margin: 5px; /* Espaciado uniforme */
+border-radius: 30px;
+font-weight: bold;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el elemento actual */
+}
+
+@media (max-width: 992px) {
+.pagination a {
+    font-size: 12px; /* Disminuir el tamaño de la fuente en pantallas más pequeñas */
+    padding: 6px 12px; /* Disminuir el padding */
+    margin: 4px; /* Espaciado reducido */
+}
+
+.pagination .current {
+    padding: 6px 12px; /* Disminuir el padding del elemento actual */
+}
+}

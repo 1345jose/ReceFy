@@ -44,21 +44,23 @@
                 <div class="slider" id="slider-subir-peso">
                     <div class="slider-track">
                         {% for dieta in dietas_subir_peso %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_dietas' dieta.id %}">
-                                        {% if dieta.imagen and dieta.imagen.url %}
-                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
-                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
-                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
-                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_dietas' dieta.id %}">
+                                            {% if dieta.imagen and dieta.imagen.url %}
+                                                <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                                <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                                <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                                <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -90,21 +92,23 @@
                 <div class="slider" id="slider-bajar-peso">
                     <div class="slider-track">
                         {% for dieta in dietas_bajar_peso %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_dietas' dieta.id %}">
-                                        {% if dieta.imagen and dieta.imagen.url %}
-                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
-                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
-                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
-                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_dietas' dieta.id %}">
+                                            {% if dieta.imagen and dieta.imagen.url %}
+                                                <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                                <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                                <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                                <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -136,21 +140,23 @@
                 <div class="slider" id="slider-deshidratacion">
                     <div class="slider-track">
                         {% for dieta in dietas_deshidratacion %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_dietas' dieta.id %}">
-                                        {% if dieta.imagen and dieta.imagen.url %}
-                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
-                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
-                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
-                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_dietas' dieta.id %}">
+                                            {% if dieta.imagen and dieta.imagen.url %}
+                                                <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                                <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                                <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                                <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -182,21 +188,23 @@
                 <div class="slider" id="slider-cardiovasculares">
                     <div class="slider-track">
                         {% for dieta in dietas_cardiovasculares %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_dietas' dieta.id %}">
-                                        {% if dieta.imagen and dieta.imagen.url %}
-                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
-                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
-                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
-                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_dietas' dieta.id %}">
+                                            {% if dieta.imagen and dieta.imagen.url %}
+                                                <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                                <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                                <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                                <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -228,21 +236,23 @@
                 <div class="slider" id="slider-diabetes">
                     <div class="slider-track">
                         {% for dieta in dietas_diabetes %}
-                            <div class="recipe-card">
-                                <div class="card">
-                                    <a href="{% url 'detalle_dietas' dieta.id %}">
-                                        {% if dieta.imagen and dieta.imagen.url %}
-                                            <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% else %}
-                                            <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
-                                        {% endif %}
-                                        <div class="card-body">
-                                            <h2 class="card-title">{{ dieta.nombre }}</h2>
-                                            <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
-                                            <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
-                                            <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
-                                        </div>
-                                    </a>
+                            <div class="col-6 col-md-4 mb-4">
+                                <div class="recipe-card">
+                                    <div class="card">
+                                        <a href="{% url 'detalle_dietas' dieta.id %}">
+                                            {% if dieta.imagen and dieta.imagen.url %}
+                                                <img src="{{ dieta.imagen.url }}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% else %}
+                                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ dieta.nombre }}">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ dieta.nombre }}</h2>
+                                                <span><i class="fas fa-fire"></i> {{ dieta.calorias }} Calorías</span>
+                                                <span><i class="fas fa-heartbeat"></i> {{ dieta.condicion_medica }}</span>
+                                                <span><i class="fas fa-running"></i> {{ dieta.actividad_fisica }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}

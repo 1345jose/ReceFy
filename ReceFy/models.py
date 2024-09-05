@@ -12,6 +12,9 @@ class MiUsuario(AbstractUser):
     pais = models.CharField(max_length=100, blank=True, null=True)
     idioma = models.CharField(max_length=50, blank=True, null=True)
     edad = models.PositiveIntegerField(blank=True, null=True)
+    
+    def tiene_rol(self, rol_id):
+        return self.rol_set.filter(id=id).exists()
 
 #region Recetas  
 class Receta(models.Model): 
@@ -123,26 +126,17 @@ class PlanNutricional(models.Model):
 #endregion
 
 #region Consejeros
-
 class Consejero(models.Model):
     id_consejero = models.AutoField(primary_key=True)
-    imagen = models.ImageField(upload_to="consejeros/")
-    nombre = models.CharField(max_length=225)
-    apellido = models.CharField(max_length=225)
-    descripcion = models.CharField(max_length=255)
-    edad = models.IntegerField()
-    idioma = models.CharField(max_length=225)
-    fecha_nacimiento = models.DateField()
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
     titulacion = models.CharField(max_length=225)
-    pais = models.TextField()
-    experiencia = models.CharField(max_length=225)
-    descripcion = models.CharField(max_length=225)
-    fecha_registro = models.DateTimeField(auto_now_add=True)
     categoria = models.CharField(max_length=255, null=True)
+    experiencia = models.IntegerField()
+    descripcion = models.CharField(max_length=225)
+    fecha_registro = models.DateTimeField()
 
     class Meta:
         db_table = 'tbl_consejeros'
-
 #endregion
 
 #region Dietas Disponibles

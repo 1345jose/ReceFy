@@ -153,7 +153,8 @@ urlpatterns = [
 
     path("consejeros/opcion/", views.optionsConsejeros, name="optionsConsejeros"),
     path("consejeros_disponibles/", views.consejeros_disponibles, name="consejeros_disponibles"),
-
+    path('consejero/<int:consejero_id>/', views.apartado_consejeros_ver, name='apartado_consejeros_ver'),
+    path('enviar_mensaje/', views.enviar_mensaje, name='enviar_mensaje'),
     #endregion
     
 ]
