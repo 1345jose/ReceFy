@@ -83,10 +83,9 @@ urlpatterns = [
 
     #CRUD CONSEJEROS
     path("administracion/consejeros/listado/", views.listar_consejeros, name="listar_consejeros"),
-    path("administracion/consejeros/insertar/", views.insertar_consejero, name="insertar_consejero"),
-    path("administracion/consejeros/borrar/<int:pk>/", views.borrar_consejero, name="borrar_consejero"),
-    path("administracion/consejeros/actualizar/<int:pk>/", views.actualizar_consejero, name="actualizar_consejero"),
+    path('cambiar_rol/<int:usuario_id>/', views.cambiar_rol, name='cambiar_rol'),
     path("administracion/consejeros/ver/<int:consejero_id>/", views.ver_consejero, name="ver_consejero"),
+
     #FIN CRUD CONSEJEROS
 
     #CRUD RECETAS
@@ -133,6 +132,11 @@ urlpatterns = [
 
     #FIN CRUD COMENTARIOS
 
+    #CRUD LICENCIAS
+    path("administracion/licencias/listado/", views.licencias, name="licencias"),
+    path("administracion/licencias/insertar/", views.InsertarLicencia, name="InsertarLicencia"),
+    #FIN CRUD LICENCIAS
+
     #ESTADISTICAS GENERALES
 
     path("administracion/estadisticas/generales/", views.Estadisticas_generales, name="estadisticas"),
@@ -156,6 +160,9 @@ urlpatterns = [
 
     #endregion
     
+    #region Licencias
+    path('usuarios/licencias/', views.licencias_usuario, name="licencias_usuario"),
+    #endregion
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

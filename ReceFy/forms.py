@@ -78,28 +78,7 @@ class RecetaForm(forms.ModelForm):
 
 #endregion
 
-#region Consejeros
 
-class ConsejeroForm(forms.ModelForm):
-
-    class Meta:
-        model = Consejero
-        fields = ['imagen', 'nombre', 'apellido', 'edad', 'descripcion', 'idioma', 'fecha_nacimiento', 'titulacion', 'pais', 'experiencia']
-        widgets = {
-            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
-            'edad': forms.NumberInput(attrs={'class': 'form-control'}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
-            'idioma': forms.TextInput(attrs={'class': 'form-control'}),
-            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'titulacion': forms.TextInput(attrs={'class': 'form-control'}),
-            'pais': forms.TextInput(attrs={'class': 'form-control'}),
-            'experiencia': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
-
-#endregion
 
 #region Dietas
 

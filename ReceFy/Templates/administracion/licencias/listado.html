@@ -1,0 +1,108 @@
+{% load static %}
+{% include 'administracion/sethings/links.html' %}
+
+<main>
+    <div class="table-responsive mt-4">
+        <h1 class="float-end">ReceFy Admin</h1>
+        <table class="table table-bordered table-hover" id="recetasTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Dias</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in licencia %}
+                <tr>
+                    <td>{{ l.id }}</td>
+                    <td>{{ l.nombre }}</td>
+                    <td>{{ l.descripcion }}</td>
+                    <td>{{ l.dias }}</td>
+                    <td>{{ l.precio }}</td>
+
+                    <td>
+                        <div class="acciones">
+                           
+                            <a href="" class="btn btn-warning delete-btn" data-url="" data-id="">
+                                <i class="fas fa-trash"></i>
+                            </a>
+
+                            <a href="" class="btn btn-info">
+                                <i class="fas fa-user-edit fa-lg"></i>
+                            </a>
+                           
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9">No se encontraron consejeros.</td>
+                    <td colspan="9"><a href="">Agregar Consejero</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <table class="table table-bordered table-hover">
+            <h1 class="float-end">Licencias Usuarios</h1>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id Usuario</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Id Licencia</th>                    
+                    <th scope="col">Licencia</th>
+                    
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in inter %}
+                <tr>
+                    <td>{{ i.usuario.id }}</td> 
+                    <td>{{ i.usuario.username }}</td>
+                    <td>{{ i.id }}</td> 
+                    <td>{{ i.licencia.nombre }}</td> 
+                    <td>
+                        <div class="acciones">
+                          
+                            <a href="" class="btn btn-info">
+                                <i class="fas fa-user-edit fa-lg"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                
+            </tbody>
+                {% endfor %}
+        </table>
+    </div>
+
+    <div class="float-button">
+        <a href="{% url 'InsertarLicencia' %}" class="btn" data-toggle="tooltip" title="Agregar nueva receta">
+            <i class="fas fa-plus"></i>
+        </a>
+    </div>
+    
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Primera</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</main>
+
+{% include 'administracion/sethings/src.html' %}

@@ -19,62 +19,73 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se itera sobre las recetas para mostrar cada fila -->
                 {% for consejero in consejeros %}
                 <tr>
                     <td>
-                        <a href="#">
-                            <img src="{{ consejero.imagen.url }}" alt="{{ consejero.nombre }}" class="img-thumbnail">
-                        </a>
+                       
+                        {% if consejero.usuario.imagen2 %}
+                            <a href="#">
+                                <img src="{{ consejero.usuario.imagen2.url }}" alt="{{ consejero.usuario.first_name }}" class="img-thumbnail">
+                            </a>
+                        {% elif consejero.usuario.imagen1 %}
+                            <img src="{{ consejero.usuario.imagen1.url }}" class="img-thumbnail" alt="{{ consejero.nombre }}">
+                        {% else %}
+                            <span>No Image</span> 
+                        {% endif %}
                     </td>
-                    <td>{{ consejero.nombre }}</td>
-                    <td>{{ consejero.apellido }}</td>
+                    <td>{{ consejero.usuario.first_name }}</td>
+                    <td>{{ consejero.usuario.last_name }}</td>
                     <td>{{ consejero.descripcion }}</td>
-                    <td>{{ consejero.idioma }}</td>
-                    <td>{{ consejero.fecha_nacimiento }}</td>
+                    <td>{{ consejero.usuario.idioma }}</td>
+                    <td>{{ consejero.usuario.fecha_nacimiento }}</td>
                     <td>{{ consejero.titulacion }}</td>
-                    <td>{{ consejero.pais }}</td>
+                    <td>{{ consejero.usuario.pais }}</td>
                     <td>
                         <div class="acciones">
-                            <button class="btn btn-warning delete-btn" data-url="{% url 'borrar_consejero' consejero.pk %}" data-id="{{ consejero.pk }}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                            <a href="{% url 'actualizar_consejero' consejero.pk %}" class="btn btn-info">
+                           
+                            <a href="{% url 'cambiar_rol' consejero.usuario.id %}" 
+                                class="btn btn-warning delete-btn" 
+                                data-url="{% url 'cambiar_rol' consejero.usuario.id %}"
+                                data-id="{{ consejero.usuario.id }}">
+                                    <i class="fas fa-trash"></i>
+                            </a>
+
+                            <a href="" class="btn btn-info">
                                 <i class="fas fa-user-edit fa-lg"></i>
                             </a>
-                            <a href="{% url 'ver_consejero' consejero.id_consejero %}" class="btn btn-primary">
+                            <a href="" class="btn btn-primary">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </div>
                     </td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9">No se encontraron consejeros.</td>
+                    <td colspan="9"><a href="{% url '' %}">Agregar Consejero</a></td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <!-- Botón para agregar nueva receta -->
-    <div class="float-button">
-        <a href="{% url 'insertar_consejero' %}" class="btn" data-toggle="tooltip" title="Agregar nueva receta">
-            <i class="fas fa-plus"></i>
-        </a>
-    </div>
+    
+    <!-- Botón para agregar nuevo consejero, si aplica -->
+    
     <div class="pagination">
         <span class="step-links">
-            {% if recetas.has_previous %}
+            {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; Primera</a>
-                <a href="?page={{ recetas.previous_page_number }}">Anterior</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
             {% endif %}
             <span class="current">
-                Página {{ recetas.number }} de {{ recetas.paginator.num_pages }}.
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
             </span>
-            {% if recetas.has_next %}
-                <a href="?page={{ recetas.next_page_number }}">Siguiente</a>
-                <a href="?page={{ recetas.paginator.num_pages }}">Última &raquo;</a>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
             {% endif %}
         </span>
     </div>
-</div>
-
 </main>
 
 {% include 'administracion/sethings/src.html' %}

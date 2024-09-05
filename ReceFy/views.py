@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .forms import ConsejeroForm, DietaForm, IngredienteForm, RecetaForm
-from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol , Mensajes
+from .forms import  DietaForm, IngredienteForm, RecetaForm
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol ,  Licencias, LicenciasInter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -29,6 +29,8 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.units import inch
 import io
+from datetime import datetime
+
 #endregion
 
 
@@ -58,12 +60,10 @@ def registro_usuario(request):
         password = request.POST.get("password")
         confirmar_contraseña = request.POST.get("confirmar_contraseña")
 
-        # Validar que todos los campos requeridos estén presentes
         if not username or not email or not password or not confirmar_contraseña:
             messages.error(request, "Por favor, completa todos los campos.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-        # email valido y personal
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             messages.error(request, "Ingresa un correo electrónico válido.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
@@ -72,46 +72,34 @@ def registro_usuario(request):
             messages.error(request, "Por favor, utiliza un correo personal y no institucional o laboral.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-        # Validar que las contraseñas coincidan
         if password != confirmar_contraseña:
             messages.error(request, "Las contraseñas no coinciden. Por favor, intenta nuevamente.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-        # contraseña cumpla con los requisitos de complejidad
         if len(password) < 8 or not re.search(r'[A-Z].*[A-Z]', password) or not re.search(r'\d.*\d.*\d', password) or not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
             messages.error(request, "La contraseña debe tener al menos 8 caracteres, incluyendo 2 letras mayúsculas, 3 números y 1 carácter especial.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-        # correo electrónico en uso
         if MiUsuario.objects.filter(email=email).exists():
             messages.error(request, "El correo electrónico ya está en uso. Por favor, utiliza otro.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-        # Verificar si el nombre de usuario ya está en uso
         if MiUsuario.objects.filter(username=username).exists():
             messages.error(request, "El nombre de usuario ya está en uso. Por favor, elige otro.")
             return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
 
-        try:
-            user = MiUsuario.objects.create_user(username=username, email=email, password=password)
-            user.save()
+        user = MiUsuario.objects.create_user(username=username, email=email, password=password)
+        
+        licencia = get_object_or_404(Licencias, id=1)  
+        LicenciasInter.objects.create(usuario=user, licencia=licencia)
 
-            rol = get_object_or_404(Rol, id=6)
-            UsuarioRol.objects.create(usuario=user, rol=rol)
+        rol = get_object_or_404(Rol, id=6) 
+        UsuarioRol.objects.create(usuario=user, rol=rol)
 
-            messages.success(request, "¡Registro exitoso! Ahora puedes iniciar sesión.")
-            return render(request, "usuarios/registro.html", {"pagina": pagina_actual, "registro_exitoso": True})
-
-        except IntegrityError as e:
-            messages.error(request, f"Ocurrió un error de integridad al registrar el usuario: {str(e)}")
-            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
-
-        except Exception as e:
-            messages.error(request, f"Ocurrió un error al registrar el usuario: {str(e)}")
-            return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
+        messages.success(request, "¡Registro exitoso! Ahora puedes iniciar sesión.")
+        return render(request, "usuarios/registro.html", {"pagina": pagina_actual, "registro_exitoso": True})
 
     return render(request, "usuarios/registro.html", {"pagina": pagina_actual})
-
 
 def loginusuarios(request):
     pagina_actual = "loginusuarios"
@@ -759,6 +747,7 @@ def dashboard(request):
     total_recetas = Receta.objects.count()
     total_dietas = Dieta.objects.count()
     total_ingredientes = Ingrediente.objects.count()
+    total_licencias = Licencias.objects.count()
 
     context = {
         "total_usuarios": total_usuarios,
@@ -766,6 +755,7 @@ def dashboard(request):
         "total_recetas": total_recetas,
         "total_dietas": total_dietas,
         "total_ingredientes": total_ingredientes,
+        "total_licencias": total_licencias,
     }
 
     consejeros_recientes = Consejero.objects.order_by('-fecha_registro')[:3]
@@ -857,9 +847,10 @@ def Estadisticas_generales(request):
 #fin estadisticas 
 
 #CRUD CONSEJEROS
-
 def listar_consejeros(request):
-    consejeros = Consejero.objects.all().order_by('-fecha_registro')
+    usuarios_ids = UsuarioRol.objects.filter(rol_id=7).values_list('usuario_id', flat=True)
+    
+    consejeros = Consejero.objects.filter(usuario__id__in=usuarios_ids).order_by('-fecha_registro')
     
     paginator = Paginator(consejeros, 15)
     page_number = request.GET.get("page")
@@ -871,47 +862,18 @@ def listar_consejeros(request):
     }
     return render(request, 'administracion/cruds/consejeros/listar.html', context)
 
-def insertar_consejero(request):
-    if request.method == "POST":
-        form = ConsejeroForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Consejero creado exitosamente.')
-            return redirect('listar_consejeros')
-        else:
-            messages.error(request, 'Por favor, corrija los errores a continuación.')
-    else:
-        form = ConsejeroForm()
-
-    return render(request, "administracion/cruds/consejeros/insertar.html", {"form": form})
-
-def borrar_consejero(request, pk):
-    consejero = get_object_or_404(Consejero, pk=pk)
-
-    if request.method == "POST":
-        consejero.delete()
-        messages.success(request, "¡El consejero ha sido eliminado correctamente!")
-        return redirect("listar_consejeros")
-
-    messages.error(request, "Método no permitido")
-    return redirect("listar_consejeros")
-
-def actualizar_consejero(request, pk):
-    consejero = get_object_or_404(Consejero, pk=pk)
+def cambiar_rol(request, usuario_id):
+    usuario_rol = get_object_or_404(UsuarioRol, usuario_id=usuario_id)
     
-    if request.method == "POST":
-        form = ConsejeroForm(request.POST, instance=consejero)
-        if form.is_valid():
-            form.save()
-            return redirect("listar_consejeros")
-    else:
-        form = ConsejeroForm(instance=consejero)
+    usuario_rol.rol_id = 6
+    usuario_rol.save()
+    
+    if usuario_rol.rol_id == 6:
+        Consejero.objects.filter(usuario=usuario_rol.usuario).delete()
+    
+    return redirect('/administracion/roles/listado/')
+    
 
-    context = {
-        "form": form,
-        "consejero": consejero,
-    }
-    return render(request, "administracion/cruds/consejeros/actualizar.html", context)
 
 def ver_consejero(request, consejero_id):
     consejero = Consejero.objects.filter(id_consejero=consejero_id).first()
@@ -928,7 +890,6 @@ def ver_consejero(request, consejero_id):
 def listar_recetas(request):
     recetas = Receta.objects.all().order_by('-fecha_registro_receta')
     
-    # Paginación
     paginator = Paginator(recetas, 15) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -1112,7 +1073,7 @@ def ver_ingrediente(request, ingrediente_id):
 
 #FIN CRUD INGREDIENTES
 
-#CRUD ROLES
+#region CRUD ROLES
 def listado_roles(request):
     roles = Rol.objects.all()  
     usuarios_roles = UsuarioRol.objects.all()   
@@ -1161,23 +1122,38 @@ def actualizar_rol(request, idroles):
 
 def editarRolu(request, idinter):
     if request.method == "POST":
-        if request.POST.get('usuario_id') and request.POST.get('rol_id'):
-            usuario_id = request.POST.get('usuario_id')  
-            rol_id = request.POST.get('rol_id')         
-            
+        usuario_id = request.POST.get('usuario_id')
+        rol_id = request.POST.get('rol_id')
+        
+        if usuario_id and rol_id:
             mant = UsuarioRol.objects.get(id=idinter)
-            mant.usuario_id = MiUsuario.objects.get(id=usuario_id)
-            mant.rol_id = Rol.objects.get(id=rol_id)
+            
+            nuevo_usuario = MiUsuario.objects.get(id=usuario_id)
+            nuevo_rol = Rol.objects.get(id=rol_id)
+            
+            mant.usuario = nuevo_usuario
+            mant.rol = nuevo_rol
             mant.save()
+            
+            if rol_id == '7': 
+                if not Consejero.objects.filter(usuario=nuevo_usuario).exists():
+                    Consejero.objects.create(
+                        usuario=nuevo_usuario,
+                        titulacion="Título por defecto",
+                        categoria="Categoría por defecto",
+                        experiencia="Experiencia por defecto",
+                        descripcion="Descripción por defecto",
+                        fecha_registro=datetime.now()
+                    )
+            elif rol_id == '6':
+                Consejero.objects.filter(usuario=nuevo_usuario).delete()
+            
             return redirect('/administracion/roles/listado')
-    else:
-        mant = UsuarioRol.objects.get(id=idinter) 
-        usuario = MiUsuario.objects.all()
-        rol = Rol.objects.all()
-        return render(request, 'administracion/cruds/roles/editarRolu.html', {"mant": mant, "usuario": usuario, "rol": rol})
-
-
-
+    
+    mant = UsuarioRol.objects.get(id=idinter)
+    usuario = MiUsuario.objects.all()
+    rol = Rol.objects.all()
+    return render(request, 'administracion/cruds/roles/editarRolu.html',{"mant": mant, "usuario": usuario, "rol": rol})
 #FIN CRUD ROLES
 
 #CRUD USUARIOS
@@ -1199,13 +1175,7 @@ def listadoUsuarios(request):
 
 def borrarUsuario(request, idusuario):
     usuario = MiUsuario.objects.filter(id=idusuario)
-    
-    if usuario.exists():
-        usuario.delete()
-        messages.success(request, "Usuario eliminado exitosamente.")
-    else:
-        messages.error(request, "El usuario no existe.")
-    
+    usuario.delete()
     return redirect('/administracion/usuarios/listado/')
 
 def actualizarUsuario(request, idusuario):
@@ -1266,6 +1236,29 @@ def borrarComentario(request, idcomentario):
     return redirect('/administracion/comentarios/listado/')
 
 #FIN CRUD COMENT
+
+#CRUD LICENCIAS 
+
+def InsertarLicencia(request):
+    if request.method == "POST":
+        if request.POST.get('nombre') and request.POST.get('descripcion') and request.POST.get('dias') and request.POST.get('precio'):
+           licencia = Licencias()
+           licencia.nombre = request.POST.get('nombre')
+           licencia.descripcion = request.POST.get('descripcion')
+           licencia.dias = request.POST.get('dias')
+           licencia.precio = request.POST.get('precio')
+           licencia.save()
+           return redirect('/administracion/licencias/listado')
+    else:
+        return render(request, 'administracion/licencias/insertar.html') 
+
+def licencias(request):
+    licencia = Licencias.objects.all()
+    inter = LicenciasInter.objects.all()
+    return render(request,'administracion/licencias/listado.html',{'licencia': licencia , 'inter': inter } )
+
+
+#FIN CRUD LICENCIAS
 
 #endregion
 
@@ -1358,7 +1351,7 @@ def consejeros_disponibles(request):
 #endregion
 
 
-#region Mensajes Usuarios
+#region Mensajes Usuarios no funcional
 @login_required
 def lista_usuarios(request):
     usuarios = MiUsuario.objects.exclude(id=request.user.id)
@@ -1393,3 +1386,11 @@ def enviar_mensaje(request):
 
 
 #endregion
+
+#region Licencias
+
+def licencias_usuario(request):
+    licencias = Licencias.objects.all()
+    return render(request, 'licencias/licencias_disponibles.html', {'licencias':licencias})
+
+#endregion 

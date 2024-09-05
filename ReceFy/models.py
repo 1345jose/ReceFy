@@ -13,6 +13,9 @@ class MiUsuario(AbstractUser):
     idioma = models.CharField(max_length=50, blank=True, null=True)
     edad = models.PositiveIntegerField(blank=True, null=True)
 
+    def tiene_rol(self, rol_id):
+        return self.rol_set.filter(id=rol_id).exists()
+
 #region Recetas  
 class Receta(models.Model): 
     id_receta = models.AutoField(primary_key=True)
@@ -36,37 +39,7 @@ class Receta(models.Model):
         
 #endregion
 
-#region Comentarios
 
-class Comentario(models.Model):
-    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, related_name='comentarios')
-    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
-    contenido = models.CharField(max_length=1500) 
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    me_gusta = models.IntegerField(default=0) 
-
-
-    class Meta:
-        db_table = "tbl_comentarios"
-        
-class MeGusta(models.Model):
-    comentario = models.ForeignKey(Comentario, related_name='megustas', on_delete=models.CASCADE,null=True,blank=True)
-    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
-    receta = models.ForeignKey(Receta, on_delete=models.CASCADE,null=True,blank=True)
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        db_table = "tbl_like_c"
-        unique_together = (('comentario', 'usuario'), ('receta', 'usuario'))
-
-    def __str__(self):
-        if self.comentario:
-            return f'Like by {self.usuario} on Comment {self.comentario.id}'
-        elif self.receta:
-            return f'Like by {self.usuario} on Recipe {self.receta.id}'
-        else:
-            return f'Like by {self.usuario}'
-
-#endregion
 
 #region Plan Nutricional (Calendario)
 
@@ -126,19 +99,12 @@ class PlanNutricional(models.Model):
 
 class Consejero(models.Model):
     id_consejero = models.AutoField(primary_key=True)
-    imagen = models.ImageField(upload_to="consejeros/")
-    nombre = models.CharField(max_length=225)
-    apellido = models.CharField(max_length=225)
-    descripcion = models.CharField(max_length=255)
-    edad = models.IntegerField()
-    idioma = models.CharField(max_length=225)
-    fecha_nacimiento = models.DateField()
+    usuario =  models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
     titulacion = models.CharField(max_length=225)
-    pais = models.TextField()
+    categoria = models.CharField(max_length=255, null=True)
     experiencia = models.CharField(max_length=225)
     descripcion = models.CharField(max_length=225)
     fecha_registro = models.DateTimeField(auto_now_add=True)
-    categoria = models.CharField(max_length=255, null=True)
 
     class Meta:
         db_table = 'tbl_consejeros'
@@ -162,7 +128,6 @@ class Dieta(models.Model):
     bibliografia = models.CharField(max_length=255)
     fecha_registro_dieta = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE, null=True)
-    consejero = models.ForeignKey(Consejero, related_name="consejero", on_delete=models.CASCADE, null=True)
     categoria = models.CharField(max_length=255)
 
     class Meta:
@@ -218,25 +183,7 @@ class UsuarioRol(models.Model):
 
 #region Mensajes Usuarios
 
-class Mensajes(models.Model):
-    emisor = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  # Usando el modelo de usuario personalizado
-        on_delete=models.CASCADE,
-        related_name='mensajes_enviados'
-    )
-    receptor = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  # Usando el modelo de usuario personalizado
-        on_delete=models.CASCADE,
-        related_name='mensajes_recibidos'
-    )
-    contenido = models.TextField()
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        db_table = "tbl_mensajes_usuarios"
-
-    def __str__(self):
-        return f"Mensaje de {self.emisor} a {self.receptor} en {self.fecha_creacion}"
 
 class Amistad(models.Model):
     usuario1 = models.ForeignKey(
@@ -261,3 +208,70 @@ class Amistad(models.Model):
     
 
 #endregion
+
+#region Comentarios
+
+class Comentario(models.Model):
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, related_name='comentarios', null=True, blank=True)
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    contenido = models.CharField(max_length=1500)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    me_gusta = models.IntegerField(default=0)  
+    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        db_table = "tbl_comentarios"
+
+#endregion
+
+#region Me Gusta
+
+class MeGusta(models.Model):
+    comentario = models.ForeignKey(Comentario, related_name='megustas', on_delete=models.CASCADE, null=True, blank=True)
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, null=True, blank=True)
+    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE, null=True, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "tbl_like_c"
+        unique_together = (('comentario', 'usuario'), ('receta', 'usuario'), ('dieta', 'usuario'))
+
+    def __str__(self):
+        if self.comentario:
+            return f'Like by {self.usuario} on Comment {self.comentario.id}'
+        elif self.receta:
+            return f'Like by {self.usuario} on Recipe {self.receta.id}'
+        elif self.dieta:
+            return f'Like by {self.usuario} on Diet {self.dieta.id}'
+        else:
+            return f'Like by {self.usuario}'
+
+#endregion
+
+#region Licencias 
+
+class Licencias(models.Model):
+    nombre = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=500)    
+    dias = models.BigIntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=3)
+
+    class Meta:
+        db_table = "tbl_licencias"
+
+class LicenciasInter(models.Model):
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    licencia = models.ForeignKey(Licencias, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('usuario', 'licencia')
+        db_table = 'tbl_licencias_inter'
+
+
+
+#endregion
+
+#endregion
+
+

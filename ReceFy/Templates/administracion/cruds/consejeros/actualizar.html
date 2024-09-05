@@ -62,7 +62,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Actualizar Consejero: {{ consejero.nombre }} {{ consejero.apellido }}</h1>
+        <h1>Actualizar Consejero: {{ consejero.usuario.first_name }} </h1>
         <form method="POST" id="actualizarConsejeroForm" action="" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="d-flex justify-content-center mb-4">

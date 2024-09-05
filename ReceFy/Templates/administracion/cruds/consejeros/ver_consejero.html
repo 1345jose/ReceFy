@@ -30,21 +30,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>Detalle del consejero: {{ consejero.nombre }} {{ consejero.apellido }}</h1>
+        <h1>Detalle del consejero: {{ consejero.usuario.first_name }} </h1>
         <div>
             {% if consejero.imagen %}
-                <img src="{{ consejero.imagen.url }}" alt="Imagen de {{ consejero.nombre }}" class="ingredient-image">
+                <img src="{{ consejero.usuario.imagen2.url }}" alt="Imagen de {{ consejero.usuario.first_name }}" class="ingredient-image">
             {% endif %}
             <br><br>
-            <p><i class="fas fa-user detail-icon"></i><strong>Nombre:</strong> {{ consejero.nombre }}</p>
-            <p><i class="fas fa-user-tag detail-icon"></i><strong>Apellido:</strong> {{ consejero.apellido }}</p>
+            <p><i class="fas fa-user detail-icon"></i><strong>Nombre:</strong> {{ consejero.usuario.first_name }}</p>
+            <p><i class="fas fa-user-tag detail-icon"></i><strong>Apellido:</strong> {{ consejero.usuario.last_name }}</p>
             <p><i class="fas fa-align-left detail-icon"></i><strong>Descripción:</strong> {{ consejero.descripcion }}</p>
-            <p><i class="fas fa-birthday-cake detail-icon"></i><strong>Edad:</strong> {{ consejero.edad }} Años</p>
-            <p><i class="fas fa-language detail-icon"></i><strong>Idioma:</strong> {{ consejero.idioma }}</p>
-            <p><i class="fas fa-calendar-alt detail-icon"></i><strong>Fecha de nacimiento:</strong> {{ consejero.fecha_nacimiento }}</p>
+            <p><i class="fas fa-birthday-cake detail-icon"></i><strong>Edad:</strong> {{ consejero.usuario.edad }} Años</p>
+            <p><i class="fas fa-language detail-icon"></i><strong>Idioma:</strong> {{ consejero.usuario.idioma }}</p>
+            <p><i class="fas fa-calendar-alt detail-icon"></i><strong>Fecha de nacimiento:</strong> {{ consejero.usuario.fecha_nacimiento }}</p>
             <p><i class="fas fa-graduation-cap detail-icon"></i><strong>Titulación:</strong> {{ consejero.titulacion }}</p>
-            <p><i class="fas fa-globe detail-icon"></i><strong>País:</strong> {{ consejero.pais }}</p>
-            <p><i class="fas fa-briefcase detail-icon"></i><strong>Experiencia:</strong> {{ consejero.experiencia }} Años</p>
+            <p><i class="fas fa-globe detail-icon"></i><strong>País:</strong> {{ consejero.usuario.pais }}</p>
+            <p><i class="fas fa-briefcase detail-icon"></i><strong>Experiencia:</strong> {{ consejero.experiencia }} </p>
             
             <!-- Agrega más detalles según sea necesario -->
         </div>

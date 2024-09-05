@@ -1,0 +1,76 @@
+{% load static %}
+{% include 'administracion/sethings/forms.html' %}
+
+<div class="container">
+    <h1>Insertar Licencia</h1>
+    <form action="{% url 'InsertarLicencia' %}" method="post" >
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese un nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Ingrese una descripción" required>
+        </div>
+        <div class="form-group">
+            <label for="dias">Dias:</label>
+            <input type="number" class="form-control" name="dias" id="dias" placeholder="Ingrese la duracion de la Licencia">
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="text" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio de la licencia" required>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary" style="background-color: #28a56b;">Guardar</button>
+                <a href="" class="btn btn-back">Volver al Listado</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#insertRoleForm').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Mostrar alerta de éxito
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Licencia insertado correctamente!',
+                        text: 'Click en OK para continuar.',
+                        confirmButtonColor: '#28a56b',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        // Redireccionar al listado de roles
+                        window.location.href = "{% url 'licencias' %}";
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Mostrar alerta de error si hay problemas al insertar el rol
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al insertar el rol. Por favor, inténtalo nuevamente.',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
