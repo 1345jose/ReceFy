@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consejero {{ consejero.usuario.first_name }}  {{ consejero.usuario.last_name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/consejeros/consejeros_detalles.css' %}">
+</head>
+
+
+<body>
+
+    <header>
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </button>
+        <h1 class="page-title">ReceFy</h1>
+    </header>
+
+
+    <aside class="sidebar" id="sidebar">
+        <button class="close-button">&times;</button>
+        <h2 class="mis_consejeros">Mis Consejeros</h2>
+        <br>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()">
+            <i class="fas fa-lightbulb"></i>  Tema Claro
+        </button>
+
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;">
+            <i class="fas fa-moon"></i>  Tema Oscuro
+        </button>
+
+        <br><br>
+        <hr>
+        <br>
+        <h2>Historial</h2>
+        <hr>
+        <br>
+        <div id="botones-consejeros-visitados"></div>
+    </aside>
+
+    <div class="pagina">
+        <h2>ReceFy</h2>
+    </div>
+    <main>
+        <br><br>
+        <div class="detalle_consejero">
+            {% if consejero.usuario.imagen1 %}
+            <img src="{{ consejero.usuario.imagen1.url }}" class="card-img-top consejero-imagen" alt="{{ consejero.nombre }}">
+            {% elif consejero.usuario.imagen2 %}
+                <img src="{{ consejero.usuario.imagen2.url }}" class="card-img-top consejero-imagen" alt="{{ consejero.nombre }}">
+            {% else %}
+                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top consejero-imagen" alt="{{ consejero.nombre }}">
+            {% endif %}
+            <div class="consejero-info">
+                <h1>{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}</h1>
+                <br>
+                <h3>{{ consejero.categoria }} - {{ consejero.usuario.pais }} - Fecha Nacimiento: {{ consejero.usuario.fecha_nacimiento }}</h3>
+            </div>
+        </div>
+        <br>
+        <div class="chat-container">
+            <h2 class="chat-title">Chat con el Consejero</h2>
+            <div class="chat-box">
+                <div class="chat-message received">
+                    <span class="message-sender">Consejero:</span>
+                    <span class="message-text">Hola, ¿en qué puedo ayudarte hoy?</span>
+                </div>
+                <div class="chat-message sent">
+                    <span class="message-sender">Tú:</span>
+                    <span class="message-text">Tengo algunas preguntas sobre mis consultas.</span>
+                </div>
+                <div class="chat-message received">
+                    <span class="message-sender">Consejero:</span>
+                    <span class="message-text">Claro, pregúntame lo que necesites.</span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Escribe tu mensaje..." />
+                <button id="sendMessage" class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script>
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const closeButton = document.querySelector('.close-button');
+
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.add('open');
+    });
+
+    closeButton.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+    });
+
+    // Cierra el menú si se hace clic fuera de él
+    document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const consejeroId = "{{ consejero.id_consejero }}"; // ID del consejero actual
+    const consejeroNombre = "{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}";
+
+    function guardarConsejero() {
+        let consejerosVisitados = localStorage.getItem('consejerosVisitados');
+        if (!consejerosVisitados) {
+            consejerosVisitados = [];
+        } else {
+            consejerosVisitados = JSON.parse(consejerosVisitados);
+        }
+
+        // Almacena un objeto con el nombre y el ID del consejero
+        const consejeroData = { id: consejeroId, nombre: consejeroNombre };
+
+        if (!consejerosVisitados.find(consejero => consejero.id === consejeroId)) {
+            consejerosVisitados.push(consejeroData);
+        }
+
+        localStorage.setItem('consejerosVisitados', JSON.stringify(consejerosVisitados));
+        actualizarSidebar();
+    }
+
+    function actualizarSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        let listaConsejeros = localStorage.getItem('consejerosVisitados');
+
+        if (listaConsejeros) {
+            listaConsejeros = JSON.parse(listaConsejeros);
+
+            const botonesContainer = document.querySelector('.botones-consejeros');
+            if (botonesContainer) {
+                botonesContainer.remove();
+            }
+
+            const nuevosBotonesContainer = document.createElement('div');
+            nuevosBotonesContainer.classList.add('botones-consejeros');
+
+            listaConsejeros.forEach((consejero, index) => {
+                const contenedorConsejero = document.createElement('div');
+                contenedorConsejero.classList.add('consejero-item');
+
+                const boton = document.createElement('button');
+                boton.classList.add('btn', 'btn-info', 'consejero-visitado');
+                boton.textContent = consejero.nombre;
+
+                // Redirigir al perfil del consejero al hacer clic en el botón
+                boton.addEventListener('click', function() {
+                    window.location.href = `/consejero/${consejero.id}`;
+                });
+
+                const botonEliminar = document.createElement('button');
+                botonEliminar.classList.add('eliminar-consejero');
+                botonEliminar.textContent = 'X';
+
+                botonEliminar.addEventListener('click', function() {
+                    eliminarConsejero(index);
+                });
+
+                contenedorConsejero.appendChild(boton);
+                boton.appendChild(botonEliminar);
+                nuevosBotonesContainer.appendChild(contenedorConsejero);
+            });
+
+            sidebar.appendChild(nuevosBotonesContainer);
+        }
+    }
+
+    function eliminarConsejero(index) {
+        let consejerosVisitados = JSON.parse(localStorage.getItem('consejerosVisitados'));
+        consejerosVisitados.splice(index, 1);
+        localStorage.setItem('consejerosVisitados', JSON.stringify(consejerosVisitados));
+        actualizarSidebar();
+    }
+
+    const tiempoEspera = 60000;
+    let temporizador = setTimeout(guardarConsejero, tiempoEspera);
+
+    window.addEventListener('beforeunload', function() {
+        clearTimeout(temporizador);
+    });
+
+    actualizarSidebar();
+});
+</script>
+
+<script src="{% static 'js/funcion_temas.js' %}"></script>
+</html>

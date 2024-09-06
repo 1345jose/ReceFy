@@ -168,6 +168,7 @@ body.light-mode .search-icon:hover{
     cursor: pointer;
 }
 
+
 /* Estilos de las categorías */
 .category-link {
     color: #28a56b;
@@ -364,13 +365,16 @@ body.light-mode hr{
         overflow: hidden;
         border-radius: 10px; /* Esquinas redondeadas para el contenedor */
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para un efecto de elevación */
+        display: flex; /* Agregado para usar flexbox */
+        justify-content: center; /* Centra horizontalmente el contenido */
+        align-items: center; /* Centra verticalmente el contenido */
     }
+    
     .slider-track {
         display: flex;
         transition: transform 0.5s ease-in-out;
         will-change: transform; /* Mejora de rendimiento para animaciones */
     }
-
 
     #searchInput {
         margin-bottom: 10px;
@@ -378,20 +382,32 @@ body.light-mode hr{
 
     .recipe-card {
         flex-direction: column;
-        align-items: flex-start; /* Cambiar de center a flex-start para alinear a la izquierda */
+        align-items: center; /* Cambiado a center para centrar las tarjetas */
+        margin-left: -20px; /* Ajusta el margen izquierdo para mover las tarjetas a la izquierda */
     }
 
     .card {
-        margin: 15px 0 15px 0; /* Ajustar margen a solo arriba y abajo */
-        width: 100%; /* Establecer un ancho fijo en píxeles */
-        max-width: none; /* Eliminar el ancho máximo */
+        margin: 15px 2px; /* Reduce el margen entre tarjetas */
+        width: 150px; /* Establece un ancho fijo */
+        max-width: none; /* Elimina el ancho máximo */
         height: 370px; /* Altura fija */
-        padding-left: 0; /* Agregar padding izquierdo si es necesario */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadir sombra si lo deseas */
+        padding-left: 0; /* Sin padding izquierdo */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra opcional */
     }
 
     .slider-btn {
-        display: none;
+        display: block; /* Asegúrate de que las flechas sean visibles en pantallas pequeñas */
+        font-size: 2rem; /* Ajusta el tamaño de la fuente */
+        top: 40%; /* Ajusta la posición vertical de las flechas */
+        padding: 0 10px; /* Agrega algo de padding para evitar que queden pegadas a los bordes */
+    }
+
+    .slider-btn.left-btn {
+        left: -20px; /* Ajusta la posición de la flecha izquierda */
+    }
+
+    .slider-btn.right-btn {
+        right: -20px; /* Ajusta la posición de la flecha derecha */
     }
 }
 

@@ -1348,6 +1348,10 @@ def consejeros_disponibles(request):
 
     return render(request, 'consejeros/consejeros_disponibles.html', context)
 
+def apartado_consejeros_ver(request, consejero_id):
+    consejero = get_object_or_404(Consejero, id_consejero=consejero_id)
+    return render(request, 'consejeros/ver_consejeros.html', {'consejero': consejero})
+
 #endregion
 
 

@@ -1,149 +1,7 @@
 {% load static %}
 {% include 'inc/header.html' %}
 
-<style>
-    .botones {
-        text-align: center;
-    }
-
-    .botones .nav-pills .nav-link {
-        color: white;
-        background-color: transparent;
-        border-radius: 5px;
-        padding: 10px 20px;
-    }
-
-    .botones .nav-pills .nav-link.active {
-        background-color: #28a56b;
-        color: white;
-    }
-
-    body.light-mode .botones .nav-pills .nav-link {
-        color: black;
-    }
-
-    body.light-mode .botones .nav-pills .nav-link.active {
-        background-color: green;
-        color: white;
-    }
-
-    /* Estilo para las imágenes de las cards */
-    .recipe-card .card-img-top {
-        height: 200px;
-        object-fit: cover;
-    }
-
-    /* Estilo para el contenido de las cards */
-    .card-body {
-        text-align: center;
-        min-height: 150px !important;
-    }
-
-    .card-title {
-        margin: 10px 0;
-        font-size: 1.25rem;
-    }
-
-    .card-body span {
-        display: block;
-        margin: 5px 0;
-        font-size: 0.9rem;
-    }
-
-    /* Ocultar contenedores por defecto */
-    #consejeros-container,
-    #mensaje-bienvenida {
-        display: none;
-    }
-
-    /* Mostrar contenedores activos */
-    #pills-home-tab.active ~ #consejeros-container {
-        display: flex;
-    }
-
-    #pills-profile-tab.active ~ #mensaje-bienvenida {
-        display: block;
-    }
-
-    .slider-container {
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    .slider-track {
-        display: flex;
-    }
-
-    .slider-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        border: none;
-        color: white;
-        padding: 10px;
-        cursor: pointer;
-    }
-
-    .left-btn {
-        left: 0;
-    }
-
-    .right-btn {
-        right: 0;
-    }
-    .pagination {
-    margin: 20px auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.pagination a {
-    color: #28a56b;
-    background-color: transparent;
-    border: 2px solid #28a56b;
-    padding: 8px 16px;
-    margin: 5px; /* Espaciado uniforme entre los enlaces */
-    border-radius: 30px;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    font-size: 14px;
-    flex: 0 1 auto; /* Permite que el enlace se ajuste a su contenido */
-    min-width: 80px; /* Ancho mínimo para cada enlace de paginación */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadir sombra para un efecto elevado */
-}
-
-.pagination a:hover {
-    background-color: #28a56b;
-    color: #fff;
-}
-
-.pagination .current {
-    color: #fff;
-    background-color: #28a56b;
-    border: 2px solid #28a56b;
-    padding: 8px 16px;
-    margin: 5px; /* Espaciado uniforme */
-    border-radius: 30px;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el elemento actual */
-}
-
-@media (max-width: 992px) {
-    .pagination a {
-        font-size: 12px; /* Disminuir el tamaño de la fuente en pantallas más pequeñas */
-        padding: 6px 12px; /* Disminuir el padding */
-        margin: 4px; /* Espaciado reducido */
-    }
-
-    .pagination .current {
-        padding: 6px 12px; /* Disminuir el padding del elemento actual */
-    }
-}
-
-
-</style>
+<link rel="stylesheet" href="{% static 'Css/consejeros/consejeros_disponibles.css' %}">
 
 <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -177,14 +35,16 @@
             <div class="col-6 col-md-4 mb-4">
                 <div class="recipe-card">
                     <div class="card">
-                        <a href="#">
-                            {% if consejero.imagen and consejero.imagen.url %}
-                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                        <a href="{% url 'apartado_consejeros_ver' consejero.id_consejero %}">
+                            {% if consejero.usuario.imagen1 %}
+                            <img src="{{ consejero.usuario.imagen1.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                            {% elif consejero.usuario.imagen2 %}
+                                <img src="{{ consejero.usuario.imagen2.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
                             {% else %}
                                 <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
                             {% endif %}
                             <div class="card-body">
-                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
+                                <h2 class="card-title">{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}</h2>
                                 <span><i class="fas fa-user"></i>  {{ consejero.categoria }}</span>
                             </div>
                         </a>
@@ -237,15 +97,17 @@
                             {% for consejero in consejeros_nutricionistas %}
                                 <div class="recipe-card">
                                     <div class="card">
-                                        <a href="#">
-                                            {% if consejero.imagen and consejero.imagen.url %}
-                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                        <a href="{% url 'apartado_consejeros_ver' consejero.id_consejero %}">
+                                            {% if consejero.usuario.imagen1 %}
+                                            <img src="{{ consejero.usuario.imagen1.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% elif consejero.usuario.imagen2 %}
+                                                <img src="{{ consejero.usuario.imagen2.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% else %}
                                                 <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% endif %}
                                             <div class="card-body">
-                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
-                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                                <h2 class="card-title">{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.usuario.idioma }}</span>
                                             </div>
                                         </a>
                                     </div>
@@ -281,15 +143,17 @@
                             {% for consejero in consejeros_especialistas_en_reposteria %}
                                 <div class="recipe-card">
                                     <div class="card">
-                                        <a href="#">
-                                            {% if consejero.imagen and consejero.imagen.url %}
-                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                        <a href="{% url 'apartado_consejeros_ver' consejero.id_consejero %}">
+                                            {% if consejero.usuario.imagen1 %}
+                                            <img src="{{ consejero.usuario.imagen1.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% elif consejero.usuario.imagen2 %}
+                                                <img src="{{ consejero.usuario.imagen2.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% else %}
                                                 <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% endif %}
                                             <div class="card-body">
-                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
-                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                                <h2 class="card-title">{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.usuario.idioma }}</span>
                                             </div>
                                         </a>
                                     </div>
@@ -325,15 +189,17 @@
                             {% for consejero in consejeros_asesor_en_nutricion_deportiva %}
                                 <div class="recipe-card">
                                     <div class="card">
-                                        <a href="#">
-                                            {% if consejero.imagen and consejero.imagen.url %}
-                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                        <a href="{% url 'apartado_consejeros_ver' consejero.id_consejero %}">
+                                            {% if consejero.usuario.imagen1 %}
+                                            <img src="{{ consejero.usuario.imagen1.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% elif consejero.usuario.imagen2 %}
+                                                <img src="{{ consejero.usuario.imagen2.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% else %}
                                                 <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% endif %}
                                             <div class="card-body">
-                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
-                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                                <h2 class="card-title">{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.usuario.idioma }}</span>
                                             </div>
                                         </a>
                                     </div>
@@ -369,15 +235,17 @@
                             {% for consejero in consejeros_dietista %}
                                 <div class="recipe-card">
                                     <div class="card">
-                                        <a href="#">
-                                            {% if consejero.imagen and consejero.imagen.url %}
-                                                <img src="{{ consejero.imagen.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                        <a href="{% url 'apartado_consejeros_ver' consejero.id_consejero %}">
+                                            {% if consejero.usuario.imagen1 %}
+                                            <img src="{{ consejero.usuario.imagen1.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
+                                            {% elif consejero.usuario.imagen2 %}
+                                                <img src="{{ consejero.usuario.imagen2.url }}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% else %}
                                                 <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ consejero.nombre }}">
                                             {% endif %}
                                             <div class="card-body">
-                                                <h2 class="card-title">{{ consejero.nombre }} {{ consejero.apellido }}</h2>
-                                                <span><i class="fas fa-flag"></i> {{ consejero.idioma }}</span>
+                                                <h2 class="card-title">{{ consejero.usuario.first_name }} {{ consejero.usuario.last_name }}</h2>
+                                                <span><i class="fas fa-flag"></i> {{ consejero.usuario.idioma }}</span>
                                             </div>
                                         </a>
                                     </div>
