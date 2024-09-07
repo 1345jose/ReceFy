@@ -101,15 +101,7 @@ class PlanNutricional(models.Model):
 #region Consejeros
 class Consejero(models.Model):
     id_consejero = models.AutoField(primary_key=True)
-    imagen = models.ImageField(upload_to="consejeros/")
-    nombre = models.CharField(max_length=225)
-    apellido = models.CharField(max_length=225)
-    descripcion = models.CharField(max_length=255)
-    edad = models.IntegerField()
-    idioma = models.CharField(max_length=225)
-    fecha_nacimiento = models.DateField()
     titulacion = models.CharField(max_length=225)
-    pais = models.TextField()
     experiencia = models.CharField(max_length=225)
     descripcion = models.CharField(max_length=225)
     fecha_registro = models.DateTimeField(auto_now_add=True)
@@ -225,10 +217,11 @@ class Comentario(models.Model):
     contenido = models.CharField(max_length=1500)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     me_gusta = models.IntegerField(default=0)  
-    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE, null=True, blank=True)
+    dieta = models.ForeignKey(Dieta, on_delete=models.CASCADE, related_name='comentarios', null=True, blank=True)  # Agregar related_name
 
     class Meta:
         db_table = "tbl_comentarios"
+
 
 #endregion
 

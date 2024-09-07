@@ -1,8 +1,6 @@
-/* Importación de fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Estilos generales */
 body {
     margin: auto;
     font-family: 'Urbanist', sans-serif;
@@ -17,20 +15,20 @@ h3 {
 }
 
 body.light-mode {
-    background-color: #eae4e4; /* Color de fondo claro */
-    color: #222; /* Color de texto claro */
+    background-color: #eae4e4; 
+    color: #222; 
 }
 
 .iconos_sol_luna {
-    font-size: 20px; /* Tamaño del icono */
-    color: #ffffff; /* Color blanco por defecto (para tema oscuro) */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
+    font-size: 20px; 
+    color: #ffffff; 
+    cursor: pointer;
     margin-left: 88%;
     margin-top: 10px;
 }
 
 body.light-mode .iconos_sol_luna {
-    color: #000000; /* Color negro en modo claro */
+    color: #000000; 
 }
 
 .logo {
@@ -45,10 +43,10 @@ body.light-mode .iconos_sol_luna {
 }
 
 .pagina {
-    position: absolute; /* Posiciona .pagina de forma absoluta */
-    left: 50%; /* Mueve horizontalmente el centro del elemento */
-    transform: translateX(-50%); /* Ajusta el desplazamiento para centrar */
-    text-align: center; /* Asegura que el texto esté centrado */
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); 
+    text-align: center; 
 }
 
 .pagina h2 {
@@ -101,11 +99,11 @@ body.light-mode .iconos_sol_luna {
 body.light-mode .pagina h2,
 body.light-mode .logo h1,
 body.light-mode .slogan h1 {
-    color: green; /* Color negro para h2 y h1 en modo claro */
+    color: rgb(16, 104, 70); 
 }
 
 body.light-mode .logo i {
-    color: green; /* Color verde para iconos en modo claro */
+    color: #28a57b; 
 }
 
 .titulos_comidas {
@@ -116,7 +114,6 @@ body.light-mode .titulos_comidas{
     color: #000000bf;
 }
 
-/* Estilos para el buscador */
 .search-container {
     display: flex;
     align-items: center;
@@ -126,41 +123,40 @@ body.light-mode .titulos_comidas{
 
 #searchInput {
     width: 100%;
-    padding: 10px 40px 10px 40px; /* Ajusta el padding a la izquierda para dar espacio al icono */
+    padding: 10px 40px 10px 40px; 
     border: 2px solid #28a56b;
-    border-radius: 25px; /* Borde más redondeado */
+    border-radius: 25px; 
     font-size: 16px;
-    background-color: white; /* Fondo blanco */
-    color: #333; /* Color del texto oscuro para contraste */
-    transition: border-color 0.3s, background-color 0.3s; /* Transiciones suaves */
+    background-color: white; 
+    color: #333; 
+    transition: border-color 0.3s, background-color 0.3s; 
 }
 
 #searchInput:focus {
-    border-color: #28a56b; /* Color del borde al enfocar */
+    border-color: #28a56b; 
     outline: none;
-    background-color: #f0f0f0; /* Fondo más claro al enfocar */
+    background-color: #f0f0f0; 
 }
 
-/* Estilo del icono de búsqueda */
 .search-icon {
     position: absolute;
     top: 12px;
-    right: 15px; /* Ajusta la posición a la izquierda */
+    right: 15px; 
     color: #28a56b;
     font-size: 20px;
-    transition: color 0.3s; /* Transición suave */
+    transition: color 0.3s; 
 }
 
 .search-icon:hover {
-    color: #fff; /* Cambia a blanco al pasar el mouse */
+    color: #fff; 
 }
 
 body.light-mode #searchInput {
-    border: 2px solid green;
+    border: 2px solid #125838;
 }
 
 body.light-mode .search-icon{
-    color: green;
+    color: #125838;
 }
 
 body.light-mode .search-icon:hover{
@@ -169,7 +165,6 @@ body.light-mode .search-icon:hover{
 }
 
 
-/* Estilos de las categorías */
 .category-link {
     color: #28a56b;
     text-decoration: none;
@@ -186,11 +181,11 @@ body.light-mode .search-icon:hover{
 }
 
 body.light-mode .category-link{
-    color: green;
+    color: #125838;
 }
 
 body.light-mode .category-link:hover{
-    border-color: green;
+    border-color:  #125838;
     color: #000000c1;
     text-decoration: none;
 }
@@ -200,7 +195,7 @@ body.light-mode .category-link:hover{
 }
 
 .category-container {
-    position: relative; /* Asegura que los botones de flechas se posicionen dentro de este contenedor */
+    position: relative; 
 }
 
 .slider-wrapper {
@@ -255,19 +250,19 @@ body.light-mode .category-link:hover{
 }
 
 body.light-mode .slider-btn{
-    color: green;
+    color:  #125838;
 }
 
 .slider-btn.left-btn {
-    left: -100px; /* Ajusta según tu diseño */
+    left: -100px; 
 }
 
 .slider-btn.right-btn {
-    right: -100px; /* Ajusta según tu diseño */
+    right: -100px; 
 }
 
 .slider-btn:hover {
-    color: rgba(255, 255, 255, 0.7); /* Cambia ligeramente el color al pasar el ratón */
+    color: rgba(255, 255, 255, 0.7); 
 }
 
 .slider-btn i {
@@ -275,16 +270,13 @@ body.light-mode .slider-btn{
 }
 
 .slider-btn:hover i {
-    transform: scale(1.2); /* Ajusta la escala según el tamaño que desees */
+    transform: scale(1.2); 
 }
 
-
-
-/* Estilos de las tarjetas de recetas */
 .recipe-card {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en múltiples líneas */
+    flex-wrap: wrap; 
 }
 
 .card {
@@ -292,10 +284,10 @@ body.light-mode .slider-btn{
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.3s;
-    margin: 10px; /* Espacio entre las tarjetas */
-    width: 90%; /* Ajustar el ancho de las tarjetas */
-    max-width: 400px; /* Ancho máximo para las tarjetas */
-    height: 300px; /* Altura fija para las tarjetas */
+    margin: 10px; 
+    width: 90%; 
+    max-width: 400px; 
+    height: 300px; 
 }
 
 .card:hover {
@@ -309,14 +301,14 @@ body.light-mode .card{
 
 .card-img-top {
     width: 100%;
-    height: 150px; /* Altura fija para las imágenes */
-    object-fit: cover; /* Mantiene la proporción de la imagen */
+    height: 150px;
+    object-fit: cover; 
 }
 
 .card-body {
     padding: 15px;
     text-align: center;
-    height: calc(300px - 150px); /* Ajusta la altura del cuerpo de la tarjeta */
+    height: calc(300px - 150px); 
 }
 
 
@@ -328,10 +320,10 @@ body.light-mode .card{
 }
 
 body.light-mode .card-title {
-    color: green;
+    color: #125838;
 }
 
-/* Estilos de los iconos dentro de la tarjeta */
+
 .card-body span {
     display: inline-block;
     margin: 5px 0;
@@ -342,38 +334,35 @@ body.light-mode .card-body span {
     color: #000000c1;
 }
 
-/* Estilos de los mensajes cuando no hay recetas */
 h3 {
     color: wheat;
     text-align: center;
 }
 
-/* Estilos de separación */
 hr {
     border-top: 1px solid #28a56b;
     margin: 20px 0;
 }
 
 body.light-mode hr{
-    color: green;
+    color: #125838;
 }
 
-/* Estilos responsivos */
 @media (max-width: 768px) {
     .slider-container {
         position: relative;
         overflow: hidden;
-        border-radius: 10px; /* Esquinas redondeadas para el contenedor */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para un efecto de elevación */
-        display: flex; /* Agregado para usar flexbox */
-        justify-content: center; /* Centra horizontalmente el contenido */
-        align-items: center; /* Centra verticalmente el contenido */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
     }
     
     .slider-track {
         display: flex;
         transition: transform 0.5s ease-in-out;
-        will-change: transform; /* Mejora de rendimiento para animaciones */
+        will-change: transform; 
     }
 
     #searchInput {
@@ -382,32 +371,32 @@ body.light-mode hr{
 
     .recipe-card {
         flex-direction: column;
-        align-items: center; /* Cambiado a center para centrar las tarjetas */
-        margin-left: -20px; /* Ajusta el margen izquierdo para mover las tarjetas a la izquierda */
+        align-items: center; 
+        margin-left: -20px;  
     }
 
     .card {
-        margin: 15px 2px; /* Reduce el margen entre tarjetas */
-        width: 150px; /* Establece un ancho fijo */
-        max-width: none; /* Elimina el ancho máximo */
-        height: 370px; /* Altura fija */
-        padding-left: 0; /* Sin padding izquierdo */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra opcional */
+        margin: 15px 2px; 
+        width: 150px; 
+        max-width: none; 
+        height: 370px; 
+        padding-left: 0; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .slider-btn {
-        display: block; /* Asegúrate de que las flechas sean visibles en pantallas pequeñas */
-        font-size: 2rem; /* Ajusta el tamaño de la fuente */
-        top: 40%; /* Ajusta la posición vertical de las flechas */
-        padding: 0 10px; /* Agrega algo de padding para evitar que queden pegadas a los bordes */
+        display: block; 
+        font-size: 2rem; 
+        top: 40%; 
+        padding: 0 10px; 
     }
 
     .slider-btn.left-btn {
-        left: -20px; /* Ajusta la posición de la flecha izquierda */
+        left: -20px; 
     }
 
     .slider-btn.right-btn {
-        right: -20px; /* Ajusta la posición de la flecha derecha */
+        right: -20px; 
     }
 }
 

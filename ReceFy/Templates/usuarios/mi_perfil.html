@@ -16,32 +16,47 @@
         Seguridad  
         <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
     </a>
-        
+    
     <div id="security-options" class="hidden">
         <hr class="seguridad">
-        <a href="/configuracion/updateUser/{{ user.id }}"><i class="bi bi-shield-fill-exclamation"></i> Contraseña</a>
-        <a href="#"><i class="fa-solid fa-lock"></i> Privacidad</a>
+        <a href="/configuracion/updateUser/{{ user.id }}">
+            <i class="bi bi-shield-fill-exclamation"></i> Contraseña
+        </a>
         <hr class="seguridad">
     </div>
-
-    <a href="#"><i class="fa-solid fa-link"></i>Enlaces</a>
-    <a href="#"><i class="fa-solid fa-timeline"></i> Vincular</a>
     
-    <br><br><br>
+    <a href="#" id="config-link">
+        <i class="bi bi-gear-fill"></i>
+        Configuración 
+        <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
+    </a>
+    
+    <div id="config-options" class="hidden">
+        <hr class="seguridad">
+        {% if not usuario.first_name %}
+            <a href="{% url 'completar_info' %}">Completa Tu informacion</a>
+            <hr class="seguridad">
+        {% else %}
+            <a href="{% url 'actualizar_perfil' usuario.id %}">
+                <i class="bi bi-person-fill-gear"></i> Mi Información
+            </a>
+            <hr class="seguridad">
+        {% endif %}
+
+    </div>
+
+    
+    <a href="#"><i class="bi bi-bell-fill"></i>Notificaciones</a>
+    <a href="{% url 'usuariosLikes' usuario.id %}"><i class="bi bi-heart-fill"></i>Me Gustas</a>
+    <a href=""><i class="bi bi-chat-left-text-fill"></i>Mis Comentarios</a>
+
+    
+
     <hr class="other">
     <a href="/" class=""><i class="fa-solid fa-house-user"></i>Inicio</a>
     <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
     <h1><a href="{% url 'index' %}">RC</a></h1>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Configuracion
-        </button>
-        <div class="dropdown-menu">
-            <h6 class="dropdown-header">Dropdown header</h6>
-            <a class="dropdown-item" href="/actualizar_perfil/{{ user.id }}">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-          </div>
-    </div>
+   
 </aside>
 
 
@@ -121,25 +136,35 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
-        }
+    var sidebar = document.querySelector('.sidebar');
+    sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+}
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const securityLink = document.getElementById('security-link');
-            const securityOptions = document.getElementById('security-options');
-        
-            securityLink.addEventListener('click', function (event) {
-                event.preventDefault(); // Evita la acción por defecto del enlace
-                
-                // Alterna entre expandir o colapsar
-                if (securityOptions.style.height === '0px' || securityOptions.style.height === '') {
-                    securityOptions.style.height = securityOptions.scrollHeight + 'px';
-                } else {
-                    securityOptions.style.height = '0px';
-                }
-            });
-        });
+document.addEventListener('DOMContentLoaded', function () {
+    const securityLink = document.getElementById('security-link');
+    const securityOptions = document.getElementById('security-options');
+    const configLink = document.getElementById('config-link');
+    const configOptions = document.getElementById('config-options');
+
+    function toggleSection(section, options) {
+        if (options.style.height === '0px' || options.style.height === '') {
+            options.style.height = options.scrollHeight + 'px';
+        } else {
+            options.style.height = '0px';
+        }
+    }
+
+    securityLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Evita la acción por defecto del enlace
+        toggleSection(securityLink, securityOptions);
+    });
+
+    configLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Evita la acción por defecto del enlace
+        toggleSection(configLink, configOptions);
+    });
+});
+
         
         
         

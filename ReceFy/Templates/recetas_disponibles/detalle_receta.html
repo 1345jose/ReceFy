@@ -36,7 +36,7 @@
                             {% if receta.usuario %}
                                 <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ receta.usuario.first_name }} {{ receta.usuario.last_name }}</p>
                             {% else %}
-                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema Recetarium</p>
+                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema ReceFy</p>
                             {% endif %}
 
                             <div class="me-gusta-section mt-4">
@@ -84,8 +84,7 @@
 
         {% for comentario in comentarios %}
     <div class="comentario">
-        <div class="row">
-            <div class="col">
+       
                 <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
                 <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
                 {% if user.is_authenticated %}
@@ -97,9 +96,6 @@
                     </button>
                 </form>
                 {% else %}
-            </div>
-             
-        </div>
         <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
         {% endif %}
     </div>

@@ -10,34 +10,50 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- Ajuste para que la tarjeta sea más ancha -->
         <div class="col-lg-10 mx-auto">
             <div class="card border-0 shadow-lg rounded-4" style="max-width: 900px; margin: auto; display: flex;">
-                <!-- Imagen a la izquierda -->
-                <img src="{{ dieta.imagen.url }}" class="card-img-left" alt="{{ dieta.nombre }}">
+                <img src="{{ dietas.imagen.url }}" class="card-img-left" alt="{{ dieta.nombre }}">
                 <div class="card-body d-flex flex-column">
                     <h1 class="display-3 mb-4">{{ dieta.nombre }}</h1>
                     <hr>
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <p><i class="fas fa-tag"></i> <strong>Categoría:</strong> {{ dietas.categoria }}</p>
-                            <p><i class="fas fa-info-circle"></i> <strong>Descripción:</strong> {{ dietas.descripcion }}</p>
-                            <p><i class="fas fa-bullseye"></i> <strong>Objetivo:</strong> {{ dietas.objetivo }}</p>
-                            <p><i class="fas fa-fire-alt"></i> <strong>Calorías:</strong> {{ dietas.calorias }}</p>
-                            <p><i class="fas fa-heartbeat"></i> <strong>Condición Médica:</strong> {{ dietas.condicion_medica }}</p>
-                            <p><i class="fas fa-apple-alt"></i> <strong>Valor Nutricional:</strong> {{ dietas.valor_nutricional }}</p>
-                            <p><i class="fas fa-dumbbell"></i> <strong>Actividad Física:</strong> {{ dietas.actividad_fisica }}</p>
-                            <p><i class="fas fa-lightbulb"></i> <strong>Consejos:</strong> {{ dietas.consejos }}</p>
-                            <p><i class="fas fa-mobile-alt"></i> <strong>Dispositivos:</strong> {{ dietas.dispositivos }}</p>
-                            <p><i class="fas fa-book"></i> <strong>Bibliografía:</strong> {{ dietas.bibliografia }}</p>
-                            <p><i class="fas fa-calendar-alt"></i> <strong>Fecha de publicación:</strong> {{ dietas.fecha_registro_dieta }}</p>                            
+                            <p><i class="fas fa-tag"></i> <strong>Categoría:</strong> {{ dieta.categoria }}</p>
+                            <p><i class="fas fa-info-circle"></i> <strong>Descripción:</strong> {{ dieta.descripcion }}</p>
+                            <p><i class="fas fa-bullseye"></i> <strong>Objetivo:</strong> {{ dieta.objetivo }}</p>
+                            <p><i class="fas fa-fire-alt"></i> <strong>Calorías:</strong> {{ dieta.calorias }}</p>
+                            <p><i class="fas fa-heartbeat"></i> <strong>Condición Médica:</strong> {{ dieta.condicion_medica }}</p>
+                            <p><i class="fas fa-apple-alt"></i> <strong>Valor Nutricional:</strong> {{ dieta.valor_nutricional }}</p>
+                            <p><i class="fas fa-dumbbell"></i> <strong>Actividad Física:</strong> {{ dieta.actividad_fisica }}</p>
+                            <p><i class="fas fa-lightbulb"></i> <strong>Consejos:</strong> {{ dieta.consejos }}</p>
+                            <p><i class="fas fa-mobile-alt"></i> <strong>Dispositivos:</strong> {{ dieta.dispositivos }}</p>
+                            <p><i class="fas fa-book"></i> <strong>Bibliografía:</strong> {{ dieta.bibliografia }}</p>
+                            <p><i class="fas fa-calendar-alt"></i> <strong>Fecha de publicación:</strong> {{ dieta.fecha_registro_dieta }}</p>     
+                            <small>ReceFy.com</small>                       
                         </div>
                         <div class="col-md-6">
                             {% if receta.usuario %}
                                 <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ receta.usuario.first_name }} {{ receta.usuario.last_name }}</p>
                             {% else %}
-                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema Recetarium</p>
+                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema ReceFy</p>
                             {% endif %}
+
+                            <div class="me-gusta-section mt-4">
+                                {% if user.is_authenticated %}
+                                    <form action="" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="dieta_id" value="{{ dieta.id }}">
+                                        <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
+                                            <i class="bi bi-heart-fill"></i> <span>{{ dieta_me_gusta_count }}</span>
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <i class="bi bi-heart-fill"></i> {{ dieta_me_gusta_count }}
+                                    <p><a href="{% url 'login' %}">Inicia sesión</a> para añadir a "me gusta".</p>
+                                {% endif %}
+                            </div>
+                            
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -47,26 +63,23 @@
 </div>
 
 <br><br>
-
 {% if user.is_authenticated %}
 <div class="sec-comentarios mt-4">
     <h2 class="mb-4">Comentarios</h2>
 
     <form action="" method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        <textarea class="form-control mb-3" id="contenido" name="contenido" placeholder="Escribe tu comentario" required></textarea>
-        <button class="btn btn-primary w-100" type="submit">Comentar</button>
-    </div>
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control mb-3" id="contenido" name="contenido" placeholder="Escribe tu comentario" required></textarea>
+            <button class="btn btn-primary w-100" type="submit">Comentar</button>
+        </div>
     </form>
+{% else %}
+    <p>Inicia sesión para comentar.</p>
+{% endif %}
 
-        {% else %}
-            <p>.</p>
-        {% endif %}
-
-    <div class="comentarios mt-3">
-
-        {% for comentario in comentarios %}
+<div class="comentarios mt-3">
+    {% for comentario in comentarios %}
     <div class="comentario">
         <p><strong>{{ comentario.usuario.username }}:</strong> {{ comentario.contenido }}</p>
         <p class="fecha">Publicado el: {{ comentario.fecha_creacion|date:"Y-m-d" }}</p>
@@ -74,7 +87,7 @@
         <form method="post" style="display:inline;">
             {% csrf_token %}
             <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
-            <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
+            <button type="submit" name="me_gusta_comentario" style="background:none; border:none; cursor:pointer;">
                 <i class="fas fa-thumbs-up"></i> {{ comentario.me_gusta_count }}
             </button>
         </form>
@@ -82,9 +95,10 @@
         <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
         {% endif %}
     </div>
-{% empty %}
-    <li>No hay comentarios aún. Sé el primero en comentar.</li>
-{% endfor %}
+    {% empty %}
+    <p>No hay comentarios aún. Sé el primero en comentar.</p>
+    {% endfor %}
+</div>
 
     
     </div>
