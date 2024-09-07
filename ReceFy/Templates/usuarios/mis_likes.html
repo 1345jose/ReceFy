@@ -1,0 +1,191 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<style>
+    body{
+        background-color: #222;
+        color: white;
+        font-family: "Urbanist", sans-serif;
+        overflow-x: hidden;  
+        overflow-y: auto; 
+
+    }
+    main{
+        margin: auto;
+    }
+    .container{
+        margin-top: 40px;
+        padding: 20px;
+    }
+
+    .container2 h3{
+        font-size: 35px;
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+    }
+    .textos{
+        text-align: center;
+    }
+
+    .textos h1{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+    }
+
+    .textos h2{
+        display: none;
+    }
+
+    hr{
+        background-color: #236b49;
+        height: 3px;
+    }
+
+    .card{
+        background-color: #333;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+        height: 60vh;
+        max-height: 400px; 
+        min-height: 400px;
+
+    }
+
+    .card:hover{
+        transform: scale(1.02);
+    }
+
+    .card img{
+        border-radius: 15px;
+        width: 100%;
+        height: 200px;
+    }
+
+    .card-body h3{
+        font-size: 30px;
+    }
+
+    .col-md-4 a{
+        text-decoration: none;
+        color: white;
+    }
+    
+@media (max-width: 381px) {
+    
+    
+    .textos h1{
+        display: none;
+    }
+
+    .textos h2{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+        display: block;
+    }
+
+    main {
+        width: 95%;
+    }
+
+    .container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        transition: none;
+   }
+
+   .container2 h3{
+        font-family: 'Courgette', cursive;
+        font-family: 'Lobster', sans-serif;
+   }
+
+   .container:hover{
+        border: none;
+        transform: none;
+   }
+    
+}
+
+    
+</style>
+
+<main>
+
+    <div class="container">
+        <div class="textos">
+            <h1>ReceFy</h1>
+            <h2>Mis <i class="bi bi-heart-fill"></i></h2>
+            <h3>¡ Encuentra tu actividad guardad aqui !</h3>
+        </div>
+
+        <hr>
+
+                {% if likes_recetas %}
+        <div class="container2">
+                    <h3>Likes en Recetas</h3>
+
+                    <div class="row">
+                        {% for like in likes_recetas %}
+                            
+                            <div class="col-md-4 mb-4"> 
+                                <a href="{% url 'detalle_receta' like.receta_id %}">
+                                <div class="card" style="width: 100%;">
+                                    <img src="{{ like.receta.imagen.url }}" alt="{{ like.receta.nombre_plato }}" class="card-img-top">
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{ like.receta.nombre_plato }}</h3>
+                                        {% if not like.receta.usuario %}
+                                            <p class="card-text"><i class="bi bi-person-fill"></i> Sistema ReceFy</p>
+                                            <h5><i class="bi bi-bookmark-star-fill"></i> {{ like.receta.categoria }}</h5>
+                                        {% else %}
+                                            <p class="card-text"><i class="bi bi-person-fill"></i> {{ like.receta.usuario }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                             </a> 
+                            </div>
+                        {% endfor %}
+                    </div>
+                
+            {% else %}
+                <p>No has dado likes en recetas.</p>
+            {% endif %}
+
+
+            <hr>
+
+            <h3>Likes en Dietas</h3>
+            {% if likes_dietas %}
+            <div class="row">
+                {% for like in likes_dietas %}
+                    
+                    <div class="col-md-4 mb-4"> 
+                        <a href="{% url 'detalle_dietas' like.dieta_id %}">
+                        <div class="card" style="width: 100%;">
+                            <img src="{{ like.dieta.imagen.url }}" alt="{{ like.dieta.nombre_plato }}" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ like.dieta.nombre_plato }}</h3>
+                                {% if not like.receta.usuario %}
+                                    <p class="card-text"><i class="bi bi-person-fill"></i> Sistema ReceFy</p>
+                                    <h5><i class="bi bi-bookmark-star-fill"></i> {{ like.dieta.categoria }}</h5>
+                                {% else %}
+                                    <p class="card-text"><i class="bi bi-person-fill"></i> {{ like.dieta.usuario }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                     </a> 
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <p>No has dado likes en dietas.</p>
+            {% endif %}
+             
+            <hr>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% include 'inc/footer.html'  %}

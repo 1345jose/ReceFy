@@ -1,0 +1,30 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<main>
+    
+    <div class="container">
+        <div class="textos">
+            <h1></h1>
+            <h2></h2>
+            <h3></h3>
+        </div>
+
+        <hr>
+
+        <h3>Mis comentarios</h3>
+        {% if likes_comentarios %}
+            <ul>
+            {% for like in likes_comentarios %}
+                <li>Like en el comentario: {{ like.comentario.contenido }} </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No has dado likes en comentarios.</p>
+        {% endif %}
+    
+    </div>
+
+</main>
+
+{% include 'inc/footer.html' %}

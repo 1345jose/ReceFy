@@ -199,6 +199,27 @@ def imagen2(request):
         usuario.save()
     return render(request, 'configuracion/imagenes_usuario.html')
 
+
+#mis megustas
+def usuariosLikes(request, usuario_id):
+    pagina_actual = "megustas"
+    usuario = request.user 
+    likes_comentarios = MeGusta.objects.filter(usuario=usuario, comentario__isnull=False)
+    likes_recetas = MeGusta.objects.filter(usuario=usuario, receta__isnull=False)
+    likes_dietas = MeGusta.objects.filter(usuario=usuario, dieta__isnull=False)
+
+    context = {
+        'likes_comentarios': likes_comentarios,
+        'likes_recetas': likes_recetas,
+        'likes_dietas': likes_dietas,
+        'pagina': pagina_actual, 
+
+    }
+    
+    return render(request, 'usuarios/mis_likes.html', context)
+#endmegustas
+
+
 #endregion
 
 #region Configuraciones
@@ -731,10 +752,69 @@ def lista_dietas(request):
     return render(request, 'salud_nutricion/dietas_disponibles/lista_dietas.html', context)
 
 
-def detalle_dietas(request, id):
+def detalle_dietas(request, id_dietas):
     pagina_actual = "detalle_dietas"
-    dietas = Dieta.objects.get(pk=id)
-    return render(request, "salud_nutricion/dietas_disponibles/detalle_dietas.html", {"dietas": dietas, "pagina": pagina_actual})
+    dieta = get_object_or_404(Dieta, pk=id_dietas)
+    comentarios = dieta.comentarios.all()
+
+    if request.method == 'POST':
+       
+        if 'contenido' in request.POST:
+            contenido = request.POST.get('contenido')
+            if contenido.strip() and request.user.is_authenticated: 
+                Comentario.objects.create(
+                    dieta=dieta,
+                    usuario=request.user,
+                    contenido=contenido
+                )
+            return redirect('detalle_dietas', id_dietas=id_dietas)
+
+        if 'me_gusta' in request.POST:
+            if request.user.is_authenticated:
+                dieta_id = request.POST.get('dieta_id')
+                if dieta_id:
+                    dieta = get_object_or_404(Dieta, pk=dieta_id)
+                    me_gusta, created = MeGusta.objects.get_or_create(
+                        dieta=dieta,
+                        usuario=request.user
+                    )
+                    if not created:
+                        me_gusta.delete()  
+                    dieta_me_gusta_count = MeGusta.objects.filter(dieta=dieta).count()
+                    dieta.me_gusta = dieta_me_gusta_count
+                    dieta.save()
+
+                    return redirect('detalle_dietas', id_dietas=id_dietas)
+
+        if 'me_gusta_comentario' in request.POST:
+            comentario_id = request.POST.get('comentario_id')
+            if comentario_id:
+                comentario = get_object_or_404(Comentario, pk=comentario_id)
+                me_gusta, created = MeGusta.objects.get_or_create(
+                    comentario=comentario,
+                    usuario=request.user
+                )
+                if not created:
+                    me_gusta.delete()
+
+                comentario.me_gusta = MeGusta.objects.filter(comentario=comentario).count()
+                comentario.save()
+
+                return redirect('detalle_dietas', id_dietas=id_dietas)
+
+    for comentario in comentarios:
+        comentario.me_gusta_count = MeGusta.objects.filter(comentario=comentario).count()
+
+    dieta_me_gusta_count = MeGusta.objects.filter(dieta=dieta).count()
+
+    return render(request, "salud_nutricion/dietas_disponibles/detalle_dietas.html", {
+        "dieta": dieta, 
+        "comentarios": comentarios,
+        "pagina": pagina_actual,
+        "dieta_me_gusta_count": dieta_me_gusta_count,
+    })
+
+
 #endregion
 
 #region Panel Administrativo

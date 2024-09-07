@@ -51,6 +51,7 @@ urlpatterns = [
     path('usuarios/completar', views.completar_info, name="completar_info"),
     path('configuracion/actualizar_info/<int:idusuario>', views.actualizar_info, name="actualizar_perfil"),
     path('usuario/mis-comentarios/', views.comentUser, name='mis_comentarios'),
+    path('usuarios/mis_likes/<int:usuario_id>', views.usuariosLikes, name="usuariosLikes"),
     
     #endregion
  
@@ -74,7 +75,7 @@ urlpatterns = [
 
     #region Dietas Disponibles
     path('dietas/', views.lista_dietas, name='lista_dietas'),
-    path('dietas/dieta=<int:id>/', views.detalle_dietas, name='detalle_dietas'),
+    path('dietas/dieta=<int:id_dietas>/', views.detalle_dietas, name='detalle_dietas'),
 
     #endregion
 
@@ -163,6 +164,10 @@ urlpatterns = [
     
     #region Licencias
     path('usuarios/licencias/', views.licencias_usuario, name="licencias_usuario"),
+    #endregion
+
+    #region Comentarios 
+    
     #endregion
 ]
 if settings.DEBUG:

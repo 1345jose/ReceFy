@@ -95,26 +95,24 @@ hr{
     border: 5px solid #28a56b;
     transition: border 0.3s ease , transform 0.5s ease; 
 }
+
 .foto img:hover{
     border: 4px solid white;
-    transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
+    transform: scale(1.05);
 
 }
 
-
-#security-options {
+#security-options, #config-options {
     height: 0;
     overflow: hidden;
     transition: height 0.3s ease-in-out;
 }
 
-/* Clase que se añade para desplegar las opciones */
-#security-options.show {
-    height: auto; /* Permite que el contenedor se expanda */
+#security-options.show, #config-options.show {
+    height: auto; 
 }
 
-
-#security-options a {
+#security-options a, #config-options a {
     display: block;
     padding: 5px 10px;
     color: #cbd5e0;
@@ -123,12 +121,11 @@ hr{
     text-decoration: none;
 }
 
-#security-options a:hover {
+#security-options a:hover, #config-options a:hover {
     background-color: rgba(255, 255, 255, 0.37);
 }
 
-/* Asegúrate de que este CSS esté incluido en tu archivo CSS o en un <style> en tu HTML */
-#security-link {
+#security-link, #config-link {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -140,11 +137,11 @@ hr{
     transition: color 0.2s ease;
 }
 
-.right-icon:hover{
+.right-icon:hover {
     color: #cbd5e0;
 }
 
-.hidden .seguridad{
+.seguridad {
     border-radius: 25px;
     background-color: rgba(255, 255, 255, 0.37);
 }
