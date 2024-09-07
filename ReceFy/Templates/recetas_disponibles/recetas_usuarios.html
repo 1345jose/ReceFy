@@ -1,25 +1,21 @@
 {% load static %}
 {% include 'inc/header.html' %}
-    <link rel="stylesheet" href="{% static 'Css/recetas_disponibles/lista_recetas.css' %}">
+    <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
     <style>
-        
-        .container h1{
-            color: white;
-            font-family: "Urbanist", sans-serif;
+        h1{
+            font-size: 30px;
+        }
 
+        @media (max-width: 768px) {
+        h1 {
+            font-size: 1.5rem;
         }
-        .container hr{
-            background-color: white;
-            border-radius: 25px;
-        }
-        .card-body h2{
-            font-family: 'Courgette', cursive;
-  
-            font-family: 'Lobster', sans-serif;
-        }
-      
+    }
     </style>
-
+    <div class="iconos_sol_luna">
+        <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+        <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+    </div>
     <br>
     <div class="container">
         <h1>¡Bienvenido <b class="titulo_nombre_usuario">{{ user.first_name }} {{ user.last_name }}</b>!</h1>
@@ -65,5 +61,6 @@
         {% endif %}
     </div>
     
+    <script src="{% static 'js/funcion_temas.js' %}"></script>
 </body>
 </html>

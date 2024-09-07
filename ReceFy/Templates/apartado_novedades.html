@@ -1,151 +1,193 @@
-    {% load static %}
-    {% include 'inc/header.html' %}
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <title>Glosario de Cocina</title>
-        <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/apartado_novedades.css' %}">
-    </head>
-    <body>
-        
-        <main>
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Aprende algo nuevo</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Novedades</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Glosario</a>
-                </li>
-            </ul>
+{% load static %}
+{% include 'inc/header.html' %}
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Glosario de Cocina</title>
+    <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/apartado_novedades.css' %}">
+</head>
+<body>
+    <main>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Aprende algo nuevo</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Novedades</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Glosario</a>
+            </li>
+        </ul>
 
-            <div class="tab-content" id="pills-tabContent">
-                <!-- Aprende algo nuevo -->
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="textos">
-                        <h4 class="info">Descubre Consejos y Trucos para Mejorar tus Habilidades Culinarias</h4>
-                    </div>
-                    <br>
-
-                    <div id="consejos-container" class="container"></div>
-
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+        <div class="tab-content" id="pills-tabContent">
+            <!-- Aprende algo nuevo -->
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="textos">
+                    <h4 class="info">Descubre Consejos y Trucos para Mejorar tus Habilidades Culinarias</h4>
                 </div>
+                <br>
+                <div id="consejos-container" class="container"></div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
-                <!-- Novedades -->
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="textos">
-                        <p style="font-size: 24px;">Aquí puedes encontrar las últimas novedades y noticias relacionadas con la cocina y la gastronomía.</p>
+            <!-- Novedades -->
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h4 class="info">Aquí puedes encontrar las novedades y noticias de la plataforma</h4>
+                <section class="glossary" id="novedadesContainer">
+                    <br><br>
+                    <h4>Recetas Más Populares</h4>
+                    <div class="row">
+                        {% for receta in recetas_mas_likes %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    {% if receta.imagen and receta.imagen.url %}
+                                    <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                    {% else %}
+                                        <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ receta.nombre_plato }}</h5>
+                                        <p class="card-text"><i class="fas fa-heart"></i> Likes: {{ receta.me_gusta_count }}</p>
+                                        <p class="card-text"><i class="fas fa-file-alt"></i>  {{ receta.descripcion }}</p>
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;"><i class="fas fa-plus-circle"></i> Ver Detalle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12">
+                                <div class="alert alert-warning" role="alert">
+                                    No hay recetas populares en este momento.
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                     
-                    <section class="glossary" id="novedadesContainer">
-                        <!-- Contenido de novedades -->
-                    </section>
-                
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!-- Glosario -->
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <h4>Consulta términos de cocina y gastronomía en nuestro glosario.</h4>
-                    <br>
-                    <div class="container-glosario">
+                    <h4>Recetas Más Comentadas</h4>
+                    <div class="row">
+                        {% for receta in recetas_mas_comentarios %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    {% if receta.imagen and receta.imagen.url %}
+                                    <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                    {% else %}
+                                        <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ receta.nombre_plato }}</h5>
+                                        <p class="card-text"><i class="fas fa-comments"></i> Comentarios: {{ receta.comentario_count }}</p>
+                                        <p class="card-text"><i class="fas fa-file-alt"></i>  {{ receta.descripcion }}</p>
+                                        <a href="{% url 'detalle_receta' receta.id_receta %}" class="btn btn-primary" style="background-color: #28a56b; border-color: #28a56b;"><i class="fas fa-plus-circle"></i> Ver Detalle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12">
+                                <div class="alert alert-warning" role="alert">
+                                    No hay recetas comentadas en este momento.
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                     
-                        <div id="glossary-container" class="container">
-                            <div class="titles-container">
-                                <h1 class="titulo-glosario-1">Glosario</h1>
-                                <h1 class="titulo-glosario-2">ReceFy</h1>
-                            </div>
-                            <div class="alphabet-list">
-                                <a href="#A">A</a>
-                                <a href="#B">B</a>
-                                <a href="#C">C</a>
-                                <a href="#D">D</a>
-                                <a href="#E">E</a>
-                                <a href="#F">F</a>
-                                <a href="#G">G</a>
-                                <a href="#H">H</a>
-                                <a href="#L">L</a>
-                                <a href="#M">M</a>
-                                <a href="#N">N</a>
-                                <a href="#P">P</a>
-                                <a href="#R">R</a>
-                                <a href="#S">S</a>
-                                <a href="#T">T</a>
-                                <a href="#V">V</a>
-                            </div>
-                            <div class="search-bar">
-                                <input type="text" id="searchInput" placeholder="Buscar...">
-                                <button type="button" onclick="buscarTerminos() ">Buscar</button>
-                            </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Glosario -->
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <h4>Consulta términos de cocina y gastronomía en nuestro glosario.</h4>
+                <br>
+                <div class="container-glosario">
+                    <div id="glossary-container" class="container">
+                        <div class="titles-container">
+                            <h1 class="titulo-glosario-1">Glosario</h1>
+                            <h1 class="titulo-glosario-2">ReceFy</h1>
+                        </div>
+                        <div class="alphabet-list">
+                            <a href="#A">A</a>
+                            <a href="#B">B</a>
+                            <a href="#C">C</a>
+                            <a href="#D">D</a>
+                            <a href="#E">E</a>
+                            <a href="#F">F</a>
+                            <a href="#G">G</a>
+                            <a href="#H">H</a>
+                            <a href="#L">L</a>
+                            <a href="#M">M</a>
+                            <a href="#N">N</a>
+                            <a href="#P">P</a>
+                            <a href="#R">R</a>
+                            <a href="#S">S</a>
+                            <a href="#T">T</a>
+                            <a href="#V">V</a>
+                        </div>
+                        <div class="search-bar">
+                            <input type="text" id="searchInput" placeholder="Buscar...">
+                            <button type="button" onclick="buscarTerminos()">Buscar</button>
                         </div>
                     </div>
-                
                 </div>
             </div>
-        </main>
-        <br><br><br>
+        </div>
+    </main>
+    <br><br><br>
 
-        <script>
-            function buscarTerminos() {
-                var input = document.getElementById("searchInput");
-                var filter = input.value.toUpperCase();
-        
-                var sections = document.getElementsByClassName("glossary-section");
-                var found = false; // Variable para verificar si se encontró al menos una coincidencia
-        
-                for (var i = 0; i < sections.length; i++) {
-                    var item = sections[i];
-                    var texto = item.textContent || item.innerText;
-                    
-                    if (texto.toUpperCase().indexOf(filter) > -1) {
-                        item.style.display = "";
-                        found = true; // Se encontró al menos una coincidencia
-                    } else {
-                        item.style.display = "none"; // Ocultar las secciones que no coinciden
-                    }
+    <script>
+        function buscarTerminos() {
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toUpperCase();
+            var sections = document.getElementsByClassName("glossary-section");
+            var found = false;
+
+            for (var i = 0; i < sections.length; i++) {
+                var item = sections[i];
+                var texto = item.textContent || item.innerText;
+
+                if (texto.toUpperCase().indexOf(filter) > -1) {
+                    item.style.display = "";
+                    found = true;
+                } else {
+                    item.style.display = "none";
                 }
-        
-                // Mostrar un mensaje si no se encontraron resultados
-                if (!found) {
-                    alert('No se encontraron resultados para la búsqueda.');
-                }   
             }
-        </script>
 
-        {% include 'inc/footer.html' %}
+            if (!found) {
+                alert('No se encontraron resultados para la búsqueda.');
+            }
+        }
+    </script>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="{% static 'js/apartado_novedades.js' %}"></script>
+    {% include 'inc/footer.html' %}
 
-
-    </body>
-    </html>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/apartado_novedades.js' %}"></script>
+</body>
+</html>

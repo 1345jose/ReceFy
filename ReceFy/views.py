@@ -19,6 +19,7 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.db.models import Q
 import re
+from django.db.models import Count
 
 #region Importaciones Sistema Generado de PDF
 from reportlab.lib import colors
@@ -40,10 +41,23 @@ def index(request):
 #region Novedades
     
 def apartado_novedades(request):
-    pagina_actual = "informacion" 
-    return render(request, "apartado_novedades.html", {"pagina": pagina_actual})
+    pagina_actual = "informacion"
 
-#endregion 
+    # Obtener las recetas que tienen al menos un "me gusta" y ordenarlas por cantidad de "me gusta"
+    recetas_mas_likes = Receta.objects.annotate(
+        me_gusta_count=Count('megusta')  # Asegúrate de que 'megusta' es el nombre correcto
+    ).filter(me_gusta_count__gt=0).order_by('-me_gusta_count')  # Filtrar recetas con más de 0 "me gusta"
+
+    # Obtener las recetas que tienen al menos un comentario y ordenarlas por cantidad de comentarios
+    recetas_mas_comentarios = Receta.objects.annotate(
+        comentario_count=Count('comentarios')  # Asegúrate de que 'comentarios' es el nombre correcto
+    ).filter(comentario_count__gt=0).order_by('-comentario_count')  # Filtrar recetas con más de 0 comentarios
+
+    return render(request, "apartado_novedades.html", {
+        "pagina": pagina_actual,
+        "recetas_mas_likes": recetas_mas_likes,
+        "recetas_mas_comentarios": recetas_mas_comentarios,  # Pasar las recetas con más comentarios al contexto
+    })
 
 #region Salud Nutricion
 
@@ -713,7 +727,7 @@ def generar_pdf(request, calendario_id):
 
 def lista_dietas(request):
     dietas = Dieta.objects.all()
-    dietas_subir_peso = Dieta.objects.filter(categoria='Dietas para subir de peso')
+    dietas_subir_peso = Dieta.objects.filter(categoria='Dieta para subir de peso')
     dietas_bajar_peso = Dieta.objects.filter(categoria='Dieta para bajar de peso')
     dietas_deshidratacion = Dieta.objects.filter(categoria='Deshidratacion')
     dietas_cardiovasculares = Dieta.objects.filter(categoria='Cardiovascular')
@@ -1295,16 +1309,16 @@ def calculadora_imc(request):
                     imc = peso / (estatura * estatura)
                     if imc < 18.5:
                         resultado = 'Bajo peso'
-                        dietas = Dieta.objects.filter(categoria='Dietas para subir de peso')
+                        dietas = Dieta.objects.filter(categoria='Dieta para subir de peso')
                     elif imc >= 18.5 and imc <= 24.9:
                         resultado = 'Normal'
-                        dietas = Dieta.objects.filter(categoria='Mantener peso')
+                        dietas = Dieta.objects.filter(categoria='Dieta Mantener peso')
                     elif imc >= 25 and imc <= 29.9:
                         resultado = 'Sobrepeso'
-                        dietas = Dieta.objects.filter(categoria='Bajar de peso')
+                        dietas = Dieta.objects.filter(categoria='Dieta para bajar de peso')
                     else:
                         resultado = 'Obesidad'
-                        dietas = Dieta.objects.filter(categoria='Bajar de peso')
+                        dietas = Dieta.objects.filter(categoria='Dieta para bajar de peso')
             except ValueError:
                 mensaje_error = 'Por favor, ingresa valores numéricos válidos.'
 

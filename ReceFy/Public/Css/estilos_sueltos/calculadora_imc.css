@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-
+/* Estilos generales */
 * {
     padding: 0;
     margin: 0;
@@ -8,13 +6,12 @@
 }
 
 body {
-    background: url('https://images.pexels.com/photos/943694/pexels-photo-943694.jpeg') no-repeat center center fixed; /* Mantener el fondo fijo */
+    background: url('https://images.pexels.com/photos/943694/pexels-photo-943694.jpeg') no-repeat center center fixed;
     background-size: cover;
     width: 100%;
     font-family: "Urbanist", sans-serif;
     overflow-x: hidden;  
-    overflow-y: auto; 
-
+    overflow-y: auto;
 }
 
 main {
@@ -26,12 +23,12 @@ main {
     background-color: rgba(255, 255, 255, 0.486);
     border: 2px solid #0d6efd;
     border-radius: 25px;
-    padding: 30px; /* Aumenta el padding para un mejor espaciado */
+    padding: 30px;
     text-align: center;
     margin-top: 40px;
     margin-bottom: 40px;
-    width: 80%; /* Reduce el ancho del contenedor */
-    max-width: 500px; /* Establece un ancho máximo */
+    width: 80%; 
+    max-width: 500px; 
     transition: border 0.3s ease, transform 0.3s ease;
 }
 
@@ -42,15 +39,10 @@ main {
 
 .titulos h1 {
     font-size: 37px;
-    font-family: 'Courgette', cursive;
-    font-family: 'Lobster', sans-serif;
+    font-family: 'Courgette', cursive, 'Lobster', sans-serif;
 }
 
-.titulos h2 {
-    display: none;
-}
-
-.titulos h3{
+.titulos h3 {
     font-size: 20px;
 }
 
@@ -80,8 +72,6 @@ hr {
     background-color: #114da7;
 }
 
- 
-
 #calcular {
     background-color: #28a56b;
     padding: 5px;
@@ -96,139 +86,134 @@ hr {
     background-color: #136d43;
 }
 
-/* Centrar las cards en el contenedor */
 #resultadoContainer {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
-    width: 100%;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
 }
 
 .card {
-    flex: 1 1 100%; /* Ocupa el 100% del ancho */
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
     margin: 10px;
-    border: 1px solid #49484869;
-    border-radius: 12px;
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    max-width: 100%; /* Asegura que la card no exceda el contenedor */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 90%;
+    max-width: 400px;
+    height: 300px;
 }
 
-.card a {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-img-top {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
 }
 
 .card-body {
     padding: 15px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    text-align: center;
+    height: calc(300px - 150px);
 }
 
-.card-body h2 {
+.card-title {
     font-size: 20px;
-    font-family: 'Lobster', sans-serif;
-    color: #333;
+    font-family: 'Courgette', cursive;
+    color: #28a56b;
 }
 
-.card-text {
-    font-size: 14px;
-    color: #666;
-    display: flex;
-    justify-content: space-between;
-}
-
-.card-text span {
-    display: flex;
-    align-items: center;
-}
-
-.card-text span i {
-    margin-right: 4px;
+.card-body span {
+    display: inline-block;
+    margin: 5px 0;
+    color: #fff;
 }
 
 .text-white {
     color: white;
 }
 
-/* Media Queries for Responsiveness */
+/* Media Queries */
+@media (max-width: 1200px) {
+    .card {
+        max-width: 350px;
+        margin: 15px auto; /* Centra las cards */
+    }
+}
+
+@media (max-width: 992px) {
+    .card {
+        max-width: 320px;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
-        width: 95%; 
+        width: 95%;
         margin-top: 5px;
     }
 
-    .container{
-        border: none;
-    }
-
-    .container:hover{
+    .container:hover {
         border: none;
         transform: none;
     }
 
-    .titulos h1{
+    .titulos h1 {
         display: none;
-        
     }
 
-    .container h2{
+    .container h2 {
         display: block;
-        font-family: 'Courgette', cursive;
-        font-family: 'Lobster', sans-serif;
+        font-family: 'Courgette', cursive, 'Lobster', sans-serif;
         font-size: 35px;
     }
 
-    .container h3{
-        font-size: 18px;
-        font-family: "Urbanist", sans-serif;
-
+    .card {
+        width: 100%;
+        max-width: 350px;
+        height: 200px;
+        margin: 10px auto; /* Centra las cards */
     }
 
-    .card {
-        flex: 1 1 100%; 
+    .card-body span {
+        display: inline-block;
+        margin: 5px 0;
+        color: #fff;
+        font-size: 15px;
     }
 }
 
 @media (max-width: 480px) {
     body {
-        background: url('https://images.pexels.com/photos/784632/pexels-photo-784632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed; 
-        background-size: cover; 
+        background: url('https://images.pexels.com/photos/784632/pexels-photo-784632.jpeg') no-repeat center center fixed;
+        background-size: cover;
         width: 100%;
-        overflow: auto; 
+        overflow: auto;
     }
 
     .container {
         width: 95%;
         padding: 10px;
         margin-top: 5px;
-    }   
+    }
 
-    
-    .card-img-top {
-        height: 150px;
+    .titulos h1 {
+        font-size: 32px;
+        color: black;
+    }
+
+    .titulos h2 {
+        color: black;
+        font-size: 19px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 300px;
+        margin: 5px auto;
     }
 
     .card-body h2 {
@@ -237,15 +222,5 @@ hr {
 
     .card-text {
         font-size: 12px;
-    }
-
-    .titulos h1 {
-        font-size: 32px;
-        color: black; /* Cambia a negro */
-    }
-
-    .titulos h2 {
-        color: black;
-        font-size: 19px;
     }
 }

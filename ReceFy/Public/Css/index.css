@@ -255,6 +255,45 @@ main .servicios{
     background: url('https://images.pexels.com/photos/6287554/pexels-photo-6287554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat center center/cover;
 }
 
+#recetas,
+#salud,
+#crear,
+#generador,
+#consejeros {
+    position: relative;
+}
+
+#recetas::before,
+#salud::before,
+#crear::before,
+#generador::before,
+#consejeros::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    border-radius: 10px;
+}
+
+#recetas h1,
+#salud h1,
+#crear h1,
+#generador h1,
+#consejeros h1,
+#recetas p,
+#salud p,
+#crear p,
+#generador p,
+#consejeros p {
+    position: relative;
+    z-index: 2;
+}
+
+
 .informacion{
     text-align: justify;
 }
