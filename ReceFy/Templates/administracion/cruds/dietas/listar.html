@@ -11,9 +11,9 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Objetivo</th>
                     <th scope="col">Calorías</th>
-                    <th scope="col">Actividad Física</th>
+                    <th scope="col">Actividad Físia</th>
                     <th scope="col">Consejero</th>
-                    <th scope="col">Usuario</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -30,7 +30,7 @@
                     <td>{{ dieta.calorias }}</td>
                     <td>{{ dieta.actividad_fisica }}</td>
                     <td>{{ dieta.consejero.nombre|default:"Sistema Recetarium" }} {{ dieta.consejero.apellido|default:"" }}</td>
-                    <td>{{ dieta.usuario.first_name|default:"Sistema Recetarium" }} {{ dieta.usuario.last_name|default:"" }}</td>
+                    <td>{{ dieta.categoria }}</td>
                     <td>
                         <div class="acciones">
                             <button class="btn btn-warning delete-btn" data-url="{% url 'borrar_dieta' dieta.pk %}" data-id="{{ dieta.pk }}">

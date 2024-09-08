@@ -1,0 +1,168 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/consejeros/crear_dieta_consejero.css' %}">
+
+<main>
+    <div class="container">
+        <form action="{% url 'crear_dieta_consejero' %}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="text">
+                <h2 class="rc">ReceFy</h2>
+                <h1 class="crear">Crear tu receta</h1>
+                <h3 class="dieta">¡Tus propias dietas!</h3>
+            </div>
+            <hr>
+
+            <div class="form-group">
+                <label for="imagen">Imagen</label>
+                <div id="drop-area" class="drop-area">
+                    <i class="bi bi-cloud-upload-fill"></i>
+                    <p>Arrastra y suelta fotos aquí<br>o haz clic para seleccionar fotos y subirlas</p>
+                    <input type="file" id="fileElem" name="imagen" class="file-input" accept="image/*"  onchange="previewImage(event)" required>
+                    <img id="preview" src="" alt="Previsualización de la imagen" style="display:none; width: 100%; max-width: 600px; margin: 0 auto; border-radius: 25px;">
+                    <div class="invalid-feedback">
+                        Por favor, selecciona una imagen.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="nombre">Ponle un Nombre a tu Dieta</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de Tu Dieta" required>
+                <div class="invalid-feedback">
+                    Por favor, completa este campo.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Describe tu Dieta</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Descripción de la dieta" required></textarea>
+                <div class="invalid-feedback">
+                    Por favor, completa este campo.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="calorias">Categoria</label>
+                    <select class="custom-select" id="calorias" name="categoria" required>
+                        <option selected disabled value="">Selecciona una categoría</option>
+                        <option value="Dieta para bajar de peso">Dieta Para Bajar De Peso</option>
+                        <option value="Dieta para subir de peso">Dieta para Subir de Peso</option>
+                        <option value="Deshidratacion">Dieta para el manejo de Deshidratación</option>
+                        <option value="Cardiovascular">Dieta Cardiovascular</option>
+                        <option value="Diabetes">Dieta para Diabetes</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Por favor, selecciona una categoría.
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="temporada">Objetivo</label>
+                    <input type="text" class="form-control" id="objetivo" name="objetivo" placeholder="Objetivo de la Dieta" required>
+                    <div class="invalid-feedback">
+                        Por favor, completa este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <label for="origen">Condicion Medica</label>
+                <input type="text" class="form-control" id="condicion_medica" name="condicion_medica" placeholder="Condición Medica (A Quíen va dirigida la dieta)" required>
+                <div class="invalid-feedback">
+                    Por favor, completa este campo.
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <label for="ingredientes">Actividad Fisica</label>
+                <input type="text" class="form-control" id="actividad_fisica" name="actividad_fisica" placeholder="Actividad fisica" required>
+                <div class="invalid-feedback">
+                    Por favor, completa este campo.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="instrucciones">Consejos</label>
+                <textarea class="form-control" id="consejos" name="consejos" rows="3" placeholder="Consejos" required></textarea>
+                <div class="invalid-feedback">
+                    Por favor, completa este campo.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="tiempo_preparacion">Valor nutricional</label>
+                    <input type="number" class="form-control" id="valor_nutricional" name="valor_nutricional" placeholder="Valor nutricional" required>
+                    <div class="invalid-feedback">
+                        Por favor, completa este campo con un valor numérico.
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="dificultad">Calorias</label>
+                    <input type="number" class="form-control" id="calorias" name="calorias" placeholder="Ingrese las  calorias" required>
+                    <div class="invalid-feedback">
+                        Por favor, completa este campo con un valor numérico.
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <label for="tiempo_preparacion">Dispositivos</label>
+                    <input type="text" class="form-control" id="dispositivos" name="dispositivos" placeholder="Ingrese los dispositivos" required>
+                    <div class="invalid-feedback">
+                        Por favor, completa este campo con un valor.
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="dificultad">Bibliografia</label>
+                    <input type="text" class="form-control" id="bibliografia" name="bibliografia" placeholder="Ingrese la bibliografia" required>
+                    <div class="invalid-feedback">
+                        Por favor, completa este campo con un valor.
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-3" type="submit">Guardar Dieta</button>
+        </form>
+    </div>
+</main>
+
+    
+
+    {% include 'inc/footer.html' %}
+
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileElem = document.getElementById('fileElem');
+    
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('dragover');
+        });
+    
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragover');
+        });
+    
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            if (files.length) {
+                fileElem.files = files;
+                previewImage({ target: { files: files } });
+            }
+        });
+    
+        dropArea.addEventListener('click', () => {
+            fileElem.click();
+        });
+    
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>

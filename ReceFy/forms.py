@@ -83,17 +83,32 @@ class RecetaForm(forms.ModelForm):
 #region Dietas
 
 class DietaForm(forms.ModelForm):
+    # Definir las opciones para el campo 'categoria'
+    CATEGORIAS_CHOICES = [
+        ('Dieta para bajar de peso', 'Dieta para bajar de peso'),
+        ('Dieta para subir de peso', 'Dieta para subir de peso'),
+        ('Deshidratacion', 'Dieta para deshidratacion'),
+        ('Cardiovasculares', 'Dieta Cardiovasculares'),
+        ('Diabetes', 'Dieta para Diabetes'),
+    ]
+    
+    categoria = forms.ChoiceField(
+        choices=CATEGORIAS_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Categoría"
+    )
+    
     usuario_id = forms.ModelChoiceField(
         queryset=MiUsuario.objects.all(),
         required=False,
-        empty_label='Sistema Recetarium',
+        empty_label='Sistema ReceFy',
         label="Usuario",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     consejero_id = forms.ModelChoiceField(
         queryset=Consejero.objects.all(),
         required=False,
-        empty_label='Sistema Recetarium',
+        empty_label='Sistema ReceFy',
         label="Consejero",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
@@ -102,30 +117,21 @@ class DietaForm(forms.ModelForm):
         model = Dieta
         fields = ['nombre', 'descripcion', 'objetivo', 'calorias', 'condicion_medica',
                   'valor_nutricional', 'actividad_fisica', 'consejos', 'dispositivos',
-                  'usuario_id', 'consejero_id', 'imagen']
+                  'usuario_id', 'consejero_id', 'imagen', 'categoria']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'descripcion': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
             'objetivo': forms.TextInput(attrs={'class': 'form-control'}),
             'calorias': forms.NumberInput(attrs={'class': 'form-control'}),
             'condicion_medica': forms.TextInput(attrs={'class': 'form-control'}),
             'valor_nutricional': forms.NumberInput(attrs={'class': 'form-control'}),
             'actividad_fisica': forms.TextInput(attrs={'class': 'form-control'}),
-            'consejos': forms.TextInput(attrs={'class': 'form-control'}),
+            'consejos': forms.Textarea(attrs={'class': 'form-control'}),
             'dispositivos': forms.TextInput(attrs={'class': 'form-control'}),
             'usuario_id': forms.Select(attrs={'class': 'form-control'}),
             'consejero_id': forms.Select(attrs={'class': 'form-control'}),
-            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control-file'})
+            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['usuario_id'].queryset = MiUsuario.objects.all()
-        self.fields['usuario_id'].label_from_instance = lambda obj: f'{obj.first_name} {obj.last_name}'
-        self.fields['usuario_id'].empty_label = 'Sistema Recetarium'
-        self.fields['consejero_id'].queryset = Consejero.objects.all()
-        self.fields['consejero_id'].label_from_instance = lambda obj: f'{obj.nombre} {obj.apellido}'
-        self.fields['consejero_id'].empty_label = 'Sistema Recetarium'
 
 
 #endregion

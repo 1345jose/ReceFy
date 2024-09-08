@@ -1,0 +1,36 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<link rel="stylesheet" href="{% static 'Css/usuarios/buzon_notificaciones.css' %}">
+
+<main class="container">
+    <h1>Hola, {{ usuario.username }}!</h1>
+    <h3>Estas son tus notificaciones:</h3>
+    <hr>
+
+    {% if notificaciones %}
+        <div class="notificaciones">
+            {% for notificacion in notificaciones %}
+                <div class="notificacion {% if notificacion.leida %}leida{% else %}no-leida{% endif %}">
+                    <p><strong>Fecha:</strong> {{ notificacion.fecha_creacion|date:"d M Y H:i" }}</p>
+                    <p>{{ notificacion.mensaje }}</p>
+                    {% if notificacion.leida %}
+                        <p class="estado">Estado: Leída</p>
+                    {% else %}
+                        <p class="estado">Estado: No leída</p>
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="notificacion_id" value="{{ notificacion.id }}">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+                        </form>
+                    {% endif %}
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No tienes notificaciones pendientes.</p>
+    {% endif %}
+    </main>
+
+{% include 'inc/footer.html' %}

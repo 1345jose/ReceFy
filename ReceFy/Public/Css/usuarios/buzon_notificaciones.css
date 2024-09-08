@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Fondo de la página */
+body {
+    background: url('https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center / cover;
+    margin: 0;
+    padding: 0;
+    font-family: 'Asap', sans-serif;
+}
+
+/* Estilos para el contenedor principal */
+.container {
+    background: rgba(255, 255, 255, 0.656);
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 1000px;
+    width: 90%;
+    margin: 50px auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto de hover en el contenedor */
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Títulos principales */
+.container h1 {
+    font-size: 2.1rem;
+    color: #343a40;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.container h3 {
+    font-size: 1.6rem;
+    color: #666;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Contenedor de las notificaciones */
+.notificaciones {
+    margin-top: 20px;
+}
+
+/* Estilos generales para cada notificación */
+.notificacion {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-left: 8px solid #007bff;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto hover para la notificación */
+.notificacion:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Notificación no leída */
+.no-leida {
+    background-color: rgba(252, 228, 236, 0.9);
+    border-left-color: #e91e63;
+}
+
+/* Notificación leída */
+.leida {
+    background-color: rgba(232, 245, 233, 0.9);
+    border-left-color: #28a745;
+}
+
+/* Textos en las notificaciones */
+.notificacion p {
+    color: #495057;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 10px 0;
+}
+
+/* Estilo del estado de la notificación */
+.estado {
+    font-weight: bold;
+    color: #495057;
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+/* Estilo del botón "Marcar como leída" */
+button {
+    background-color: #007bff;
+    border: none;
+    padding: 12px 25px;
+    color: white;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Estilo del botón de volver */
+#atras {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #6c757d;
+    padding: 12px 30px;
+    color: white;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+#atras:hover {
+    background-color: #343a40;
+    transform: scale(1.05);
+}
+
+/* Estilo para mensajes dentro del buzón */
+.mensaje {
+    color: #666;
+    font-size: 1rem;
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Estilo de transición suave para elementos */
+.transition {
+    transition: all 0.4s ease;
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    body {
+        background: url('https://images.pexels.com/photos/3338497/pexels-photo-3338497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center / cover;
+        margin: 0;
+        padding: 0;
+        font-family: 'Asap', sans-serif;
+    }
+
+    .container {
+        padding: 20px;
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .container h1 {
+        font-size: 1.8rem;
+    }
+
+    .container h3 {
+        font-size: 1.4rem;
+    }
+
+    .notificacion {
+        padding: 20px;
+    }
+
+    .notificacion p {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    #atras {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        background: url('https://images.pexels.com/photos/3338497/pexels-photo-3338497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center / cover;
+        margin: 0;
+        padding: 0;
+        font-family: 'Asap', sans-serif;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .container h1 {
+        font-size: 1.6rem;
+    }
+
+    .container h3 {
+        font-size: 1.2rem;
+    }
+
+    .notificacion {
+        padding: 15px;
+    }
+
+    .notificacion p {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+
+    #atras {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+    }
+}

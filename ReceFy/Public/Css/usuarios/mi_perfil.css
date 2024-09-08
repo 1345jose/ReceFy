@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-body{
-    background: url('https://images.pexels.com/photos/6077630/pexels-photo-6077630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat center center/cover;
+
+/* Fondo de la página */
+body {
+    background: url('https://images.pexels.com/photos/6077630/pexels-photo-6077630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center / cover;
 }
+
+/* Sidebar */
 .sidebar {
     width: 275px;
     background-color: #156a43;
@@ -21,58 +25,66 @@ body{
     text-decoration: none;
     margin-bottom: 10px;
     border-radius: 4px;
-    transition: color 0.5s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
+
 .sidebar a:hover {
     background-color: rgba(255, 255, 255, 0.37);
     color: #fff;
 }
-.sidebar h2{
+
+.sidebar h2 {
     color: #fff;
-    transition: transform 0.5s ease; /* Aplica la transición al cambio de color del borde */
-
+    transition: transform 0.5s ease;
 }
-.sidebar h2:hover{
-    transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
 
+.sidebar h2:hover {
+    transform: scale(1.05); /* Escala el contenedor al 105% cuando se pasa el cursor */
 }
 
 .sidebar a i {
     margin-right: 10px;
 }
-.sidebar hr{
+
+.sidebar hr {
     background-color: white;
 }
-.sidebar h1{
+
+/* Encabezado */
+.sidebar h1 {
     font-family: 'Courgette', cursive;
-    font-family: 'Lobster', sans-serif;
+    font-family:'Lobster', sans-serif;
 }
 
-
-.barra{
-    margin-left: 270px;
+/* Barra principal */
+.barra {
+    margin-left: 275px;
     padding: 20px;
-    width: calc(100% - 270px);
+    width: calc(100% - 275px);
 }
 
-.barita{
+.barita {
     margin: 0 auto;
     width: 15%;
 }
-.encabezado h1{
+
+/* Estilo del encabezado principal */
+.encabezado h1 {
     font-family: 'Courgette', cursive;
     font-family: 'Lobster', sans-serif;
     font-size: 45px;
     color: white;
 }
 
-.informacion{
+/* Información del perfil */
+.informacion {
     background-color: white;
     border-radius: 15px;
     padding: 20px;
     font-size: 17px;
     margin-top: 8px;
 }
+
 .informacion strong i {
     margin-right: 10px;
 }
@@ -81,27 +93,28 @@ body{
     margin-right: 10px;
 }
 
-hr{
+hr {
     background-color: gray;
     height: 1px;
     border-radius: 15px;
 }
 
-.foto img{
+/* Foto de perfil */
+.foto img {
     width: 170px;
     height: 170px;
     border-radius: 50%;
     margin: 0 auto;
     border: 5px solid #28a56b;
-    transition: border 0.3s ease , transform 0.5s ease; 
+    transition: border 0.3s ease, transform 0.5s ease;
 }
 
-.foto img:hover{
+.foto img:hover {
     border: 4px solid white;
     transform: scale(1.05);
-
 }
 
+/* Opciones desplegables */
 #security-options, #config-options {
     height: 0;
     overflow: hidden;
@@ -109,7 +122,7 @@ hr{
 }
 
 #security-options.show, #config-options.show {
-    height: auto; 
+    height: auto;
 }
 
 #security-options a, #config-options a {
@@ -145,3 +158,153 @@ hr{
     border-radius: 25px;
     background-color: rgba(255, 255, 255, 0.37);
 }
+
+
+.close-btn {
+    font-size: 30px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ff6b6b; /* Cambia de color al pasar el cursor */
+    transform: scale(1.2); /* Aumenta de tamaño al hacer hover */
+}
+
+.close-btn{
+    display: none;
+}
+
+.no-profile {
+    background-color: white; /* Fondo semi-transparente */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    text-align: center; /* Centramos el texto */
+    margin: 0 auto; /* Centramos el bloque en su contenedor */
+    width: 300px; /* Ancho del contenedor (ajusta según sea necesario) */
+    margin-left: -80px;
+    max-width: 600px; /* Máximo ancho del contenedor */
+}
+
+.no-profile p {
+    margin: 0; /* Quitamos el margen por defecto del párrafo */
+}
+
+.btn-success {
+    padding: 5px 10px; /* Ajusta el padding para hacer el botón más pequeño */
+    font-size: 0.9rem; /* Ajusta el tamaño de fuente si es necesario */
+}
+
+#toggle-sidebar {
+    display: none; /* Ocultamos el botón por defecto en pantallas grandes */
+    background-color: #156a43;
+    border-color: #156a43;
+    font-size: 16px; /* Aumentamos el tamaño del icono */
+    cursor: pointer;
+    position: absolute; /* Para posicionar el botón sin afectar el flujo del layout */
+    left: 10px; /* Margen izquierdo */
+    top: 28px; /* Margen superior */
+}
+
+#close-sidebar{
+    display: none;
+    color: white;
+    font-size: 23px;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 25px;
+    z-index: 1000;
+
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+    body {
+        background: url('https://images.pexels.com/photos/1108117/pexels-photo-1108117.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center / cover;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        left: -100%;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .barra {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #toggle-sidebar {
+        display: block; /* Mostramos el botón en dispositivos móviles */
+    }
+    
+    #close-sidebar{
+        display: block;
+    }
+
+    .barita, .informacion {
+        width: 100%;
+    }
+
+    .foto img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .foto {
+        text-align: center;
+    }
+    
+    .informacion h1{
+        font-size: 23px;
+    }
+
+    .informacion p {
+        display: block;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .informacion p strong, .informacion p i {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .close-btn{
+        display: block;
+    }
+
+    .no-profile {
+        padding: 15px;
+        width: 95%;
+        margin: 0 auto; /* Centrar el contenedor */
+    }
+
+    .btn-success {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+        margin: 0 auto; /* Centrar el botón */
+    }
+}
+
+/* Para pantallas más grandes */
+@media (min-width: 769px) {
+    .toggle-btn {
+        display: none;
+    }
+}
+

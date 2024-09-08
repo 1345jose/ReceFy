@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import  DietaForm, IngredienteForm, RecetaForm
-from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol ,  Licencias, LicenciasInter
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Notificacion, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol ,  Licencias, LicenciasInter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -30,13 +30,19 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.units import inch
 import io
-from datetime import datetime
-
+from django.utils import timezone
 #endregion
 
 
 def index(request):
-    return render(request,'index.html')
+    if request.user.is_authenticated:
+        tiene_rol_7 = UsuarioRol.objects.filter(usuario=request.user, rol_id=7).exists()
+        tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    else:
+        tiene_rol_7 = False
+        tiene_rol_5 = False
+
+    return render(request, 'index.html', {'tiene_rol_7': tiene_rol_7, 'tiene_rol_5': tiene_rol_5})
 
 #region Novedades
     
@@ -45,7 +51,7 @@ def apartado_novedades(request):
 
     # Obtener las recetas que tienen al menos un "me gusta" y ordenarlas por cantidad de "me gusta"
     recetas_mas_likes = Receta.objects.annotate(
-        me_gusta_count=Count('megusta')  # Asegúrate de que 'megusta' es el nombre correcto
+        me_gusta_count=Count('megusta')  
     ).filter(me_gusta_count__gt=0).order_by('-me_gusta_count')  # Filtrar recetas con más de 0 "me gusta"
 
     # Obtener las recetas que tienen al menos un comentario y ordenarlas por cantidad de comentarios
@@ -212,6 +218,31 @@ def imagen2(request):
             usuario.imagen2 = request.FILES.get('imagen2')
         usuario.save()
     return render(request, 'configuracion/imagenes_usuario.html')
+
+def subir_imagen_perfil(request):
+    if request.method == 'POST':
+        usuario = request.user
+        if 'imagen2' in request.FILES:
+            usuario.imagen2 = request.FILES['imagen2']
+            usuario.save()
+            messages.success(request, 'Imagen de perfil actualizada.')
+        else:
+            messages.error(request, 'No se seleccionó ninguna imagen.')
+        return redirect('mi_perfil')
+
+def eliminar_imagen_perfil(request):
+    usuario = get_object_or_404(MiUsuario, id=request.user.id)
+
+    # Verificamos si el usuario tiene una imagen de perfil
+    if usuario.imagen2:
+        usuario.imagen2.delete()  # Esto elimina el archivo de la carpeta de medios
+        usuario.imagen2 = None    # Esto vacía el campo de imagen en la base de datos
+        usuario.save()
+        messages.success(request, "La imagen de perfil ha sido eliminada.")
+    else:
+        messages.error(request, "No tienes una imagen de perfil para eliminar.")
+
+    return redirect('mi_perfil')
 
 
 #mis megustas
@@ -423,7 +454,16 @@ def detalle_receta(request, id_receta):
                     )
                     if not created:
                         me_gusta.delete()
-                    
+                    else:
+                        # Crear una notificación si el usuario que le dio "me gusta" es diferente al autor de la receta
+                        if receta.usuario != request.user:
+                            mensaje = f"{request.user.username} le dio 'me gusta' a tu receta: {receta.nombre_plato}."
+                            Notificacion.objects.create(
+                                usuario=receta.usuario,
+                                mensaje=mensaje,
+                                fecha_creacion=timezone.now()
+                            )
+
                     # Actualiza el conteo de "me gusta" en el modelo Receta
                     receta_me_gusta_count = MeGusta.objects.filter(receta=receta).count()
                     receta.me_gusta = receta_me_gusta_count
@@ -441,7 +481,16 @@ def detalle_receta(request, id_receta):
                     )
                     if not created:
                         me_gusta.delete()
-                    
+                    else:
+                        # Crear una notificación si el usuario que le dio "me gusta" es diferente al autor del comentario
+                        if comentario.usuario != request.user:
+                            mensaje = f"{request.user.username} le dio 'me gusta' a tu comentario."
+                            Notificacion.objects.create(
+                                usuario=comentario.usuario,
+                                mensaje=mensaje,
+                                fecha_creacion=timezone.now()
+                            )
+
                     # Actualiza el conteo de "me gusta" para el comentario
                     comentario_me_gusta_count = MeGusta.objects.filter(comentario=comentario).count()
                     comentario.me_gusta = comentario_me_gusta_count
@@ -461,7 +510,6 @@ def detalle_receta(request, id_receta):
         "comentarios": comentarios,
         "receta_me_gusta_count": receta_me_gusta_count
     })
-
 
 
 def receta_crear(request):
@@ -520,7 +568,52 @@ def recetas_usuarios(request, usuario_id):
         {"user": user, "recetas_usuario": recetas_usuario, "pagina":pagina_actual},
     )
 
-#endregion
+def actualizar_recetas_usuarios(request, id_receta):
+    receta = get_object_or_404(Receta, id_receta=id_receta)
+    
+    if request.method == 'GET':
+        data = {
+            'nombre_plato': receta.nombre_plato,
+            'categoria': receta.categoria,
+            'temporada': receta.temporada,
+            'origen': receta.origen,
+            'ingredientes': receta.ingredientes,
+            'descripcion': receta.descripcion,
+            'instrucciones': receta.instrucciones,
+            'tiempo_preparacion': receta.tiempo_preparacion,
+            'dificultad': receta.dificultad,
+        }
+        return JsonResponse(data)
+
+    elif request.method == 'POST':
+        receta.nombre_plato = request.POST['nombre_plato']
+        receta.categoria = request.POST['categoria']
+        receta.temporada = request.POST['temporada']
+        receta.origen = request.POST['origen']
+        receta.ingredientes = request.POST['ingredientes']
+        receta.descripcion = request.POST['descripcion']
+        receta.instrucciones = request.POST['instrucciones']
+        receta.tiempo_preparacion = request.POST['tiempo_preparacion']
+        receta.dificultad = request.POST['dificultad']
+        receta.save()
+
+        usuario_id = receta.usuario.id
+
+        return redirect(reverse('recetas_usuarios', args=[usuario_id]))
+
+
+def eliminar_receta_usuarios(request, pk):
+    try:
+        receta = get_object_or_404(Receta, pk=pk)
+
+        if request.method == "POST":
+            receta.delete()
+            return JsonResponse({'success': True, 'message': 'Receta eliminada.'})
+        
+        return JsonResponse({'success': False, 'message': 'Método no permitido'}, status=405)
+    
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)
 
 #region Comentarios Usuario
 def comentUser(request, usuario_id):
@@ -1085,7 +1178,7 @@ def actualizar_dieta(request, pk):
     dieta = get_object_or_404(Dieta, pk=pk)
     
     if request.method == "POST":
-        form = DietaForm(request.POST, instance=dieta)
+        form = DietaForm(request.POST, request.FILES, instance=dieta)
         if form.is_valid():
             form.save()
             return redirect("listar_dietas")
@@ -1492,3 +1585,73 @@ def licencias_usuario(request):
     return render(request, 'licencias/licencias_disponibles.html', {'licencias':licencias})
 
 #endregion 
+
+#region Notificaciones
+
+def buzon_notificaciones(request):
+    # Obtener las notificaciones del usuario actual
+    notificaciones = Notificacion.objects.filter(usuario=request.user).order_by('-fecha_creacion')
+
+    # Si el usuario marca una notificación como leída
+    if request.method == "POST":
+        notificacion_id = request.POST.get("notificacion_id")
+        notificacion = Notificacion.objects.get(id=notificacion_id, usuario=request.user)
+        notificacion.leida = True
+        notificacion.save()
+        return redirect('buzon_notificaciones')
+
+    # Renderiza la página con las notificaciones del usuario
+    return render(request, 'usuarios/buzon_notificaciones.html', {
+        'notificaciones': notificaciones,
+        'usuario': request.user  # Pasa el usuario actual para el saludo personalizado
+    })
+
+#endregion
+
+#region Crear Dieta Consejero
+
+def crear_dieta_consejero(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    pagina_actual = "crear_dieta_consejero"
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        objetivo = request.POST.get('objetivo')
+        calorias = request.POST.get('calorias')
+        condicion_medica = request.POST.get('condicion_medica')
+        valor_nutricional = request.POST.get('valor_nutricional')
+        actividad_fisica = request.POST.get('actividad_fisica')
+        consejos = request.POST.get('consejos')
+        dispositivos = request.POST.get('dispositivos')
+        bibliografia = request.POST.get('bibliografia')
+        categoria = request.POST.get('categoria')
+        imagen = request.FILES.get('imagen')  
+
+        usuario = request.user
+
+        nueva_dieta = Dieta(
+            nombre=nombre,
+            descripcion=descripcion,
+            objetivo=objetivo,
+            calorias=calorias,
+            condicion_medica=condicion_medica,
+            valor_nutricional=valor_nutricional,
+            actividad_fisica=actividad_fisica,
+            consejos=consejos,
+            dispositivos=dispositivos,
+            bibliografia=bibliografia,
+            categoria=categoria,
+            imagen=imagen,
+            usuario=usuario  # Asignar el usuario actual
+        )
+
+        # Guardar la receta en la base de datos
+        nueva_dieta.save()
+    
+        return redirect('crear_dieta_consejero')
+    else:
+        # Manejar el caso de solicitud GET si es necesario
+        return render(request, 'consejeros/form_dieta_consejero.html', {"pagina": pagina_actual})
+
+#endregion

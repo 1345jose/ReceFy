@@ -39,6 +39,8 @@ urlpatterns = [
     path('recetas/crear', views.receta_crear, name="crear_receta"),
     path("recetas/apartado",views.crear_ver,name="crear_ver"),
     path('recetas/<int:usuario_id>/tus_recetas/', views.recetas_usuarios, name='recetas_usuarios'),
+    path('receta/<int:id_receta>/actualizar/', views.actualizar_recetas_usuarios, name='actualizar_recetas_usuarios'),
+    path('recetas/eliminar/<int:pk>/', views.eliminar_receta_usuarios, name='eliminar_receta_usuarios'),
 
 
     #endregion
@@ -52,6 +54,9 @@ urlpatterns = [
     path('configuracion/actualizar_info/<int:idusuario>', views.actualizar_info, name="actualizar_perfil"),
     path('usuario/mis-comentarios/', views.comentUser, name='mis_comentarios'),
     path('usuarios/mis_likes/<int:usuario_id>', views.usuariosLikes, name="usuariosLikes"),
+    path('buzon-notificaciones/', views.buzon_notificaciones, name='buzon_notificaciones'),
+    path('eliminar-imagen/', views.eliminar_imagen_perfil, name='eliminar_imagen_perfil'),
+    path('subir-imagen-perfil/', views.subir_imagen_perfil, name='subir_imagen_perfil'),
     
     #endregion
  
@@ -61,7 +66,7 @@ urlpatterns = [
     #region Soporte y Configuracion
     path('configuracion/soporte_tecnico', views.soporte_tecnico, name="soporte"),
     path('configuracion/recuperar_contraseña', views.rest_email, name="recuperar_contraseña"),
-    path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwordUpdate"),
+    path('configuracion/passwordUpdate/<int:idusuario>', views.passwordUpdate, name="passwo rdUpdate"),
     path('configuracion/updateUser/<int:idusuario>', views.updateUser, name="updateUser"),
 
 
@@ -76,7 +81,6 @@ urlpatterns = [
     #region Dietas Disponibles
     path('dietas/', views.lista_dietas, name='lista_dietas'),
     path('dietas/dieta=<int:id_dietas>/', views.detalle_dietas, name='detalle_dietas'),
-
     #endregion
 
     #region Administracion
@@ -160,6 +164,7 @@ urlpatterns = [
     path("consejeros_disponibles/", views.consejeros_disponibles, name="consejeros_disponibles"),
     path('consejero/<int:consejero_id>/', views.apartado_consejeros_ver, name='apartado_consejeros_ver'),
     path('enviar_mensaje/', views.enviar_mensaje, name='enviar_mensaje'),
+    path('crear_dieta_consejero/', views.crear_dieta_consejero, name='crear_dieta_consejero'),
     #endregion
     
     #region Licencias

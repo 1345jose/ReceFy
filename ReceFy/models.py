@@ -128,7 +128,7 @@ class Dieta(models.Model):
     bibliografia = models.CharField(max_length=255)
     fecha_registro_dieta = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE, null=True)
-    categoria = models.CharField(max_length=255)
+    categoria = models.CharField(max_length=255, null=True)
 
     class Meta:
         db_table = 'tbl_dietas'
@@ -273,6 +273,19 @@ class LicenciasInter(models.Model):
 
 #endregion
 
-#endregion
+#region Notificaciones
 
+class Notificacion(models.Model):
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE, related_name='notificaciones')
+    mensaje = models.CharField(max_length=255)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    leida = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = "tbl_notificaciones"
+
+    def __str__(self):
+        return f'Notificación para {self.usuario.username}: {self.mensaje}'
+
+#endregion
 

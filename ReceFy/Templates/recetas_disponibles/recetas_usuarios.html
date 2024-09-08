@@ -1,66 +1,310 @@
 {% load static %}
 {% include 'inc/header.html' %}
-    <link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
-    <style>
-        h1{
-            font-size: 30px;
-        }
+<link rel="stylesheet" href="{% static 'Css/estilos_sueltos/listados.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<style>
+    h1 {
+        font-size: 30px;
+    }
 
-        @media (max-width: 768px) {
+    @media (max-width: 768px) {
         h1 {
             font-size: 1.5rem;
         }
+        h2 {
+            font-size: 1.5rem;
+        }
     }
-    </style>
-    <div class="iconos_sol_luna">
-        <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
-        <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
-    </div>
-    <br>
-    <div class="container">
-        <h1>¡Bienvenido <b class="titulo_nombre_usuario">{{ user.first_name }} {{ user.last_name }}</b>!</h1>
-        {% if recetas_usuario %}
-            <h1>Estas son todas tus recetas que has subido a la plataforma</h1>
-            <br><hr>
-            <div class="row">
-                {% for receta in recetas_usuario %}
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card">
-                            <a href="{% url 'detalle_receta' receta.id_receta %}">
-                                {% if receta.imagen %}
-                                    <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                {% else %}
-                                    <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
-                                {% endif %}
-                                <div class="card-body">
-                                    <h2 class="card-title">{{ receta.nombre_plato }}</h2>
-                                    <p class="card-text">
-                                        <span><i class="fas fa-folder"></i>  {{ receta.categoria }}</span><br>
-                                        <span><i class="fas fa-clock"></i>  {{ receta.tiempo_preparacion }} minutos</span><br>
-                                        <span><i class="fas fa-star"></i>  {{ receta.dificultad }}</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
+
+    /* Estilo del select cuando se muestra */
+    .receta-select {
+        display: none;
+        margin-top: 20px;
+        border-radius: 28px;
+        background-color: #1f1f1f;
+        color: white;
+    }
+
+    /* Estilo del botón de actualizar */
+    .btn-actualizar {
+        background-color: #28a56b;
+        border-color: #28a56b;
+        color: white;
+    }
+
+    .btn-actualizar:hover {
+        background-color: #218f5e;
+        border-color: #218f5e;
+    }
+
+    #form-receta input[type="text"],
+    #form-receta input[type="number"] {
+        background-color: #1f1f1f;
+        color: #fff;
+        border-radius: 25px;
+        border: 1px solid #fff;
+        padding: 10px;
+    }
+
+    #form-receta label {
+        color: #fff;
+    }
+
+    body.light-mode #form-receta  input[type="text"]{
+        background-color: white;
+        color: #1f1f1f;
+    }
+
+    body.light-mode #form-receta input[type="number"]{
+        background-color: #ffff;
+        color: #1f1f1f;
+    }
+
+    body.light-mode #form-receta label{
+        color: #1f1f1f;
+    }
+
+    body.light-mode .receta-select{
+        background-color: #fff;
+        color: #1f1f1f;
+    }
+</style>
+
+<div class="iconos_sol_luna">
+    <i id="sun-icon" class="fas fa-sun" title="Tema Claro" onclick="toggleTheme()"></i>
+    <i id="moon-icon" class="fas fa-moon" title="Tema Oscuro" onclick="toggleTheme()" style="display: none;"></i>
+</div>
+<br>
+<div class="container">
+    <h1>¡Bienvenido <b class="titulo_nombre_usuario">{{ user.first_name }} {{ user.last_name }}</b>!</h1>
+    {% if recetas_usuario %}
+        <h1>Estas son todas tus recetas que has subido a la plataforma</h1>
+        <br><hr>
+        <div class="row justify-content-center">
+            {% for receta in recetas_usuario %}
+                <div class="col-6 col-md-4">
+                    <div class="card mb-4">
+                        <a href="{% url 'detalle_receta' receta.id_receta %}">
+                            {% if receta.imagen %}
+                                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                            {% else %}
+                                <img src="{% static 'path/a/una/imagen_por_defecto.jpg' %}" class="card-img-top" alt="{{ receta.nombre_plato }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h2 class="card-title">{{ receta.nombre_plato }}</h2>
+                                <p class="card-text">
+                                    <span><i class="fas fa-folder"></i>  {{ receta.categoria }}</span><br>
+                                    <span><i class="fas fa-clock"></i>  {{ receta.tiempo_preparacion }} minutos</span><br>
+                                    <span><i class="fas fa-star"></i>  {{ receta.dificultad }}</span>
+                                </p>
+                            </div>
+                        </a>
                     </div>
-                {% endfor %}
-                
-            </div>
-        {% else %}
-         <div class="alert alert-dark text-center" role="alert">
-            ¡No has subido ninguna receta aún! ¿Quieres subir una receta?
-            <a href="{% url 'crear_receta' %}" >Crear Una Receta</a>
+                </div>
+            {% endfor %}
         </div>
-        <hr>    
+        <br><br><hr>
+        <h2>¿Quieres modificar alguna de tus recetas? 
+            <a href="javascript:void(0)" onclick="mostrarSelect()"><b class="titulo_nombre_usuario">¡Haz Click aquí!</b></a>
+        </h2>
+    
+        <select id="select-recetas" class="form-control receta-select">
+            <option value="">Selecciona una receta para modificar</option>
+            {% for receta in recetas_usuario %}
+                <option value="{% url 'actualizar_recetas_usuarios' receta.id_receta %}">{{ receta.nombre_plato }}</option>
+            {% endfor %}
+        </select>
+    
+        <!-- Formulario que se mostrará al seleccionar una receta -->
+        <form id="form-receta" action="" method="POST" style="display:none;">
+            {% csrf_token %}
+            <br><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nombre_plato">Nombre del plato</label>
+                        <input type="text" id="nombre_plato" name="nombre_plato" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <input type="text" id="categoria" name="categoria" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="temporada">Temporada</label>
+                        <input type="text" id="temporada" name="temporada" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="origen">Origen</label>
+                        <input type="text" id="origen" name="origen" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ingredientes">Ingredientes</label>
+                        <input type="text" id="ingredientes" name="ingredientes" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <input type="text" id="descripcion" name="descripcion" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="instrucciones">Instrucciones</label>
+                        <input type="text" id="instrucciones" name="instrucciones" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="tiempo_preparacion">Tiempo de preparación (minutos)</label>
+                        <input type="number" id="tiempo_preparacion" name="tiempo_preparacion" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dificultad">Dificultad</label>
+                        <input type="text" id="dificultad" name="dificultad" class="form-control" value="">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-actualizar">Actualizar Receta</button>
+        </form>
+        <br><br>
+        <h2>¿Quieres eliminar alguna de tus recetas? 
+            <a href="javascript:void(0)" onclick="mostrarSelectEliminar()">
+                <b class="titulo_nombre_usuario">¡Haz Click aquí!</b>
+            </a>
+        </h2>
+        
+        <!-- Select de recetas a eliminar -->
+        <select id="select-recetas-eliminar" class="form-control receta-select" style="display:none;">
+            <option value="">Selecciona una receta para eliminar</option>
+            {% for receta in recetas_usuario %}
+                <option value="{% url 'eliminar_receta_usuarios' receta.pk %}">{{ receta.nombre_plato }}</option>
+            {% endfor %}
+        </select>
+    {% else %}
+        <div class="alert alert-dark text-center" role="alert">
+            ¡No has subido ninguna receta aún! ¿Quieres subir una receta?
+            <a href="{% url 'crear_receta' %}">Crear Una Receta</a>
+        </div>
+        <hr>
         <div class="mensaje mt-5">
             <h1 class="rc text-center">ReceFy</h1>
             <p class="text-center">Crea Tus propias Recetas para que las puedas compartir con los demas Usuarios y las puedas ver reflejadas Aqui.</p>
         </div>
-        
-           
-        {% endif %}
-    </div>
-    
-    <script src="{% static 'js/funcion_temas.js' %}"></script>
-</body>
-</html>
+    {% endif %}
+
+</div>
+
+<script src="{% static 'js/funcion_temas.js' %}"></script>
+<br><br><br><br>
+<script>
+function mostrarSelect() {
+    var selectRecetas = document.getElementById('select-recetas');
+    if (selectRecetas.style.display === 'none' || selectRecetas.style.display === '') {
+        selectRecetas.style.display = 'block';
+    } else {
+        selectRecetas.style.display = 'none';
+    }
+}
+
+// Al seleccionar una receta, carga los datos en el formulario
+document.getElementById('select-recetas').addEventListener('change', function() {
+    var url = this.value;
+    if (url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar el formulario
+                var formReceta = document.getElementById('form-receta');
+                formReceta.style.display = 'block';
+                
+                // Asignar los datos recibidos a los campos del formulario
+                document.getElementById('nombre_plato').value = data.nombre_plato;
+                document.getElementById('categoria').value = data.categoria;
+                document.getElementById('temporada').value = data.temporada;
+                document.getElementById('origen').value = data.origen;
+                document.getElementById('ingredientes').value = data.ingredientes;
+                document.getElementById('descripcion').value = data.descripcion;
+                document.getElementById('instrucciones').value = data.instrucciones;
+                document.getElementById('tiempo_preparacion').value = data.tiempo_preparacion;
+                document.getElementById('dificultad').value = data.dificultad;
+
+                // Establecer la acción del formulario para la URL de actualización
+                formReceta.action = url;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+});
+
+function mostrarSelectEliminar() {
+    var selectRecetasEliminar = document.getElementById('select-recetas-eliminar');
+    selectRecetasEliminar.style.display = (selectRecetasEliminar.style.display === 'none' || selectRecetasEliminar.style.display === '') ? 'block' : 'none';
+}
+
+document.getElementById('select-recetas-eliminar').addEventListener('change', function() {
+    var url = this.value; // Asegúrate de que este valor sea la URL de eliminación
+    if (url) {
+        var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta receta? ¡No podrás revertir esta acción!");
+
+        if (confirmDelete) {
+            const csrftoken = getCookie('csrftoken');
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('¡La receta ha sido eliminada exitosamente!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Hubo un problema al eliminar la receta.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un problema al eliminar la receta.');
+            });
+        }
+    }
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

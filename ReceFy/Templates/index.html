@@ -43,6 +43,15 @@
                           </a>
                           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <h3 class="option text-center">Opciones</h3>
+                            {% if tiene_rol_7 %}
+                              <hr>
+                              <li><a class="dropdown-item" href="{% url 'crear_dieta_consejero' %}"><i class="bi bi-person-vcard-fill"></i> Crear Dieta</a></li>
+                            {% elif tiene_rol_5 %}
+                                <hr>
+                                <li><a class="dropdown-item" href="{% url 'home_administracion' %}"><i class="bi bi-person-vcard-fill"></i> Administracion</a></li>
+                            {% else %}
+                            <hr>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'mi_perfil' %}"><i class="fa-solid fa-user"></i> Ver Mi Perfil</a></li>
                             <li><a class="dropdown-item" href="{% url 'recetas_usuarios' user.id %}"><i class="fa-solid fa-utensils"></i> Mis Recetas</a></li>
                             <li><a class="dropdown-item" href="{% url 'crear_receta' %}"><i class="fa-solid fa-plus"></i> Crear una Receta</a></li>

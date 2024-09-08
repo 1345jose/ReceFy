@@ -1,77 +1,89 @@
 {% load static %}
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'Css/usuarios/mi_perfil.css' %}">
+    <title>Mi Perfil</title>
 </head>
-<aside class="sidebar">
-    <h2>Mi perfil</h2>
-    <hr class="other">
-
-    <a href="{% url 'recetas_usuarios' user.id %}"><i class="fa-solid fa-utensils"></i>Mis Recetas</a>
-    <a href="#" id="security-link">
-        <i class="fa-solid fa-user-shield"></i> 
-        Seguridad  
-        <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
-    </a>
-    
-    <div id="security-options" class="hidden">
-        <hr class="seguridad">
-        <a href="/configuracion/updateUser/{{ user.id }}">
-            <i class="bi bi-shield-fill-exclamation"></i> Contraseña
-        </a>
-        <hr class="seguridad">
+<body>
+    <div id="toggle-sidebar" class="btn btn-primary">
+        <i class="fas fa-bars"></i> <!-- Ícono de hamburguesa -->
     </div>
-    
-    <a href="#" id="config-link">
-        <i class="bi bi-gear-fill"></i>
-        Configuración 
-        <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
-    </a>
-    
-    <div id="config-options" class="hidden">
-        <hr class="seguridad">
-        {% if not usuario.first_name %}
-            <a href="{% url 'completar_info' %}">Completa Tu informacion</a>
+
+
+    <aside class="sidebar">
+        <div id="close-sidebar">
+            <i class="fas fa-times"></i> <!-- Ícono de cerrar -->
+        </div>
+        <h2>Mi perfil</h2>
+        <hr class="other">
+
+        <a href="{% url 'recetas_usuarios' user.id %}"><i class="fa-solid fa-utensils"></i>Mis Recetas</a>
+        <a href="#" id="security-link">
+            <i class="fa-solid fa-user-shield"></i> 
+            Seguridad  
+            <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
+        </a>
+        
+        <div id="security-options" class="hidden">
             <hr class="seguridad">
-        {% else %}
-            <a href="{% url 'actualizar_perfil' usuario.id %}">
-                <i class="bi bi-person-fill-gear"></i> Mi Información
+            <a href="/configuracion/updateUser/{{ user.id }}">
+                <i class="bi bi-shield-fill-exclamation"></i> Contraseña
             </a>
             <hr class="seguridad">
-        {% endif %}
+        </div>
+        
+        <a href="#" id="config-link">
+            <i class="bi bi-gear-fill"></i>
+            Configuración 
+            <span class="right-icon"><i class="fa-solid fa-caret-down"></i></span>
+        </a>
+        
+        <div id="config-options" class="hidden">
+            <hr class="seguridad">
+            {% if not usuario.first_name %}
+                <a href="{% url 'completar_info' %}">Completa Tu información</a>
+                <hr class="seguridad">
+            {% else %}
+                <a href="{% url 'actualizar_perfil' usuario.id %}">
+                    <i class="bi bi-person-fill-gear"></i> Mi Información
+                </a>
+                <hr class="seguridad">
+            {% endif %}
+        </div>
 
-    </div>
+        <a href="#"><i class="bi bi-bell-fill"></i>Notificaciones</a>
+        <a href="{% url 'usuariosLikes' usuario.id %}"><i class="bi bi-heart-fill"></i>Me Gustas</a>
+        <a href=""><i class="bi bi-chat-left-text-fill"></i>Mis Comentarios</a>
+        <a href="{% url 'buzon_notificaciones' %}"><i class="fas fa-envelope"></i> Buzón De Notificaciones</a>
 
-    
-    <a href="#"><i class="bi bi-bell-fill"></i>Notificaciones</a>
-    <a href="{% url 'usuariosLikes' usuario.id %}"><i class="bi bi-heart-fill"></i>Me Gustas</a>
-    <a href=""><i class="bi bi-chat-left-text-fill"></i>Mis Comentarios</a>
-
-    
-
-    <hr class="other">
-    <a href="/" class=""><i class="fa-solid fa-house-user"></i>Inicio</a>
-    <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
-    <h1><a href="{% url 'index' %}">RC</a></h1>
-   
-</aside>
-
+        <hr class="other">
+        <a href="/" class=""><i class="fa-solid fa-house-user"></i>Inicio</a>
+        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+        <h1><a href="{% url 'index' %}">RC</a></h1>
+    </aside>
 
     <main class="barra">
-      {% include 'inc/header.html' %}
+        <h1 class="text-center" style="color: white; font-family: 'Courgette', cursive; font-family: 'Lobster', sans-serif;">ReceFy</h1>
+        <br>
         <div class="barita">
             <div class="foto">
                 {% if usuario.imagen2 %}
-                    <img src="{{ usuario.imagen2.url }}" alt="Perfil del usuario">
+                    <img src="{{ usuario.imagen2.url }}" alt="Perfil del usuario" id="profileImage" data-toggle="modal" data-target="#imageModal">
                 {% else %}
-                    <img src="{% static 'media/default.webp' %}" alt="No tienes perfil">
+                    <div class="no-profile">
+                        <p style="color: #1f1f1f; text-align: center; font-size: 1rem;">No Tienes Foto de Perfil, <br> Sube una aquí</p>
+                        <br>
+                        <button class="btn btn-success" onclick="uploadImage()">Subir Imagen</button>
+                    </div>
                 {% endif %}
             </div>
         </div>
-        
 
         <div class="informacion">
             <div class="row">
@@ -92,11 +104,9 @@
                 </div>
         
                 <div class="row mt-4">
-                   
-                    
                     <div class="col-md-4">
                         {% if usuario.idioma %}
-                            <p><i class="fa-solid fa-language"></i> <strong>Idioma:</strong>{{ usuario.idioma }}</p>
+                            <p><i class="fa-solid fa-language"></i> <strong>Idioma:</strong> {{ usuario.idioma }}</p>
                         {% endif %}
                     </div>
                 </div>  
@@ -105,28 +115,44 @@
                     <div class="col">
                         {% if usuario.telefono %}
                             <p><i class="bi bi-telephone-fill"></i> <strong>Teléfono:</strong> {{ usuario.telefono }}</p>
-                            <p><i class="fa-solid fa-envelope"></i> <strong>Correo Electronico:</strong> {{ usuario.email }}</p>
-
+                            <p><i class="fa-solid fa-envelope"></i> <strong>Correo Electrónico:</strong> {{ usuario.email }}</p>
                         {% endif %}
                     </div>
                     <div class="col">
                         {% if usuario.fecha_nacimiento %}
                             <p><i class="bi bi-calendar2-date-fill"></i> <strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
                             <p><i class="bi bi-globe-americas"></i> <strong>País:</strong> {{ usuario.pais }}</p>
-
                         {% endif %}
                     </div>
                 </div>
-        
+
                 {% if not usuario.biografia and not usuario.telefono and not usuario.fecha_nacimiento and not usuario.pais and not usuario.idioma %}
                     <a href="{% url 'completar_info' %}"><button type="submit" class="btn btn-primary">Completar Información</button></a>
                 {% endif %}
-            {% else %}
             {% endif %}
-           
-
         </div>
     </main>
+
+    <!-- Modal para cambiar o subir imagen -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Opciones de Imagen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="imageModalBody">
+                    <!-- Aquí se agregarán las opciones dinámicamente con JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% include 'inc/footer.html' %}
 
     <!-- Bootstrap JS and Popper.js -->
@@ -134,11 +160,135 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
-        function toggleSidebar() {
-    var sidebar = document.querySelector('.sidebar');
-    sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalBody = document.getElementById('imageModalBody');
+            const profileImage = document.getElementById('profileImage');
+
+            profileImage.addEventListener('click', function () {
+                // Verificar si el usuario tiene una imagen de perfil
+                const hasImage = profileImage.getAttribute('src') !== "{% static 'media/default.webp' %}";
+
+                if (hasImage) {
+                    modalBody.innerHTML = `
+                        <button class="btn btn-primary" onclick="changeImage()">Cambiar Imagen</button>
+                        <button class="btn btn-danger" onclick="removeImage()">Remover Imagen</button>
+                    `;
+                } else {
+                    modalBody.innerHTML = `
+                        <button class="btn btn-success" onclick="uploadImage()">Subir Imagen</button>
+                    `;
+                }
+            });
+        });
+
+        function changeImage() {
+    const inputFile = document.createElement('input');
+    inputFile.type = 'file';
+    inputFile.accept = 'image/*';
+
+    inputFile.addEventListener('change', function () {
+        const file = inputFile.files[0];
+
+        if (file) {
+            const formData = new FormData();
+            formData.append('imagen2', file);
+
+            fetch("{% url 'subir_imagen_perfil' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Hubo un error al subir la imagen');
+                }
+            })
+            .catch(error => {
+                console.error('Error al subir la imagen:', error);
+            });
+        }
+    });
+
+    inputFile.click();
 }
+        function removeImage() {
+        if (confirm('¿Estás seguro de que quieres eliminar la imagen de perfil?')) {
+            // Realizamos una redirección a la vista de eliminar imagen
+            window.location.href = "{% url 'eliminar_imagen_perfil' %}";
+        }
+    }
+
+    function uploadImage() {
+        // Crear un input de tipo file para seleccionar la imagen
+        const inputFile = document.createElement('input');
+        inputFile.type = 'file';
+        inputFile.accept = 'image/*'; // Solo acepta archivos de imagen
+
+        // Detectar cuando se selecciona un archivo
+        inputFile.addEventListener('change', function () {
+            const file = inputFile.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('imagen2', file);
+
+                // Enviar la imagen al servidor con una petición POST
+                fetch("{% url 'subir_imagen_perfil' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}', // Añadir token CSRF para seguridad
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload(); // Recargar la página para mostrar la nueva imagen
+                    } else {
+                        alert('Hubo un error al subir la imagen');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al subir la imagen:', error);
+                });
+            }
+        });
+
+        // Hacer clic automáticamente en el input para abrir el selector de archivos
+        inputFile.click();
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const toggleSidebarButton = document.getElementById('toggle-sidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const closeSidebarButton = document.getElementById('close-sidebar'); // Asegúrate de tener un ID para el botón de cerrar
+
+    // Función para mostrar/ocultar el sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle('show'); // Cambia la clase 'show' al sidebar
+        toggleSidebarButton.style.display = sidebar.classList.contains('show') ? 'none' : 'block'; // Oculta el botón de hamburguesa si el sidebar está abierto
+    }
+
+    toggleSidebarButton.addEventListener('click', toggleSidebar); // Evento para el botón de hamburguesa
+    closeSidebarButton.addEventListener('click', function () {
+        sidebar.classList.remove('show'); // Oculta el sidebar
+        toggleSidebarButton.style.display = 'block'; // Muestra el botón de hamburguesa
+    }); // Evento para el botón de cerrar
+
+    // Cierra el sidebar si se hace clic fuera de él
+    document.addEventListener('click', function (event) {
+        if (!sidebar.contains(event.target) && !toggleSidebarButton.contains(event.target) && !closeSidebarButton.contains(event.target)) {
+            sidebar.classList.remove('show'); // Oculta el sidebar
+            toggleSidebarButton.style.display = 'block'; // Muestra el botón de hamburguesa
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     const securityLink = document.getElementById('security-link');
@@ -164,13 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleSection(configLink, configOptions);
     });
 });
-
-        
-        
-        
-        
     </script>
-    
 
 </body>
 </html>

@@ -72,8 +72,8 @@
                         {{ form.imagen }}
                     </div>
                     <div class="selected-image" id="selectedImage">
-                        {% if receta.imagen %}
-                            <img src="{{ receta.imagen.url }}" class="img-thumbnail">
+                        {% if dieta.imagen %}
+                            <img src="{{ dieta.imagen.url }}" class="img-thumbnail">
                         {% endif %}
                     </div>
                 </div>
@@ -130,12 +130,16 @@
                         {{ form.usuario_id.label_tag }}
                         {{ form.usuario_id }}
                     </div>
+                    <div class="form-group">
+                        {{ form.categoria.label_tag }}
+                        {{ form.categoria }}
+                    </div>
                 </div>
             </div>
             <br>
             <div class="btn-container">
-                <button type="submit" class="btn btn-create">Actualizar Receta</button>
-                <a href="{% url 'listar_recetas' %}" class="btn btn-back">Volver</a>
+                <button type="submit" class="btn btn-create">Actualizar Dieta</button>
+                <a href="{% url 'listar_dietas' %}" class="btn btn-back">Volver</a>
             </div>
         </form>
     </div>
