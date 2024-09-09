@@ -101,6 +101,7 @@ class PlanNutricional(models.Model):
 #region Consejeros
 class Consejero(models.Model):
     id_consejero = models.AutoField(primary_key=True)
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
     titulacion = models.CharField(max_length=225)
     experiencia = models.CharField(max_length=225)
     descripcion = models.CharField(max_length=225)
@@ -182,6 +183,51 @@ class UsuarioRol(models.Model):
 #enregion
 
 #region Mensajes Usuarios
+
+class Conversacion(models.Model):
+    emisor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='conversaciones_enviadas')
+    receptor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='conversaciones_recibidas')
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'tbl_conversaciones'
+        verbose_name = 'Conversación'
+        verbose_name_plural = 'Conversaciones'
+
+    def __str__(self):
+        return f"Conversación entre {self.emisor} y {self.receptor}"
+
+
+class Mensaje(models.Model):
+    contenido = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'tbl_mensaje'
+        verbose_name = 'Mensaje'
+        verbose_name_plural = 'Mensajes'
+
+    def __str__(self):
+        return f"Mensaje: {self.contenido[:50]}"  # Muestra los primeros 50 caracteres del mensaje
+
+
+class ConversacionMensaje(models.Model):
+    conversacion = models.ForeignKey(Conversacion, on_delete=models.CASCADE)
+    mensaje = models.ForeignKey(Mensaje, on_delete=models.CASCADE)
+    emisor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mensajes_enviados')
+    receptor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mensajes_recibidos')
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'tbl_conversaciones_mensaje'
+        verbose_name = 'Conversación Mensaje'
+        verbose_name_plural = 'Conversaciones Mensajes'
+
+    def __str__(self):
+        return f"Mensaje en la conversación {self.conversacion.id} entre {self.emisor} y {self.receptor}"
+
+
+
 
 
 

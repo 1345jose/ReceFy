@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index ,name="index"),
+    path('404/not-found/', views.page_not_found, name="page_not_found"),
     path('novedades/', views.apartado_novedades, name="apartado_novedades"),
     
     
@@ -151,7 +152,8 @@ urlpatterns = [
 
     #region Mensajes Usuarios (por terminar)
 
-    path('usuarios/lista', views.lista_usuarios, name='lista_usuarios'),
+    path('usuarios/lista', views.listaC_usuarios, name='listaC_usuarios'),
+    path('usuarios/perfiles/<int:usuario_id>/', views.  perfiles_usuarios, name='perfiles_usuarios'),
     path('chat/<int:usuario_id>/', views.chat_view, name='chat'),
     path('chat/enviar/', views.enviar_mensaje, name='enviar_mensaje'),
 

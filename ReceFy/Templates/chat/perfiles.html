@@ -1,0 +1,12 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<main>
+    {% if usuarios %}
+        <h1>{{ usuarios.first_name }}</h1>
+    {% else %}
+        <p>No se encontró el usuario.</p>
+    {% endif %}
+</main>
+
+{% include 'inc/footer.html' %}

@@ -15,9 +15,33 @@
                 <img src="{{ dieta.imagen.url }}" class="card-img-left" alt="{{ dieta.nombre }}">
                 <div class="card-body d-flex flex-column">
                     <h1 class="display-3 mb-4">{{ dieta.nombre }}</h1>
+                    <div class="me-gusta-section mt-4">
+                        {% if user.is_authenticated %}
+                            <form action="" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="dieta_id" value="{{ dieta.id }}">
+                                <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
+                                    <i class="bi bi-heart-fill"></i> 
+                                    <span>
+                                        {{ dieta_me_gusta_count }}  
+                                        {% if dieta_me_gusta %}
+                                            Guardada en tus me gustas
+                                        {% else %}
+                                            Guarda esta Dieta en tus me gustas
+                                        {% endif %}
+                                    </span>
+                                </button>
+                            </form>
+                        {% else %}
+                            <i class="bi bi-heart-fill"></i> {{ dieta_me_gusta_count }}
+                            <p><a href="{% url 'login' %}">Inicia sesión</a> para añadir a "me gusta".</p>
+                        {% endif %}
+
+                    </div>       
                     <hr>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
+                    <div class="contenido">
+                        <div class="detalles">
+                            
                             <p><i class="fas fa-tag"></i> <strong>Categoría:</strong> {{ dieta.categoria }}</p>
                             <p><i class="fas fa-info-circle"></i> <strong>Descripción:</strong> {{ dieta.descripcion }}</p>
                             <p><i class="fas fa-bullseye"></i> <strong>Objetivo:</strong> {{ dieta.objetivo }}</p>
@@ -29,29 +53,15 @@
                             <p><i class="fas fa-mobile-alt"></i> <strong>Dispositivos:</strong> {{ dieta.dispositivos }}</p>
                             <p><i class="fas fa-book"></i> <strong>Bibliografía:</strong> {{ dieta.bibliografia }}</p>
                             <p><i class="fas fa-calendar-alt"></i> <strong>Fecha de publicación:</strong> {{ dieta.fecha_registro_dieta }}</p>     
-                            <small>ReceFy.com</small>                       
                         </div>
                         <div class="col-md-6">
                             {% if dieta.usuario %}
-                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ dieta.usuario.first_name }} {{ dieta.usuario.last_name }}</p>
+                                <p><i class="fas fa-user"></i> <strong>Subido por:</strong> {{ dieta.usuario.first_name }} {{ receta.usuario.last_name }}</p>
                             {% else %}
                                 <p><i class="fas fa-user"></i> <strong>Subido por:</strong> Sistema ReceFy</p>
                             {% endif %}
 
-                            <div class="me-gusta-section mt-4">
-                                {% if user.is_authenticated %}
-                                    <form action="" method="post" style="display:inline;">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="dieta_id" value="{{ dieta.id }}">
-                                        <button type="submit" name="me_gusta" style="background:none; border:none; cursor:pointer;">
-                                            <i class="bi bi-heart-fill"></i> <span>{{ dieta_me_gusta_count }}</span>
-                                        </button>
-                                    </form>
-                                {% else %}
-                                    <i class="bi bi-heart-fill"></i> {{ dieta_me_gusta_count }}
-                                    <p><a href="{% url 'login' %}">Inicia sesión</a> para añadir a "me gusta".</p>
-                                {% endif %}
-                            </div>
+                           
                             
                         </div>
                         </div>

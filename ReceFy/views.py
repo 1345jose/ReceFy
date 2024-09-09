@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import  DietaForm, IngredienteForm, RecetaForm
-from .models import Consejero, Dieta, Ingrediente, MiUsuario, Notificacion, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol ,  Licencias, LicenciasInter
+from .models import Consejero, Dieta, Ingrediente, MiUsuario, Receta , Comentario, MeGusta, PlanNutricional, Rol, UsuarioRol ,  Licencias, LicenciasInter,  Mensaje, Conversacion, ConversacionMensaje, Notificacion
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -31,6 +31,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.units import inch
 import io
 from django.utils import timezone
+from datetime import datetime
 #endregion
 
 
@@ -43,6 +44,10 @@ def index(request):
         tiene_rol_5 = False
 
     return render(request, 'index.html', {'tiene_rol_7': tiene_rol_7, 'tiene_rol_5': tiene_rol_5})
+
+def page_not_found(request):
+    pagina_actual = "not-found"
+    return render(request, '404/error404.html', {'pagina': pagina_actual})
 
 #region Novedades
     
@@ -929,6 +934,12 @@ def detalle_dietas(request, id_dietas):
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
+    
     total_usuarios = MiUsuario.objects.count()
     total_consejeros = Consejero.objects.count()
     total_recetas = Receta.objects.count()
@@ -972,7 +983,14 @@ def dashboard(request):
 
 #estadisticas
 def Estadisticas_generales(request):
-    # Obtener los totales de los diferentes modelos
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")    
+
     total_usuarios = MiUsuario.objects.count()
     total_consejeros = Consejero.objects.count()
     total_recetas = Receta.objects.count()
@@ -1035,6 +1053,13 @@ def Estadisticas_generales(request):
 
 #CRUD CONSEJEROS
 def listar_consejeros(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     usuarios_ids = UsuarioRol.objects.filter(rol_id=7).values_list('usuario_id', flat=True)
     
     consejeros = Consejero.objects.filter(usuario__id__in=usuarios_ids).order_by('-fecha_registro')
@@ -1050,6 +1075,13 @@ def listar_consejeros(request):
     return render(request, 'administracion/cruds/consejeros/listar.html', context)
 
 def cambiar_rol(request, usuario_id):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     usuario_rol = get_object_or_404(UsuarioRol, usuario_id=usuario_id)
     
     usuario_rol.rol_id = 6
@@ -1063,6 +1095,14 @@ def cambiar_rol(request, usuario_id):
 
 
 def ver_consejero(request, consejero_id):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
+    
     consejero = Consejero.objects.filter(id_consejero=consejero_id).first()
     if not consejero:
         messages.error(request, "Consejero no encontrado.")
@@ -1075,6 +1115,13 @@ def ver_consejero(request, consejero_id):
 #CRUD RECETAS
 
 def listar_recetas(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     recetas = Receta.objects.all().order_by('-fecha_registro_receta')
     
     paginator = Paginator(recetas, 15) 
@@ -1088,6 +1135,13 @@ def listar_recetas(request):
     return render(request, 'administracion/cruds/recetas/listar.html', context)
 
 def insertar_receta(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         form = RecetaForm(request.POST, request.FILES)
         if form.is_valid():
@@ -1113,6 +1167,13 @@ def borrar_receta(request, pk):
     return redirect("listar_recetas")
 
 def actualizar_receta(request, pk):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     receta = get_object_or_404(Receta, pk=pk)
     
     if request.method == "POST":
@@ -1130,6 +1191,13 @@ def actualizar_receta(request, pk):
     return render(request, "administracion/cruds/recetas/actualizar.html", context)
 
 def ver_receta(request, receta_id):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     receta = Receta.objects.filter(id_receta=receta_id).first()
     if not receta:
         messages.error(request, "Ingrediente no encontrado.")
@@ -1143,10 +1211,24 @@ def ver_receta(request, receta_id):
 #CRUD DIETAS
 
 def listar_dietas(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     dietas = Dieta.objects.all().order_by('-fecha_registro_dieta')
     return render(request, "administracion/cruds/dietas/listar.html", {"dietas": dietas})
 
 def insertar_dieta(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         form = DietaForm(request.POST, request.FILES)
         if form.is_valid():
@@ -1175,6 +1257,13 @@ def borrar_dieta(request, pk):
     return redirect("listar_dietas")
 
 def actualizar_dieta(request, pk):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     dieta = get_object_or_404(Dieta, pk=pk)
     
     if request.method == "POST":
@@ -1193,6 +1282,13 @@ def actualizar_dieta(request, pk):
     return render(request, "administracion/cruds/dietas/actualizar.html", context)
 
 def ver_dieta(request, dieta_id):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     dieta = Dieta.objects.filter(id=dieta_id).first()
     if not dieta:
         messages.error(request, "Dieta no encontrado.")
@@ -1205,10 +1301,24 @@ def ver_dieta(request, dieta_id):
 #CRUD INGREDIENTES
 
 def listado_ingredientes(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     ingredientes = Ingrediente.objects.all().order_by('-fecha_registro_ingredientes')
     return render(request, "administracion/cruds/ingredientes/listar.html", {"ingredientes": ingredientes})
 
 def insertar_ingrediente(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         form = IngredienteForm(request.POST)
         if form.is_valid():
@@ -1221,6 +1331,13 @@ def insertar_ingrediente(request):
     return render(request, "administracion/cruds/ingredientes/insertar.html", context)
 
 def actualizar_ingrediente(request, pk):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     ingrediente = get_object_or_404(Ingrediente, pk=pk)
     
     if request.method == "POST":
@@ -1250,6 +1367,13 @@ def borrar_ingrediente(request, pk):
     return redirect("listado_ingredientes")
 
 def ver_ingrediente(request, ingrediente_id):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     ingrediente = Ingrediente.objects.filter(id_ingrediente=ingrediente_id).first()
     if not ingrediente:
         messages.error(request, "Ingrediente no encontrado.")
@@ -1262,12 +1386,26 @@ def ver_ingrediente(request, ingrediente_id):
 
 #region CRUD ROLES
 def listado_roles(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     roles = Rol.objects.all()  
     usuarios_roles = UsuarioRol.objects.all()   
     return render(request, "administracion/cruds/roles/listar.html", {"roles": roles, 'usuarios_roles': usuarios_roles } )
 
 
 def insertar_roles(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         if (
             request.POST.get("nombre")
@@ -1291,6 +1429,13 @@ def borrar_rol(request, idroles):
     return redirect("/administracion/roles/listado")
 
 def actualizar_rol(request, idroles):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         nombre = request.POST.get("nombre")
         descripcion = request.POST.get("descripcion")
@@ -1308,6 +1453,13 @@ def actualizar_rol(request, idroles):
         return render(request, "administracion/cruds/roles/actualizar.html", {"roles": roles})
 
 def editarRolu(request, idinter):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         usuario_id = request.POST.get('usuario_id')
         rol_id = request.POST.get('rol_id')
@@ -1347,6 +1499,13 @@ def editarRolu(request, idinter):
 
 
 def listadoUsuarios(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     usuarios = MiUsuario.objects.all().order_by('-date_joined')
 
     paginator = Paginator(usuarios, 15) 
@@ -1366,6 +1525,13 @@ def borrarUsuario(request, idusuario):
     return redirect('/administracion/usuarios/listado/')
 
 def actualizarUsuario(request, idusuario):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     usuario = get_object_or_404(MiUsuario, id=idusuario)
     if request.method == "POST":
         imagen2 = request.FILES.get('imagen2')
@@ -1404,6 +1570,13 @@ def actualizarUsuario(request, idusuario):
 #CRUD COMENTARIOS
 
 def listadoComentarios(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     comentario = Comentario.objects.all().order_by('-fecha_creacion')
 
     paginator = Paginator(comentario, 15) 
@@ -1427,6 +1600,13 @@ def borrarComentario(request, idcomentario):
 #CRUD LICENCIAS 
 
 def InsertarLicencia(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     if request.method == "POST":
         if request.POST.get('nombre') and request.POST.get('descripcion') and request.POST.get('dias') and request.POST.get('precio'):
            licencia = Licencias()
@@ -1440,6 +1620,13 @@ def InsertarLicencia(request):
         return render(request, 'administracion/licencias/insertar.html') 
 
 def licencias(request):
+    if not request.user.is_authenticated:
+        return redirect("/usuarios/login")
+    
+    tiene_rol_5 = UsuarioRol.objects.filter(usuario=request.user, rol_id=5).exists()
+    
+    if not tiene_rol_5:
+        return redirect("/404/not-found/")
     licencia = Licencias.objects.all()
     inter = LicenciasInter.objects.all()
     return render(request,'administracion/licencias/listado.html',{'licencia': licencia , 'inter': inter } )
@@ -1543,17 +1730,30 @@ def apartado_consejeros_ver(request, consejero_id):
 
 
 #region Mensajes Usuarios no funcional
+
+def perfiles_usuarios(request, usuario_id):
+    usuarios = MiUsuario.objects.filter(id=usuario_id).exclude(id=request.user.id)
+    return render(request, 'chat/perfiles.html', {'usuarios': usuarios})
+
+
 @login_required
-def lista_usuarios(request):
+def listaC_usuarios(request):
     usuarios = MiUsuario.objects.exclude(id=request.user.id)
     return render(request, 'chat/lista_usuarios.html', {'usuarios': usuarios})
+
 
 @login_required
 def chat_view(request, usuario_id):
     receptor = get_object_or_404(MiUsuario, id=usuario_id)
-    mensajes = Mensajes.objects.filter(
+    
+    conversacion = Conversacion.objects.filter(
         (Q(emisor=request.user) & Q(receptor=receptor)) | (Q(emisor=receptor) & Q(receptor=request.user))
-    ).order_by('fecha_creacion')
+    ).first()
+
+    if not conversacion:
+        conversacion = Conversacion.objects.create(emisor=request.user, receptor=receptor)
+
+    mensajes = ConversacionMensaje.objects.filter(conversacion=conversacion).order_by('fecha_creacion')
 
     return render(request, 'chat/chat.html', {'receptor': receptor, 'mensajes': mensajes})
 
@@ -1565,15 +1765,31 @@ def enviar_mensaje(request):
         receptor_id = request.POST.get('receptor_id')
         receptor = MiUsuario.objects.get(id=receptor_id)
 
-        mensaje = Mensajes.objects.create(
+        # Buscar la conversación existente o crear una nueva si no existe
+        conversacion = Conversacion.objects.filter(
+            (Q(emisor=request.user) & Q(receptor=receptor)) | (Q(emisor=receptor) & Q(receptor=request.user))
+        ).first()
+
+        if not conversacion:
+            conversacion = Conversacion.objects.create(emisor=request.user, receptor=receptor)
+
+        # Crear el mensaje
+        mensaje = Mensaje.objects.create(contenido=contenido)
+
+        # Crear la relación en ConversacionMensaje
+        ConversacionMensaje.objects.create(
+            conversacion=conversacion,
+            mensaje=mensaje,
             emisor=request.user,
-            receptor=receptor,
-            contenido=contenido
+            receptor=receptor
         )
 
-        return JsonResponse({'mensaje': mensaje.contenido, 'fecha': mensaje.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S')})
+        return JsonResponse({
+            'mensaje': mensaje.contenido, 
+            'fecha': mensaje.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S')
+        })
+    
     return JsonResponse({'error': 'Solicitud inválida'}, status=400)
-
 
 
 #endregion
@@ -1654,4 +1870,10 @@ def crear_dieta_consejero(request):
         # Manejar el caso de solicitud GET si es necesario
         return render(request, 'consejeros/form_dieta_consejero.html', {"pagina": pagina_actual})
 
+#endregion
+
+#region page not found
+
+def page_not_found(request):
+    return render(request, '404/error404.html')
 #endregion
